@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function getViewDashboard()
+    public function getView()
     {
         $name = 'Tho';
         return view('dashboard',[]);
