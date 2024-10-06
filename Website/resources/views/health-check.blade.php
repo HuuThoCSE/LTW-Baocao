@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('title')
-Quản lý dê
+Quản sức khỏe
 @endsection
 
 @section('content')
