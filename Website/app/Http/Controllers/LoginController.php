@@ -21,7 +21,7 @@ class LoginController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        // Truy vấn cơ sở dữ liệu để lấy user theo username
+        // Truy vấn cơ sở dữ liệu để lấy user theo email
         $user = DB::table('users')->where('email', $username)->first();
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
