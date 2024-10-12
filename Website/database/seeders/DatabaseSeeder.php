@@ -20,5 +20,13 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin',
             'password'=> bcrypt('123456'),
         ]);
+
+        $this->call(FarmsTableSeeder::class);
+
+        // Chạy seeder bảng breeds trước
+        $this->call(BreedsTableSeeder::class);
+
+        // Sau đó mới chạy seeder bảng goats
+        $this->call(GoatsTableSeeder::class);
     }
 }
