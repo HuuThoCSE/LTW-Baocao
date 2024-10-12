@@ -19,5 +19,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $this->call(FarmsTableSeeder::class);
+
+        // Chạy seeder bảng breeds trước
+        $this->call(BreedsTableSeeder::class);
+
+        // Sau đó mới chạy seeder bảng goats
+        $this->call(GoatsTableSeeder::class);
     }
 }

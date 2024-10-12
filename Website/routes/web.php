@@ -5,8 +5,7 @@ use App\Http\Controllers\HealthCheckController;
 
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/', ['DashboardController', 'getViewDashboard'])->name('home');
+Route::get('/', 'App\Http\Controllers\DashboardController@getView')->name('home');
 
 Route::get('/health-check', 'App\Http\Controllers\HealthCheckController@getView')->name('health-check');
 
