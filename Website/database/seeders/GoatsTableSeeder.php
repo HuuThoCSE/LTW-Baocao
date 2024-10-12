@@ -22,6 +22,20 @@ class GoatsTableSeeder extends Seeder
                 'origin' => 'imported' // Dê này là dê được nhập
             ],
             [
+                'goat_name' => 'Amaly',
+                'goat_age' => 2,
+                'farm_id' => 1,
+                'breed_id' => 1,
+                'origin' => 'imported' // Dê này là dê được nhập
+            ],
+            [
+                'goat_name' => 'Telly',
+                'goat_age' => 1,
+                'farm_id' => 1,
+                'breed_id' => 2,
+                'origin' => 'born_on_farm' // Dê này sinh tại nông trại
+            ],
+            [
                 'goat_name' => 'Molly',
                 'goat_age' => 1,
                 'farm_id' => 1,

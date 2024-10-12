@@ -6,9 +6,14 @@ Danh sách dê
 
 @section('content')
 <h1>List of Goats</h1>
+<table >
 <ul>
     @foreach($listgoats as $goat)
-        <li>{{ $goat->goat_name }} - Origin: {{ $goat->origin }}</li>
+    
+        <li>{{$goat->goat_id}}-{{ $goat->goat_name }} - {{$goat->goat_age}} - Origin: {{ $goat->origin }}</li>
+   
+        
     @endforeach
 </ul>
+</table>
 @endsection
