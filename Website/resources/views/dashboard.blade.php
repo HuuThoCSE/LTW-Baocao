@@ -4,30 +4,14 @@
 Bảng điều khiển
 @endsection
 
-@section('content')
-<form action="">
-    <h1>Con bò</h1>
-    <label for="">ID: </label>
-    <input type="text" value="1">
-</form>
-@endsection
-
-@extends('main')
-
-@section('title')
-Quản sức khỏe
-@endsection
-
-@section('content')
-<h1>List of Goats</h1>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Age</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>25</td>
-    </tr>
-</table>
+@section('contents')
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 @endsection
