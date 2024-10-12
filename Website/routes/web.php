@@ -9,4 +9,6 @@ Route::get('/', 'App\Http\Controllers\DashboardController@getView')->name('home'
 
 Route::get('/health-check', 'App\Http\Controllers\HealthCheckController@getView')->name('health-check');
 
+Route::get('/ListGost', 'App\Http\Controllers\ListGoatController@getview')->name('listgoat');
+
 // Route::get('/health-check', ['HealthCheckController::class', 'getViewQLD'])->name('health-check');

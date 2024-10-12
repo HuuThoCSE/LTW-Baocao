@@ -19,9 +19,8 @@ class GoatsTableSeeder extends Seeder
             'farm_id' => 1,
             'breed_id' => 1,
             'origin' => 'imported' // Dê này là dê được nhập
-        ]);
-        
-        DB::table('goats')->insert([
+        ],
+        [
             'goat_name' => 'Molly',
             'goat_age' => 1,
             'farm_id' => 1,
