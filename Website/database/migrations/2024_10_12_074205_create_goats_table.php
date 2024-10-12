@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('goat_id');
             $table->string('goat_name', 100);
             $table->integer('goat_age');
+            $table->string('breed_color', 100)->nullable();
             $table->enum('origin', ['imported', 'born_on_farm']);
             $table->unsignedBigInteger('farm_id');
             $table->unsignedBigInteger('breed_id');
