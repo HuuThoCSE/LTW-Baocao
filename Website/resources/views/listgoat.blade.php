@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('title')
-Đăng nhập
+Danh sách dê
 @endsection
 
 @section('content')
