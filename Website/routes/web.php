@@ -9,6 +9,6 @@ Route::get('/danhsachde', 'App\Http\Controllers\DashboardController@getViewQLD')
 Route::get('/login', 'App\Http\Controllers\LoginController@getView')->name('login');
 Route::post('/login', 'App\Http\Controllers\LoginController@login')->name('login_post');
 
-Route::get('/listgoat', 'App\Http\Controllers\ListGoatController@getview')->name('listgoat');
+Route::get('/listgoat', ['ListGoatController::class','getview'])->name('listgoat');
 
 // Route::get('/health-check', ['HealthCheckController::class', 'getViewQLD'])->name('health-check');
