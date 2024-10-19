@@ -27,10 +27,12 @@ class LoginController extends Controller
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->password)) {
             // Mật khẩu đúng, đăng nhập thành công
-            return "Login successful!";
+            return redirect()->intended('listgoat');
         } else {
             // Sai username hoặc password
-            return "Invalid username or password!";
+            return back()->withErrors([
+                'username' => 'Thông tin đăng nhập không chính xác.',
+            ]);
         }
     }
 
