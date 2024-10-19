@@ -269,6 +269,28 @@
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i>
+            <span>Account</span>
+            <i class="bi bi-chevron-down ms-auto">
+          </i>
+        </a>
+
+        <ul id="components-device" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="/account">
+              <i class="bi bi-circle"></i><span>List Account</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-accordion.html">
+              <i class="bi bi-circle"></i><span>Accordion</span>
+            </a>
+          </li>
+        </ul>
+    </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i>
             <span>Device</span>
             <i class="bi bi-chevron-down ms-auto">
           </i>
