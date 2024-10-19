@@ -67,3 +67,32 @@ extension=mbstring
 extension=openssl
 extension=pdo_mysql
 ```
+
+# Database
+## Tạo migrate
+```bash
+php artisan make:migration create_farms_table
+```
+
+```bash
+php artisan migrate:rollback
+```
+
+```bash
+php artisan migrate:refresh
+```
+
+```bash
+php artisan migrate:reset
+```
+
+## Tạo seeder
+```bash
+php artisan make:seeder GoatTableSeeder
+```
+
+## Tạo lại table và seeder
+```bash
+php artisan migrate:fresh --seed
+```
+
