@@ -12,28 +12,26 @@ Quản lý thuốc
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
 
-<table>
+<table class="table table-striped">
     <thead>
-        <tr>
+        <tr style='text-align: center'>
             <th>ID</th>
             <th>Mã thuốc</th>
             <th>Tên thuốc</th>
-            <th>Sửa</th>
-            <th>Xóa</th>
-            <th>Chi tiết</th>
+            <th>Thao tác</th>
         </tr>
-</thead>
-<tbody>
+    </thead>
+    <tbody>
     @foreach ($medications as $medication)
        <tr>
-            <td>{{ $medication->id }}</td>
-            <td>{{ $medication->medication_code }}</td>
+            <td style='text-align: center'>{{ $medication->id }}</td>
+            <td style='text-align: center'>{{ $medication->medication_code }}</td>
             <td>{{ $medication->medication_name }}</td>
-            <td>
+            <td align='center'>
                 <form action="{{ route('medication.del', $medication->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
                 </form>
             </td>
         <tr>
