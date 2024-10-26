@@ -3,7 +3,51 @@
 @section('title')
 Account
 @endsection
+@section('account_style')
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+    }
 
+    table, th, td {
+        border: 1px solid #dddddd;
+    }
+
+    th, td {
+        padding: 12px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .pagetitle {
+        margin-bottom: 20px;
+    }
+
+    .breadcrumb a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .breadcrumb-item.active {
+        color: #6c757d;
+    }
+</style>
+@endsection
 @section('contents')
 <div class="pagetitle">
     <h1>Dashboard</h1>

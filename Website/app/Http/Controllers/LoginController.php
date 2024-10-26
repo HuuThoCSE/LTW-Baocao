@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+  
     public function getView()
     {
         return view('login',[]);
@@ -34,6 +35,8 @@ class LoginController extends Controller
                 'username' => 'Thông tin đăng nhập không chính xác.',
             ]);
         }
+        
     }
+    
 
 }
