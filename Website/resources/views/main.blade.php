@@ -313,6 +313,28 @@
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-farm" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i>
+            <span>Goat</span>
+            <i class="bi bi-chevron-down ms-auto">
+          </i>
+        </a>
+
+        <ul id="components-farm" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="/goats">
+              <i class="bi bi-circle"></i><span>List Goat</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-accordion.html">
+              <i class="bi bi-circle"></i><span>Accordion</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-farm" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i>
             <span>Farm</span>
             <i class="bi bi-chevron-down ms-auto">
           </i>
