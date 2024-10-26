@@ -9,16 +9,13 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-  
     public function getView()
     {
-        return view('login',[]);
+        return view('login', []);
     }
 
     public function login(Request $request)
     {
-        // dd($request);
-
         $username = $request->input('username');
         $password = $request->input('password');
 
@@ -27,15 +24,52 @@ class LoginController extends Controller
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->password)) {
-            // Mật khẩu đúng, đăng nhập thành công
-            return redirect()->intended('listgoat');
+            // Mật khẩu đúng, lấy quyền từ bảng roles
+            $role = DB::table('roles')->where('user_id', $user->id)->first();
+
+            if ($role) {
+                // Kiểm tra quyền của người dùng
+                switch ($role->role) {
+                    case 0:
+                        // Quản trị viên
+                        return redirect()->route('home');
+                    case 1:
+                        // Admin
+                        return redirect()->route('home');
+                    case 2:
+                        // Nông dân
+                        return redirect()->route('home');
+                    case 3:
+                        // Khách hàng
+                        return redirect()->route('home');
+                    default:
+                        return back()->withErrors([
+                            'username' => 'Không có quyền truy cập.',
+                        ]);
+                }
+                
+            } else {
+                return back()->withErrors([
+                    'username' => 'Tài khoản không có quyền.',
+                ]);
+            }
+           
         } else {
             // Sai username hoặc password
             return back()->withErrors([
                 'username' => 'Thông tin đăng nhập không chính xác.',
             ]);
         }
-        
+    }
+    public function index(Request $request)
+    {
+        $user = $request->user(); // Lấy thông tin người dùng đã đăng nhập
+        $role = DB::table('roles')->where('user_id', $user->id)->first();
+
+        return view('home', [
+            'role' => $role ? $role->role : null,
+            'userName' => $user->name, // Truyền tên người dùng vào view
+        ]);
     }
     
 
