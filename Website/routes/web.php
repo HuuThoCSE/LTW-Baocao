@@ -5,6 +5,7 @@ use App\Http\Controllers\ListGoatController;
 use App\Http\Controllers\GoatDetailController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ListFarmController;
+use App\Http\Controllers\MedicationController;
 
 Route::get('/', [DashboardController::class, 'getView'])->name('home');
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
@@ -15,3 +16,10 @@ Route::get('/account', [AccountController::class, 'getView'])->name('account');
 Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
 
 Route::get('goatdetail/{goat_id}', [GoatDetailController::class, 'getview'])->name('goatdetail');
+
+# Medication Management
+
+Route::get('/medication', [MedicationController::class, 'getView'])->name('medication');
+Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
+Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
+Route::put('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.put');

@@ -28,5 +28,7 @@ class DatabaseSeeder extends Seeder
 
         // Sau đó mới chạy seeder bảng goats
         $this->call(GoatsTableSeeder::class);
+
+        $this->call(MedicationsTableSeeder::class);
     }
 }
