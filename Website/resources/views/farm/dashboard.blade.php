@@ -22,34 +22,61 @@ Bảng điều khiển
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
-                    <tr>
-                        
+                    <tr align='center'>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Location</th>
                         <th>Owner</th>
+                        <th colspan = "2">Operation</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($farms as $farm)
                         <tr>
-                            
+                            <td>{{ $farm->farm_id }}</td>
                             <td>{{ $farm->farm_name }}</td>
                             <td>{{ $farm->location }}</td>
                             <td>{{ $farm->owner_id }}</td>
+                            <td align='center'>
+                            <form action="{{ route('listfarm.del', $farm->farm_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
+                            </form>
+                            </td>
+
+                            <td align='center'>
+                            <form action="{{ route('listfarm.put', $farm->farm_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" onclick="return confirm('Are you sure you want to update this item?');" class="btn btn-success" >Update</button>
+                            </form>
+                            </td>
                         </tr>
                     @endforeach
-                    <tr>
-                        
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
-                        <td><input type="text"></td>
+                    <tr>   
+                       
                     </tr>
+                    
                 </tbody>
                 
             </table>
             
         </div>
 
+        <form action="{{ route('listfarm.add') }}" method="POST">
+            @csrf
+            <table class="table table-border">
+                <tr>
+                    <td><input type="text" name="farm_id" class="form-control"></td>
+                    <td><input type="text" name="farm_name" class="form-control" ></td>
+                    <td><input type="text" name="location"class="form-control" ></td>
+                    <td><input type="text" name="owner_id" class="form-control" ></td>
+                   
+                </tr>
+            </table>
+            <input type="submit" value="Add farm" class="btn btn-primary" >
+        </form>
 
 
 @endsection
