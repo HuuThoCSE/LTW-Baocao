@@ -16,7 +16,7 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   @include('links')
-
+  @yield('account_style')
 </head>
 
 <body>
@@ -194,7 +194,7 @@
         </li><!-- End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
-
+    
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">Farmer</span>
@@ -285,6 +285,11 @@
               <i class="bi bi-circle"></i><span>Accordion</span>
             </a>
           </li>
+          <li>
+            <a href="/admin">
+              <i class="bi bi-circle"></i><span>Register an account</span>
+            </a>
+          </li>
         </ul>
     </li>
 
@@ -354,6 +359,12 @@
         </ul>
     </li>
     </ul>
+    <li class="nav-item">
+    <a href="{{ route('login') }}">
+        <i></i>
+        <span>Login</span>
+    </a>
+</li>
 
   </aside>
   <!-- End Sidebar-->
