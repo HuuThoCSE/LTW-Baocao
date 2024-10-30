@@ -18,7 +18,7 @@ Quản lý thuốc
             <th>ID</th>
             <th>Mã thuốc</th>
             <th>Tên thuốc</th>
-            <th>Thao tác</th>
+            <th colspan="2">Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +34,9 @@ Quản lý thuốc
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
                 </form>
             </td>
+            <td>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
+            </td>
         <tr>
     @endforeach
 </table>
@@ -47,4 +50,29 @@ Quản lý thuốc
     <input type="text" name="medication_name" id="" class="form-control"><br>
     <input type="submit" value="Thêm thuốc" class="btn btn-primary">
 </form>
+
+<div class="modal fade" id="udpModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Basic Modal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- End Basic Modal-->
+
 @endsection
