@@ -55,6 +55,7 @@ Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name(
 Route::put('/farms/{farm_id}', [ListFarmController::class, 'putFarm'])->name('listfarm.put');
 
 # List_Goat Management
+Route::post('/farms', [ListGoatController::class, 'addGoat'])->name('listgoat.add');
 Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('listgoat.del');
 Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('listgoat.put');
 

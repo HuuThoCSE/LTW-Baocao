@@ -50,6 +50,7 @@
     </table>
 </div>
 
+<!-- Madol Update -->
 <div class="modal fade" id="udpModal" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
