@@ -53,6 +53,12 @@ class MedicationController extends Controller
 
         DB::table('medications')->where('id', $id)->update(['$medication_code', '$medication_name']);
 
+        // DB::statement("UPDATE medications 
+        // SET medication_code = '$medication_code', medication_name = '$medication_name' WHERE id = $id");
+
+        // DB::statement("UPDATE medications 
+        //            SET medication_code = ?, medication_name = ? WHERE id = ?", [$medication_code, $medication_name, $id]);
+
         $medications = DB::table('medications')->get();
         return view('medication',['medications' => $medications]);
     }
