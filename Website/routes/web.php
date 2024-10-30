@@ -8,6 +8,7 @@ use App\Http\Controllers\ListFarmController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoatController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
   
-    Route::post('/goats', [GoatController::class, 'addGoat'])->name('listgoat.add');
+    Route::get('/goats', [GoatController::class, 'getView'])->name('goat.getView');
 });
 
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');

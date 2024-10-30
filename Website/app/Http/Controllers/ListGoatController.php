@@ -14,6 +14,6 @@ class ListGoatController extends Controller
         $listgoats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
         
         // Truyền dữ liệu vào view
-        return view('goat.dashboard', ['listgoats' => $listgoats]);
+        return view('goats.listgoat', ['listgoats' => $listgoats]);
     }
 }
