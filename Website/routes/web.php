@@ -20,9 +20,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
-
+  
     Route::post('/goats', [GoatController::class, 'addGoat'])->name('listgoat.add');
 });
+
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
 // Route::get('/login', [LoginController::class, 'getView'])->name('login');
 // Route::post('/login', [LoginController::class, 'login'])->name('login_post');
@@ -53,6 +54,5 @@ Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name(
 Route::put('/farms/{farm_id}', [ListFarmController::class, 'putFarm'])->name('listfarm.put');
 
 # List_Goat Management
-Route::get('/goats', [ListGoatController::class, 'getView'])->name('listgoat');
 Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('listgoat.del');
 Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('listgoat.put');
