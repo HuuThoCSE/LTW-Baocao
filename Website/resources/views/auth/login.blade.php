@@ -102,7 +102,7 @@
         @csrf
         <h1 class="form-heading">Đăng Nhập</h1>
         <div class="form-group">
-            <input type="text" class="form-input" placeholder="Email đăng nhập" id="username" name="username" required>
+            <input type="email" class="form-input" placeholder="Email đăng nhập" id="username" name="email" required>
         </div>
         <div class="form-group">
             <input type="password" class="form-input" placeholder="Mật khẩu" id="password" name="password" required>
@@ -110,7 +110,7 @@
         <input type="submit" value="Đăng Nhập" class="form-submit">
         @if ($errors->any())
             <div style="color: red; text-align: center; margin-top: 15px;">
-                {{ $errors->first('username') }}
+                {{ $errors->first('email') }}
             </div>
         @endif
     </form>
