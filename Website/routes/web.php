@@ -17,22 +17,23 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/goats/{id}', [GoatController::class, 'show'])->name('goats.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class, 'getView'])->name('home');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
-    # Medication Management
-    Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
-    Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
+    Route::get('/', [DashboardController::class, 'getView'])->name('dashboard');
 
     Route::get('/admin', [AdminController::class, 'getView'])->name('admin.view');
     Route::post('/admin/add', [AdminController::class, 'addUser'])->name('user.add');
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+
+    # Medication Management
+    Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
+    Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
+    
     Route::post('/goats', [GoatController::class, 'addGoat'])->name('goats.add');
     Route::get('/goats', [GoatController::class, 'getView'])->name('goats.getView');
 
 });
-
-Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
 Route::get('/account', [AccountController::class, 'getView'])->name('account');
 
 Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
@@ -57,7 +58,5 @@ Route::put('/farms/{farm_id}', [ListFarmController::class, 'putFarm'])->name('li
 
 # List_Goat Management
 
-Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('listgoat.del');
-Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('listgoat.put');
-
-
+Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('goats.del');
+Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('goats.put');

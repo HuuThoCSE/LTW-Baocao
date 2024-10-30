@@ -10,23 +10,39 @@ class GoatController extends Controller
 {
     public function show($id)
     {
-        $goat = DB::table('goats')->where('goat_id', $id)->first();
+        // $goat = DB::table('goats')
+        //         ->where('goat_id', $id)
+        //         ->first();
+
+        $goat = DB::select("
+            SELECT goats.*, breeds.breed_name 
+            FROM goats 
+            JOIN breeds ON goats.breed_id = breeds.breed_id 
+            WHERE goats.goat_id = ?", 
+            [$id]
+        );
     
         if (!$goat) {
             abort(404);
         }
+
+        $goatWeights = DB::select("
+            SELECT *
+            FROM goat_weighs
+            WHERE goat_id = ?", 
+            [$id]
+        );
         
-        return view('goats.show', compact('goat'));
+        return view('goats.show', ['goat' => $goat[0], 'goatWeights' => $goatWeights]);
     }
     public function getView()
     {
         // Lấy danh sách từ bảng 'goats'
-        $listgoats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
+        $goats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
         
         // Truyền dữ liệu vào view
-        return view('goats.listgoat', ['listgoats' => $listgoats]);
+        return view('goats.listgoat', ['goats' => $goats]);
     }
-
 
     public function addGoat(Request $request)
     {
@@ -46,7 +62,7 @@ class GoatController extends Controller
         ]);
 
         $farms = DB::table('goats')->get();
-        return view('goat/listgoat',['goats' => $goats]);
+        return view('goat.listgoat',['goats' => $goats]);
     }
 
 }

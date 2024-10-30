@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
         $this->call(GoatsTableSeeder::class);
 
         $this->call(MedicationsTableSeeder::class);
+
         $this->call(RolesTableSeeder::class);
+
+        $this->call(GoatWeighsTableSeeder::class);
     }
 }
