@@ -44,7 +44,7 @@ Danh sách dê
 </div>
 
 <!-- Form to add a new farm -->
-<form action="{{ route('listgoat.add') }}" method="POST">
+<form action="{{ route('goats.add') }}" method="POST">
     @csrf
     <table class="table table-border">
         <tr>
