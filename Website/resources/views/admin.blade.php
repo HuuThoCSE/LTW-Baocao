@@ -12,7 +12,7 @@ Register User
 @endif
 
 <div class="container mt-4">
-    <form action="{{ route('User_add', ) }}" method="POST" class="bg-light p-4 rounded shadow">
+    <form action="{{ route('user.add', ) }}" method="POST" class="bg-light p-4 rounded shadow">
         @csrf
         <h4 class="mb-3">Điền thông tin vào form đăng ký</h4>
 
