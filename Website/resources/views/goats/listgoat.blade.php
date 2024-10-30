@@ -18,15 +18,14 @@ Danh sách dê
             </tr>
         </thead>
      
-        @foreach($listgoats as $goat)
-        
-            <tr>
+        @foreach($goats as $goat)
+            <tr onclick="window.location='{{ route('goats.show', ['id' => $goat->goat_id]) }}'" style="cursor:pointer;">
                 <td>{{ $goat->goat_id }}</td>
                 <td>{{ $goat->goat_name }}</td>
                 <td>{{ $goat->goat_age }}</td>
                 <td>{{ $goat->origin }}</td>
                 <td align='center'>
-                        <form action="{{ route('listgoat.del', $goat->goat_id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('goats.del', $goat->goat_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
@@ -36,8 +35,6 @@ Danh sách dê
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
                 </td>
             </tr>
-    
-            
         @endforeach
        
     </table>
