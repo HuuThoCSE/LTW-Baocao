@@ -8,6 +8,7 @@ use App\Http\Controllers\ListFarmController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoatController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,18 +21,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
-<<<<<<< HEAD
-
     # Medication Management
     Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
     Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
 
     Route::get('/admin', [AdminController::class, 'getView'])->name('Admin');
     Route::post('/admin', [AdminController::class, 'addUser'])->name('User_add');
-=======
-  
-    Route::post('/goats', [GoatController::class, 'addGoat'])->name('listgoat.add');
->>>>>>> main
+
+    Route::get('/goats', [GoatController::class, 'getView'])->name('goat.getView');
+
 });
 
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
@@ -49,8 +47,6 @@ Route::get('/admin', [AdminController::class, 'getView'])->name('Admin');
 # Medication Management
 
 Route::get('/medication', [MedicationController::class, 'getView'])->name('medication');
-
-
 Route::put('/medication/{id}', [MedicationController::class, 'putData'])->name('medication.put');
 
 # List_Farm Management
