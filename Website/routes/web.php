@@ -21,15 +21,32 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
-  
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
+    # Medication Management
+    Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
+    Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
+
+<<<<<<< Updated upstream
+    Route::get('/admin', [AdminController::class, 'getView'])->name('Admin');
+    Route::post('/admin', [AdminController::class, 'addUser'])->name('User_add');
+
     Route::get('/goats', [GoatController::class, 'getView'])->name('goat.getView');
+=======
+    Route::get('/admin', [AdminController::class, 'getView'])->name('admin.view');
+    Route::post('/admin/add', [AdminController::class, 'addUser'])->name('User_add');
+
+  
+    Route::post('/goats', [GoatController::class, 'addGoat'])->name('listgoat.add');
+>>>>>>> Stashed changes
+
 });
 
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
-// Route::get('/login', [LoginController::class, 'getView'])->name('login');
-// Route::post('/login', [LoginController::class, 'login'])->name('login_post');
 Route::get('/account', [AccountController::class, 'getView'])->name('account');
-// Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
 
 Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
 Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
@@ -43,9 +60,6 @@ Route::get('/admin', [AdminController::class, 'getView'])->name('Admin');
 # Medication Management
 
 Route::get('/medication', [MedicationController::class, 'getView'])->name('medication');
-Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
-Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
-
 Route::put('/medication/{id}', [MedicationController::class, 'putData'])->name('medication.put');
 
 # List_Farm Management
@@ -57,3 +71,5 @@ Route::put('/farms/{farm_id}', [ListFarmController::class, 'putFarm'])->name('li
 # List_Goat Management
 Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('listgoat.del');
 Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('listgoat.put');
+
+
