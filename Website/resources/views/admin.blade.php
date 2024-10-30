@@ -18,17 +18,17 @@ Register User
 
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
-            <input type="text" name="name" id="" class="form-control" required>
+            <input type="text" name="name" id="" class="form-control" required placeholder="Tên truy cập">
         </div>
         
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" name="email" id="" class="form-control" required>
+            <input type="email" name="email" id="" class="form-control" required placeholder="Email">
         </div>
         
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
-            <input type="password" name="password" id="" class="form-control" required>
+            <input type="password" name="password" id="" class="form-control" required placeholder="Mật khẩu">
         </div>
 
         <div>
