@@ -1,119 +1,159 @@
-@extends('auth/main')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title')
-Đăng nhập
-@endsection
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-@section('link')
-<style>
-    html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+  <title>Login</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-#login {
-    margin: 0;
-    width: 100%; /* Đảm bảo chiều rộng 100% */
-    height: 100vh; /* Chiều cao 100% của viewport */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("{{ asset('assets/img/Login1.jpg') }}"); /* Thêm hình ảnh nền */
-    background-size: cover; /* Đảm bảo hình ảnh lấp đầy phần tử */
-    background-attachment: fixed;
-    background-position: center; /* Căn giữa hình ảnh */
-    background-repeat: no-repeat; /* Không lặp lại hình ảnh */
-}
-#login::before {
-    content: ""; /* Tạo một pseudo-element */
-    position: absolute; /* Đặt nó ở vị trí tuyệt đối */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("{{ asset('assets/img/Login1.jpg') }}"); /* Hình nền */
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(8px); /* Độ mờ */
-    z-index: 1; /* Đặt lớp này phía dưới các nội dung khác */
-}
-#form-login{
-    max-width: 400px;
-    background: white; /* Màu nền với độ trong suốt */
-    flex-grow: 1;
-    padding: 30px 30px 40px;
-    border-radius: 8px; /* Bo tròn khung */
-    box-shadow: 0px 0px 15px 5px rgba(255, 255, 255, 0.8); /* Thêm độ bóng */
-    position: relative; /* Để đảm bảo form nằm trên lớp mờ */
-    z-index: 2; /* Đặt z-index cao hơn để nằm trên lớp mờ */
-}
-.form-heading{
-    font-family: sans-serif;
-    font-size: 35px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 30px;
-}
-.form-group{
-    border-bottom: 1px solid black;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    display: flex;
-}
-.form-input{
-    background: transparent;
-    border: 2px solid #f5f5f5; /* Đặt viền với chiều rộng là 2px */
-    border-radius: 4px; /* Bo tròn viền */
-    outline: 0;
-    color: black;
-    padding: 10px; /* Khoảng cách bên trong trường nhập liệu */
-    width: 100%; /* Đặt chiều rộng là 100% của khung chứa */
-    box-sizing: border-box; /* Đảm bảo padding và border nằm trong kích thước tổng thể */
-}
-.form-input::placeholder{
-    color: #f5baba; /* Màu chữ của placeholder */
-    opacity: 0.7; /* Độ mờ của chữ placeholder */
-}
-.form-submit{
-    font-family: sans-serif;
-    background-color: #2980b9;
-    border: 1px solid;
-    color: white;
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
-    border-radius: 4px;
-    transition: opacity 0.3s;
-}
-.form-submit:hover {
-    background-color: #2980b9; /* Màu nền khi hover */
-    opacity: 0.7; /* Làm mờ nút khi hover */
-}
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+    <style>
+    #login {
+        margin: 0;
+        width: 100%; /* Đảm bảo chiều rộng 100% */
+        height: 100vh; /* Chiều cao 100% của viewport */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("{{ asset('assets/img/Login1.jpg') }}"); /* Thêm hình ảnh nền */
+        background-size: cover; /* Đảm bảo hình ảnh lấp đầy phần tử */
+        background-attachment: fixed;
+        background-position: center; /* Căn giữa hình ảnh */
+        background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+        position: relative; /* Thêm thuộc tính này */
+        z-index: 1; /* Đặt z-index cho phần chính */
+    }
+    #login::before {
+        content: ""; /* Tạo một pseudo-element */
+        position: absolute; /* Đặt nó ở vị trí tuyệt đối */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("{{ asset('assets/img/Login1.jpg') }}"); /* Hình nền */
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(8px); /* Độ mờ */
+        z-index: 0; /* Đặt z-index thấp hơn để nền không đè lên nội dung */
+        opacity: 0.6; /* Thêm độ mờ để làm rõ form hơn */
+    }
+    .card {
+        position: relative; /* Đảm bảo card nằm trên pseudo-element */
+        z-index: 2; /* Đặt z-index cao hơn */
+    }   
+    span.d-none.d-lg-block {
+        position: relative;
+        z-index: 2; /* Đảm bảo chữ Farm Goat có z-index cao hơn */
+    }
 </style>
-@endsection
+</head>
 
-@section('contents')
+<body>
+  <main id="login">
+    <div class="container">
 
-<div id="login">
-    <form action="{{ route('login') }}" id="form-login" method="POST">
-        @csrf
-        <h1 class="form-heading">Đăng Nhập</h1>
-        <div class="form-group">
-            <input type="email" class="form-input" placeholder="Email đăng nhập" id="username" name="email" required>
-        </div>
-        <div class="form-group">
-            <input type="password" class="form-input" placeholder="Mật khẩu" id="password" name="password" required>
-        </div>
-        <input type="submit" value="Đăng Nhập" class="form-submit">
-        @if ($errors->any())
-            <div style="color: red; text-align: center; margin-top: 15px;">
-                {{ $errors->first('email') }}
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                  <!-- <img src="assets/img/logo.png" alt=""> -->
+                  <span class="d-none d-lg-block">Farm Goat</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                    <p class="text-center small">Enter your email & password to login</p>
+                  </div>
+
+                  <form class="row g-3 needs-validation" action="{{ route('login') }}" id="form-login" method="POST" novalidate>
+                    @csrf
+                    <div class="col-12">
+                      <label for="yourEmail" class="form-label">Email</label>
+                      <div class="input-group has-validation">
+                        <input type="text" name="email" class="form-control" id="yourEmail" required>
+                        <div class="invalid-feedback">Please enter your username.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <div class="invalid-feedback">Please enter your password!</div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                    </div>
+                    <div class="col-12">
+                      <!-- <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p> -->
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+
             </div>
-        @endif
-    </form>
-</div>
-@endsection
+          </div>
+        </div>
 
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
