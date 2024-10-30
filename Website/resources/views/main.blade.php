@@ -195,55 +195,51 @@
 
         <li class="nav-item dropdown pe-3">
     
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+        @if(auth()->check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Farmer</span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span> <!-- Hiển thị tên người dùng -->
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Meta</h6>
-              <span>Famer</span>
+                <h6>Meta</h6>
+                <span>{{ auth()->user()->name }}</span> <!-- Hiển thị tên người dùng -->
             </li>
             <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
+                <hr class="dropdown-divider">
             </li>
             <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
-              </a>
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                    <i class="bi bi-person"></i>
+                    <span>My Profile</span>
+                </a>
             </li>
             <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
+                <hr class="dropdown-divider">
             </li>
             <li>
-              <hr class="dropdown-divider">
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('settings') }}">
+                    <i class="bi bi-gear"></i>
+                    <span>Account Settings</span>
+                </a>
             </li>
-
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/logout">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Sign Out</span>
+                </a>
+            </li>
+        </ul>
+    @else
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{ route('login') }}">
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">Đăng Nhập</span>
+        </a>
+    @endif
+</li>
             </li>
 
           </ul><!-- End Profile Dropdown Items -->
@@ -280,11 +276,7 @@
               <i class="bi bi-circle"></i><span>List Account</span>
             </a>
           </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
+          
           <li>
             <a href="/admin">
               <i class="bi bi-circle"></i><span>Register an account</span>
