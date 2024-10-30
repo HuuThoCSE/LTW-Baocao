@@ -68,9 +68,16 @@ Bảng điều khiển
             @csrf
             <table class="table table-border">
                 <tr>
-                    <td><input type="text" name="farm_id" class="form-control"></td>
+                    <!-- <td><input type="text" name="farm_id" class="form-control"></td> -->
                     <td><input type="text" name="farm_name" class="form-control" ></td>
-                    <td><input type="text" name="location"class="form-control" ></td>
+                    <!-- <td><input type="text" name="location"class="form-control" ></td> -->
+                     <td><select name="location" id="location_id">
+                        <option value="Area">Select Area</option>
+                        <option value="Area A">Area A</option>
+                        <option value="Area B">Area B</option>
+                        <option value="Area C">Area C</option>
+                        <option value="Area D">Area D</option>
+                    </select></td>
                     <td><input type="text" name="owner_id" class="form-control" ></td>
                    
                 </tr>
