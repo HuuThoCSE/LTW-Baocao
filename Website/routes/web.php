@@ -18,7 +18,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+    
 });
+
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
 // Route::get('/login', [LoginController::class, 'getView'])->name('login');
 // Route::post('/login', [LoginController::class, 'login'])->name('login_post');
