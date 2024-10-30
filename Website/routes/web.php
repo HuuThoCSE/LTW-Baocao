@@ -7,11 +7,21 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ListFarmController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', [DashboardController::class, 'getView'])->name('home');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [DashboardController::class, 'getView'])->name('home');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+});
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
-Route::get('/login', [LoginController::class, 'getView'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login_post');
+// Route::get('/login', [LoginController::class, 'getView'])->name('login');
+// Route::post('/login', [LoginController::class, 'login'])->name('login_post');
 Route::get('/account', [AccountController::class, 'getView'])->name('account');
 // Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
 
