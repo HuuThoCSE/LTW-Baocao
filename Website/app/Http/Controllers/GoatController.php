@@ -10,7 +10,12 @@ class GoatController extends Controller
 {
     public function show($id)
     {
-        $goat = Goat::findOrFail($id);
+        $goat = DB::table('goats')->where('goat_id', $id)->first();
+    
+        if (!$goat) {
+            abort(404);
+        }
+        
         return view('goats.show', compact('goat'));
     }
     public function getView()
