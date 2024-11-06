@@ -9,6 +9,7 @@ use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoatController;
+use App\Http\Controllers\FoodController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,8 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'getView'])->name('dashboard');
 
     Route::get('/admin', [AdminController::class, 'getView'])->name('admin.view');
-    Route::post('/admin/add', [AdminController::class, 'addUser'])->name('user.add');
-
+    Route::post('/admin', [AdminController::class, 'addUser'])->name('user.add');
+    Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
@@ -32,6 +33,10 @@ Route::middleware(['auth'])->group(function () {
     
     Route::post('/goats', [GoatController::class, 'addGoat'])->name('goats.add');
     Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
+
+    #Food Management
+    Route::get('/food', [FoodController::class, 'getView'])->name('food');
+    Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
 
 });
 Route::get('/account', [AccountController::class, 'getView'])->name('account');
@@ -61,3 +66,6 @@ Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('li
 Route::delete('/goats/{goat_id}', [GoatController::class, 'delGoat'])->name('goats.del');
 Route::put('/goats/{goat_id}', [GoatController::class, 'udpGoat'])->name('goats.udp');
 Route::get('/goats/create', [GoatController::class, 'createGoatForm'])->name('goats.create');
+
+#Food Management
+Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
