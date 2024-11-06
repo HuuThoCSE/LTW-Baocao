@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
     
     Route::post('/goats', [GoatController::class, 'addGoat'])->name('goats.add');
-    Route::get('/goats', [GoatController::class, 'getView'])->name('goats.getView');
+    Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
 
     #Food Management
     Route::get('/food', [FoodController::class, 'getView'])->name('food');
@@ -59,12 +59,13 @@ Route::put('/medication/{id}', [MedicationController::class, 'putData'])->name('
 Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
 Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
 Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
-Route::put('/farms/{farm_id}', [ListFarmController::class, 'putFarm'])->name('listfarm.put');
+Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
 
 # List_Goat Management
 
-Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('goats.del');
-Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('goats.put');
+Route::delete('/goats/{goat_id}', [GoatController::class, 'delGoat'])->name('goats.del');
+Route::put('/goats/{goat_id}', [GoatController::class, 'udpGoat'])->name('goats.udp');
+Route::get('/goats/create', [GoatController::class, 'createGoatForm'])->name('goats.create');
 
 #Food Management
 Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');

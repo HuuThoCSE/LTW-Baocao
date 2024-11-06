@@ -24,6 +24,7 @@ Danh sách dê
                 <td>{{ $goat->goat_name }}</td>
                 <td>{{ $goat->goat_age }}</td>
                 <td>{{ $goat->origin }}</td>
+                <td>{{ $goat->farm_name }}</td> <!-- Display farm name -->
                 <td align='center'>
                         <form action="{{ route('goats.del', $goat->goat_id) }}" method="POST" style="display:inline;">
                             @csrf
@@ -45,15 +46,27 @@ Danh sách dê
     @csrf
     <table class="table table-border">
         <tr>
-            <td><input type="text" name="goat_name" class="form-control" placeholder="Goat Name"></td>
-            <td><input type="text" name="goat_age" class="form-control" placeholder="Goat Age"></td>
+            <td><input type="text" name="goat_name" class="form-control" placeholder="Goat Name" required></td>
+            <td><input type="text" name="goat_age" class="form-control" placeholder="Goat Age" required></td>
             <td>
-                <select name="origin" class="form-control">
+                <select name="origin" class="form-control" required>
                     <option value="origin">Select Origin</option>
                     <option value="imported">imported</option>
                     <option value="born_on_farm">born_on_farm</option>
                 </select>
             </td>    
+            <td>
+            <td><input type="text" name="goat_age" class="form-control" placeholder="Goat Age" required></td>
+                <!-- <select name="farm_id" class="form-control" required>
+                 <option value="">Select Farm</option>
+                    @foreach($farm as $farm)
+                        <option value="{{ $farm->farm_id }}">  
+                            {{ old('farm_id', $goat->farm_id) == $farm->farm_id ? 'selected' : '' }}>
+                            {{ $farm->farm_name }}
+                        </option>
+                    @endforeach 
+                </select> -->
+            </td>
         </tr>
     </table>
     <input type="submit" value="Add goat" class="btn btn-primary">
@@ -61,7 +74,7 @@ Danh sách dê
 
 <!-- Madol Update -->
 <div class="modal fade" id="udpModal" tabindex="-1">
-    <div class="modal-dialog modal-fullscreen">
+    <div class="modal-dialog modal-small">
       <div class="modal-content">
 
         <div class="modal-header">
@@ -92,7 +105,7 @@ Danh sách dê
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
