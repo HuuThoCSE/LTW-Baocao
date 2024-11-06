@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('title')
-Account
+Quản lý tài khoản
 @endsection
 @section('account_style')
 <style>
@@ -66,6 +66,7 @@ Account
                 <th>Tên</th>
                 <th>Email</th>
                 <th>Ngày Tạo</th>
+                <th colspan="2">Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -75,6 +76,16 @@ Account
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
+                    <td align='center'>
+                <form action="{{ route('account.del', $user->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+            <td>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
+            </td>
                 </tr>
             @endforeach
         </tbody>
