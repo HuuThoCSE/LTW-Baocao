@@ -372,6 +372,23 @@
           </li>
         </ul>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i>
+            <span>Food</span>
+            <i class="bi bi-chevron-down ms-auto">
+          </i>
+        </a>
+
+        <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="/food">
+              <i class="bi bi-circle"></i><span>List Food</span>
+            </a>
+          </li>
+        </ul>
+    </li>
+
     </ul>
     <li class="nav-item">
     <a href="{{ route('login') }}">

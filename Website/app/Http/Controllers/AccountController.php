@@ -13,4 +13,16 @@ class AccountController extends Controller
         $users = DB::table('users')->get();
         return view('account',['users' => $users]);
     }
+    public function delAccount($id)
+    {
+        // Find the medication by ID and delete it
+        $account = DB::table('users')->where('id', $id);
+        
+        if ($account->exists()) {
+            $account->delete();
+            return redirect()->back()->with('success', 'Medication deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Medication not found.');
+        }
+    }
 }
