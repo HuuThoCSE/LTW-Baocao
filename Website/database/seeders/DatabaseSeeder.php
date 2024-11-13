@@ -15,13 +15,18 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $this->call(FarmsTableSeeder::class);
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'admin@test.vn',
             'password'=> bcrypt('123456'),
+            'farm_id' => 1,
         ]);
 
-        $this->call(FarmsTableSeeder::class);
+        $this->call(ZoneSeeder::class);
+
+        $this->call(BarnSeeder::class);
 
         // Chạy seeder bảng breeds trước
         $this->call(BreedsTableSeeder::class);
@@ -34,5 +39,9 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
 
         $this->call(GoatWeighsTableSeeder::class);
+
+        $this->call(TypeDevicesTableSeeder::class);
+
+        $this->call(DevicesTableSeeder::class);
     }
 }

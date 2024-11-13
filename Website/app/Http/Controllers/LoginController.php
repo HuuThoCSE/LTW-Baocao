@@ -27,6 +27,11 @@ class LoginController extends Controller
             // Mật khẩu đúng, lấy quyền từ bảng roles
             $role = DB::table('roles')->where('user_id', $user->id)->first();
 
+            $farm_id = $user->farm_id;
+            session(['encrypted_farm_id' => encrypt($farm_id)]);
+
+            // $farm_id = decrypt(session('encrypted_farm_id'));
+
             if ($role) {
                 // Kiểm tra quyền của người dùng
                 switch ($role->role) {
@@ -61,6 +66,7 @@ class LoginController extends Controller
             ]);
         }
     }
+
     public function index(Request $request)
     {
         $user = $request->user(); // Lấy thông tin người dùng đã đăng nhập

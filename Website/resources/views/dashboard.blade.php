@@ -14,6 +14,7 @@ Bảng điều khiển
         </ol>
     </nav>
 </div><!-- End Page Title -->
+    <h1>Chào mừng đến với ứng dụng Laravel và Vite</h1>
 
-
+    
 @endsection

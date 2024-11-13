@@ -17,6 +17,7 @@
 
   @include('links')
   @yield('account_style')
+  @vite('resources/js/app.js')
 </head>
 
 <body>
@@ -295,7 +296,7 @@
 
         <ul id="components-device" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="components-alerts.html">
+            <a href="/devices">
               <i class="bi bi-circle"></i><span>List Device</span>
             </a>
           </li>
@@ -372,6 +373,7 @@
           </li>
         </ul>
     </li>
+
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i>
