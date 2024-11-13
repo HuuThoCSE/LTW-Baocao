@@ -15,17 +15,20 @@ class GoatController extends Controller
         //         ->first();
 
         $goat = DB::select("
-            SELECT goats.*, breeds.breed_name 
+            SELECT goats.*, breeds.breed_name, farms.farm_name,farms.location,goat_weighs.weight
             FROM goats 
             JOIN breeds ON goats.breed_id = breeds.breed_id 
+            JOIN farms ON goats.farm_id = farms.farm_id
+            JOIN goat_weighs ON goats.goat_id = goat_weighs.goat_id
             WHERE goats.goat_id = ?", 
             [$id]
         );
+      
     
         if (!$goat) {
             abort(404);
         }
-
+        
         $goatWeights = DB::select("
             SELECT *
             FROM goat_weighs
@@ -40,21 +43,25 @@ class GoatController extends Controller
         // Lấy danh sách từ bảng 'goats'
         // $goats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
         $goats = DB::table('goats')
-               ->join('farms', 'goats.farm_id', '=', 'farms.farm_id')
-               ->select('goats.*', 'farms.farm_name') // Including farm name in the list of goats
-               ->get();
+            ->join('farms', 'goats.farm_id', '=', 'farms.farm_id')
+            ->join('breeds', 'goats.breed_id', '=', 'breeds.breed_id')
+            ->select('goats.*', 'farms.farm_name', 'breeds.breed_name') // Lấy farm_name và breed_name
+            ->get();
+               
         // Truyền dữ liệu vào view
         return view('goats.listgoat', ['goats' => $goats]);
     }
 
     public function addGoat(Request $request)
     {
-        // $request->validate([
-        //     'goat_name' => 'required|string|max:255',
-        //     'goat_age' => 'required|integer',
-        //     'origin' => 'required|string',
-        //     'farm_id' => 'required|integer',  // Ensure farm_id is included in the form
-        // ]);
+        // Validate incoming request data
+        $request->validate([
+            'goat_name' => 'required|string|max:255', // Goat name is required and should be a string
+            'goat_age' => 'required|integer', // Goat age is required and should be an integer
+            'origin' => 'required|string', // Origin is required and should be a string
+            'farm_id' => 'required|integer|exists:farms,farm_id',  // Farm ID is required, should be an integer, and must exist in the 'farms' table
+            'breed_id' => 'required|integer|exists:breeds,breed_id', // Breed ID is required, should be an integer, and must exist in the 'breeds' table
+        ]);
     
         // Debugging: Check all request data
         // dd($request->all()); // This will show all request data and stop the script
@@ -63,6 +70,7 @@ class GoatController extends Controller
         $goat_age = $request->input('goat_age');
         $origin = $request->input('origin');
         $farm_id = $request->input('farm_id'); 
+        $breed_id = $request->input('breed_id'); 
 
         // Insert to database
      
@@ -74,6 +82,7 @@ class GoatController extends Controller
             'goat_age' => $goat_age,
             'origin' => $origin,
             'farm_id' => $farm_id,
+            'breed_id' => $breed_id,
             ]);
 
         $farms = DB::table('goats')->get();

@@ -49,7 +49,7 @@
         </tbody>   
     </table>
 </div>
-
+<h2>New Farm</h2>
             @foreach($farms as $farm)
             <div class="modal fade" id="udpModal{{$farm->farm_id}}" tabindex="-1">
                 <div class="modal-dialog modal-small">
