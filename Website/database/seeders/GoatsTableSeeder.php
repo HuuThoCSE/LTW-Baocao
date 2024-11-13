@@ -42,7 +42,7 @@ class GoatsTableSeeder extends Seeder
                 'goat_id' => 4,
                 'goat_name' => 'Bitelly',
                 'goat_age' => 1,
-                'farm_id' => 1,
+                'farm_id' => 2,
                 'breed_id' => 2,
                 'origin' => 'born_on_farm' // Dê này sinh tại nông trại
             ],
@@ -50,7 +50,7 @@ class GoatsTableSeeder extends Seeder
                 'goat_id' => 5,
                 'goat_name' => 'Celly',
                 'goat_age' => 1,
-                'farm_id' => 1,
+                'farm_id' => 3,
                 'breed_id' => 5,
                 'origin' => 'imported' // Dê này là dê được nhập
             ],
