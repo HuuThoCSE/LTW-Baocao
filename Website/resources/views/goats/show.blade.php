@@ -27,10 +27,12 @@ Bảng điều khiển
     <p><strong>Trang trại:</strong> {{ $goat->farm_name }}</p>
     <p><strong>Khu vực:</strong> {{ $goat->location }}</p>
     <p><strong>Cân nặng hiện tại:</strong> {{ $goat->weight }} kg</p>
-    <img src="{{ asset('img/news-' . $goat->goat_id . '.jpg') }}" alt="{{ $goat->goat_name }}" class="img-fluid"  
-    style="width: 300px; height: 200px; border-radius: 10px; border: 2px solid #000; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);" />
-    
-
+    <img src="{{ asset('resources\img/news-' . $goat->goat_id . '.jpg') }}" 
+     alt="{{ $goat->goat_name }}" 
+     class="img-fluid"  
+     style="width: 300px; height: 200px; border-radius: 10px; border: 2px solid #000; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);" 
+     onerror="this.onerror=null;this.src='{{ asset('img/default-goat.jpg') }}';" />
+   
 
 
 </div>

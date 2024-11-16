@@ -17,9 +17,9 @@
 
 <!-- Table displaying list of farms -->
 <div class="table-responsive">
-    <table class="table table-bordered">
-        <thead>
-            <tr align='center'>
+    <table class="table table-bordered" style="border-radius: 10px; overflow: hidden">
+        <thead >
+            <tr align='center' >
                 <th>ID</th>
                 <th>Name</th>
                 <th>Location</th>
@@ -34,22 +34,33 @@
                     <td>{{ $farm->farm_name }}</td>
                     <td>{{ $farm->location }}</td>
                     <td>{{ $farm->owner_id }}</td>
-                    <td align='center'>
+                    <td text-align='center'>
                         <form action="{{ route('listfarm.del', $farm->farm_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
+                            <button type="submit" onclick=" return confirm('Are you sure you want to delete this item?');" class="btn btn-danger d-flex align-items-center">
+                                Delete
+                                <div class="icon" style="margin-left: 10px;">
+                                    <i class="ri-delete-bin-5-line"></i>
+                                </div>
+                            </button>
                         </form>
                     </td>
                     <td align='center'>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal{{$farm->farm_id}}" >Update</button>
+                        <button class="btn btn-success d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$farm->farm_id}}" >
+                        Update               
+                            <div class="icon" style="margin-left: 10px;">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </div>
+                        </button>
                     </td>
                 </tr>     
             @endforeach
         </tbody>   
     </table>
 </div>
-<h2>New Farm</h2>
+<h2><br>New Farm...</h2>
+
             @foreach($farms as $farm)
             <div class="modal fade" id="udpModal{{$farm->farm_id}}" tabindex="-1">
                 <div class="modal-dialog modal-small">
@@ -68,15 +79,13 @@
                                     <input type="text" name="farm_name" class="form-control" value="{{$farm->farm_name}}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="location" class="col-form-label">Location:</label>
-                                    <select name="location" class="form-control"  >
-                                        <option value="Area" {{ $farm->location == 'Area' ? 'selected' : '' }}>Select Area</option>
-                                        <option value="Area A" {{ $farm->location == 'Area A' ? 'selected' : '' }}>Area A</option>
-                                        <option value="Area B" {{ $farm->location == 'Area B' ? 'selected' : '' }}>Area B</option>
-                                        <option value="Area C" {{ $farm->location == 'Area C' ? 'selected' : '' }}>Area C</option>
-                                        <option value="Area D" {{ $farm->location == 'Area D' ? 'selected' : '' }}>Area D</option>
-                
-                                    </select>
+                                    <label for="Province" class="col-form-label">Location:</label>
+                                        <select name="Province" class="form-control">
+                                            <option value="Province" {{ $farm->location == 'Province' ? 'selected' : '' }}>Select Province</option>
+                                            <option value="Vinh Long Province" {{ $farm->location == 'Vinh Long Province' ? 'selected' : '' }}>Vinh Long Province</option>
+                                            <option value="Tien Giang Province" {{ $farm->location == 'Tien Giang Province' ? 'selected' : '' }}>Tien Giang Province</option>
+                                            <option value="Ben Tre Province" {{ $farm->location == 'Ben Tre Province' ? 'selected' : '' }}>Ben Tre Province</option>
+                                        </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="owner_id" class="col-form-label">Owner:</label>
@@ -112,11 +121,11 @@
             </td>
             <td>
                 <select name="location" class="form-control">
-                    <option value="Area">Select Area</option>
-                    <option value="Area A">Area A</option>
-                    <option value="Area B">Area B</option>
-                    <option value="Area C">Area C</option>
-                    <option value="Area D">Area D</option>
+                    <option value="Province">Select Province</option>
+                    <option value="Vinh Long Province">Vinh Long Province</option>
+                    <option value="Tien Giang Province">Tien Giang Province</option>
+                    <option value="Ben Tre Province">Ben Tre Province</option>
+                    
                 </select>
                 @error('location')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -130,7 +139,12 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="Add farm" class="btn btn-primary">
+  
+    <button type="submit" class="btn btn-primary d-flex align-items-center">
+        Add Farm
+        <i class="bi bi-clipboard-plus ms-2"></i> <!-- Biểu tượng nằm sau -->
+    </button>
+  
 </form>
 
 @if (session('success'))
