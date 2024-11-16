@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     #Food Management
     Route::get('/food', [FoodController::class, 'getView'])->name('food');
     Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
+    Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
 
     #Device Management
     Route::get('/devices', [DeviceController::class, 'getView'])->name('device.list');
