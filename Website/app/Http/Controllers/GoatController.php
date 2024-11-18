@@ -76,18 +76,24 @@ class GoatController extends Controller
      
         
 
-        // Insert the new goat into the database
-        DB::table('goats')->insert([
-            'goat_name' => $goat_name,
-            'goat_age' => $goat_age,
-            'origin' => $origin,
-            'farm_id' => $farm_id,
-            'breed_id' => $breed_id,
+        try {
+            // Insert the new goat into the database
+            DB::table('goats')->insert([
+                'goat_name' => $goat_name,
+                'goat_age' => $goat_age,
+                'origin' => $origin,
+                'farm_id' => $farm_id,
+                'breed_id' => $breed_id,
             ]);
+    
+            // Thêm thông báo thành công
+            return redirect()->route('goats.list')->with('success', 'Goat added successfully');
+        } catch (\Exception $e) {
+            // Thêm thông báo lỗi
+            return redirect()->route('goats.list')->with('error', 'Failed to add goat. Please try again.');
+        }
 
-        $farms = DB::table('goats')->get();
-        // return view('goat.listgoat',['goats' => $goats]);
-        return redirect()->route('goats.list')->with('success', 'Goat added successfully');
+
     }
 
     

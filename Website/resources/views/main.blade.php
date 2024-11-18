@@ -347,7 +347,7 @@
           </li>
           <li>
             <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
+              <i class="bi bi-circle"></i><span>List Area</span>
             </a>
           </li>
         </ul>
