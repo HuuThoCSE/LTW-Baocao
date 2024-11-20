@@ -17,8 +17,9 @@
 
   @include('links')
   @yield('account_style')
+  @yield('dashboard_style')
   @vite('resources/js/app.js')
-</head>
+  @yield('dashboard_script')
 
 <body>
 

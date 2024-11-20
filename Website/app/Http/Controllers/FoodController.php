@@ -48,4 +48,24 @@ class FoodController extends Controller
             return redirect()->back()->with('error', 'Food not found.');
         }
     }
+    public function udpFood(Request $request, $id)
+    {
+        // Update medicaion
+        $food_code = $request->input('farm_code');
+        $food_name_vn = $request->input('food_name_vn');
+        $food_name_el = $request->input('food_name_el');
+        $expiry_date = $request->input('expiry_date');
+
+        DB::table('foods')->where('id', $id)->update([
+            'food_code'=>$food_code ,
+            'food_name_vn'=>$food_name_vn,
+            'food_name_el'=>$food_name_el,
+            'expiry_date'=>$expiry_date]);
+
+        $farms = DB::table('foods')->get();
+        // return view('farm/dashboard',['farms' => $farms]);
+        return redirect()->route('food')->with('success', 'Food updated successfully.');
+    }
+    
 }
+
