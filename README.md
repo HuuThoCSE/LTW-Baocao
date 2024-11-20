@@ -4,7 +4,7 @@
 Tuần 13 báo cáo (2-7/13/2024)
 
 # INFO BASIC
-- Php version: 8.3.12
+- PHP version: 8.3.12
 
 ### HƯỚNG DẪN SỬ DỤNG LARAVEL
 #### 1. Cấu hình Laravel
