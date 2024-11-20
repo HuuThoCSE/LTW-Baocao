@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     #Food Management
     Route::get('/food', [FoodController::class, 'getView'])->name('food');
     Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
+    Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
 
     #Device Management
     Route::get('/devices', [DeviceController::class, 'getView'])->name('device.list');
@@ -72,4 +73,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
     Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
     Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
+
+    Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 });

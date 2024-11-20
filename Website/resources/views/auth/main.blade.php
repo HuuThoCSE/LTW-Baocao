@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập</title>
     @yield('link')
+    
 </head>
 <body>
 @yield('contents')
+
 </body>
 </html>
