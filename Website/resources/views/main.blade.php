@@ -334,7 +334,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-farm" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i>
-            <span>Farm</span>
+            <span>Location</span>
             <i class="bi bi-chevron-down ms-auto">
           </i>
         </a>
@@ -346,8 +346,18 @@
             </a>
           </li>
           <li>
-            <a href="components-accordion.html">
+            <a href="/areas">
               <i class="bi bi-circle"></i><span>List Area</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-accordion.html">
+              <i class="bi bi-circle"></i><span>List Zone</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-accordion.html">
+              <i class="bi bi-circle"></i><span>List Barn</span>
             </a>
           </li>
         </ul>

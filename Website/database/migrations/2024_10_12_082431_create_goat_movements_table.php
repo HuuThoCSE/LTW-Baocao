@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
         
             // Khóa ngoại
-            $table->foreign('goat_id')->references('goat_id')->on('goats')->onDelete('cascade');
+            $table->foreign('goat_id')->references('goat_id')->on('goats')->onDelete('cascade ');
             $table->foreign('farm_id')->references('farm_id')->on('farms')->onDelete('cascade');
         });
     }

@@ -74,5 +74,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
     Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
 
+    # List_Area Management
+    Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
+    Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
+    Route::delete('/areas/{areas_id}', [AreaController::class, 'delArea'])->name('listarea.del');
+    Route::put('/areas/{areas_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
     Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 });
