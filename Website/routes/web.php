@@ -73,4 +73,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
     Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
     Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
+
+    Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 });

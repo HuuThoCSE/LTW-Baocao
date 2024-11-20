@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
+        "chart.js": "^4.4.6",
         "web3": "^4.15.0"
     }
 }
