@@ -99,58 +99,49 @@ class GoatController extends Controller
     
     public function delGoat($goat_id)
     {
-        // Find the medication by ID and delete it
-        $goat = DB::table('goats')->where('goat_id', $goat_id);
         
-        if ($goat->exists()) {
-            $goat->delete();
-            return redirect()->back()->with('success', 'Farm deleted successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Farm not found.');
-        }
+    // Find the goat by its ID
+    $goat = DB::table('goats')->where('goat_id', $goat_id)->first();
+    
+    if ($goat) {
+        // Delete the goat if found
+        DB::table('goats')->where('goat_id', $goat_id)->delete();
+        return redirect()->back()->with('success', 'Goat deleted successfully.');
+    } else {
+        // If the goat doesn't exist, return an error
+        return redirect()->back()->with('error', 'Goat not found.');
+    }
+
+        
     }
     public function udpGoat(Request $request, $goat_id)
     {
-        // Update medicaion
+        // Lấy dữ liệu từ request
         $goat_name = $request->input('goat_name');
-        $location = $request->input('location');
-        $owner_id = $request->input('owner_id');
+        $goat_age = $request->input('goat_age');
+        $origin = $request->input('origin');
+        $farm_id = $request->input('farm_id'); // Lấy farm_id từ form
+        $breed_id = $request->input('breed_id'); 
 
-        DB::table('farms')->where('farm_id', $farm_id)->update([
-            'farm_name'=>$farm_name ,
-            'goat_age'=>$goat_age,
-            'origin'=>$origin]);
-
+        // Kiểm tra farm_id có tồn tại không
+        if (!$farm_id) {
+            return redirect()->back()->with('error', 'Farm ID is missing.');
+        }
+    
+        // Cập nhật bảng farms
+         // Cập nhật thông tin cho con dê
+        $updated = DB::table('goats')->where('goat_id', $goat_id)->update([
+            'goat_name' => $goat_name,
+            'goat_age' => $goat_age,
+            'origin' => $origin,
+            'farm_id' => $farm_id, // Cập nhật farm_id cho con dê
+            'breed_id' => $breed_id, // Cập nhật breed_id nếu cần
+        ]);
+    
+        // Truy xuất lại danh sách
         $farms = DB::table('goats')->get();
-        // return view('farm/dashboard',['farms' => $farms]);
-        return redirect()->route('goats')->with('success', 'Farm updated successfully.');
+    
+        // Chuyển hướng về trang danh sách với thông báo thành công
+        return redirect()->route('goats.list')->with('success', 'Farm updated successfully.');
     }
-    // public function createGoatForm()
-    // {
-    //     // Fetch farms from the database
-    //     $farms = DB::table('farms')->get();
-    // dd($farms);
-    //     // Pass the farms list to the view
-    //     return view('goats.add', ['farms' => $farms]);
-    // }
-    // public function edit($goat_id)
-    // {
-    //     $goat = DB::table('goats')->where('goat_id', $goat_id)->first();
-    //     $farms = DB::table('farms')->get();
-        
-    //     return view('goats.edit', ['goat' => $goat, 'farms' => $farms]);
-    // }
-    // public function index()
-    // {
-    //     // Fetch all farms
-    //     $farms = DB::table('farms')->get();
-
-    //     // Fetch goats and pass both goats and farms to the view
-    //     $goats = DB::table('goats')
-    //             ->join('farms', 'goats.farm_id', '=', 'farms.farm_id')
-    //             ->select('goats.*', 'farms.farm_name')
-    //             ->get();
-
-    //     return view('goats.list', ['goats' => $goats, 'farms' => $farms]);
-    // }
 }

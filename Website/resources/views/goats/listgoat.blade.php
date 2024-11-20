@@ -43,13 +43,14 @@ Danh sách dê
                         </form>
                 </td>
                 <td align='center'>
-                        <button class="btn btn-success d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal" onclick="event.stopPropagation();">
-                            Update
-                            <div class="icon" style="margin-left: 10px;">
-                                <i class="bi bi-arrow-clockwise"></i>
-                            </div>
-                        </button>
+                    <button class="btn btn-success d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{ $goat->goat_id }}" onclick="event.stopPropagation();">
+                        Update
+                        <div class="icon" style="margin-left: 10px;">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </div>
+                    </button>
                 </td>
+
             </tr>
         @endforeach
        
@@ -95,9 +96,9 @@ Danh sách dê
                 <td>
                     <select name="farm_id" class="form-control">
                         <option value="Area">Select Area</option>
-                        <option value="1">Area A</option>
-                        <option value="2">Area B</option>
-                        <option value="3">Area C</option>
+                        <option value="1">Vinh Long Goat Farm</option>
+                        <option value="2">Tien Giang Goat Farm</option>
+                        <option value="3">Ben Tre Goat Farm</option>
                     </select>
                     @error('farm_id')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -144,44 +145,76 @@ Danh sách dê
 
 
 <!-- Madol Update -->
-<div class="modal fade" id="udpModal" tabindex="-1">
-    <div class="modal-dialog modal-small">
-    <div class="modal-content">
-    <form id="updateForm{{$goat->goat_id}}" method="POST" action="{{ route('goats.udp', ['goat_id' => $goat->goat_id] )}}">
-        <div class="modal-header">
-          <h5 class="modal-title">Update Goat</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+@foreach($goats as $goat)
+    <div class="modal fade" id="udpModal{{ $goat->goat_id }}" tabindex="-1">
+        <div class="modal-dialog modal-small">
+            <div class="modal-content">
+                <form id="updateForm{{ $goat->goat_id }}" method="POST" action="{{ route('goats.udp', ['goat_id' => $goat->goat_id]) }}">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Goat</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-        <div class="modal-body">
-            <form id="updateForm" >
-                    <div class="form-group">
-                        <label for="goat_name" class="col-form-label">Name:</label>
-                        <input type="text" name="goat_name" class="form-control" placeholder="Goat Name">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="goat_name{{ $goat->goat_id }}" class="col-form-label">Name:</label>
+                            <input type="text" id="goat_name{{ $goat->goat_id }}" name="goat_name" value="{{ $goat->goat_name }}" class="form-control" placeholder="Goat Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="goat_age{{ $goat->goat_id }}" class="col-form-label">Age:</label>
+                            <input type="text" id="goat_age{{ $goat->goat_id }}" name="goat_age" value="{{ $goat->goat_age }}" class="form-control" placeholder="Goat Age">
+                        </div>
+                        <div class="form-group">
+                            <label for="origin{{ $goat->goat_id }}" class="col-form-label">Origin:</label>
+                            <select id="origin{{ $goat->goat_id }}" name="origin" class="form-control">
+                                <option value="imported" {{ $goat->origin == 'imported' ? 'selected' : '' }}>Imported</option>
+                                <option value="born_on_farm" {{ $goat->origin == 'born_on_farm' ? 'selected' : '' }}>Born on farm</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="farm_id{{ $goat->goat_id }}" class="col-form-label">Location:</label>
+                            <select id="farm_id{{ $goat->goat_id }}" name="farm_id" class="form-control">
+                                <option value="1" {{ $goat->farm_id == 1 ? 'selected' : '' }}>Vinh Long Goat Farm</option>
+                                <option value="2" {{ $goat->farm_id == 2 ? 'selected' : '' }}>Tien Giang Goat Farm</option>
+                                <option value="3" {{ $goat->farm_id == 3 ? 'selected' : '' }}>Ben Tre Goat Farm</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="breed_id{{ $goat->goat_id }}" class="col-form-label">Breed:</label>
+                            <select id="breed_id{{ $goat->goat_id }}" name="breed_id" class="form-control">
+                                <option value="1" {{ $goat->breed_id == 1 ? 'selected' : '' }}>Saanen</option>
+                                <option value="2" {{ $goat->breed_id == 2 ? 'selected' : '' }}>Boer</option>
+                                <option value="3" {{ $goat->breed_id == 3 ? 'selected' : '' }}>Nubian</option>
+                                <option value="4" {{ $goat->breed_id == 4 ? 'selected' : '' }}>Alpine</option>
+                                <option value="5" {{ $goat->breed_id == 5 ? 'selected' : '' }}>Anglo-Nubian</option>
+                                <option value="6" {{ $goat->breed_id == 6 ? 'selected' : '' }}>LaMancha</option>
+                                <option value="7" {{ $goat->breed_id == 7 ? 'selected' : '' }}>Bách Thảo</option>
+                                <option value="8" {{ $goat->breed_id == 8 ? 'selected' : '' }}>Cỏ</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="goat_age" class="col-form-label">Age:</label>
-                        <td><input type="text" name="goat_age" class="form-control" placeholder="Goat Age"></td>
-                    </div>
-                    <div class="form-group">
-                        <label for="origin" class="col-form-label">Origin:</label>
-                        <select name="origin" class="form-control">
-                            <option value="origin">Select Origin</option>
-                            <option value="imported">imported</option>
-                            <option value="born_on_farm">born_on_farm</option>
-                        </select>
-                    </div>
-            </form>
-        </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
-    </form>
     </div>
-</div><!-- End Basic Modal-->
+@endforeach
+<!-- End Basic Modal-->
 
+<script>
+    function fillUpdateForm(id, name, age, origin, farm_id, breed_id) {
+        document.getElementById(`goat_name${id}`).value = name;
+        document.getElementById(`goat_age${id}`).value = age;
+        document.getElementById(`origin${id}`).value = origin;
+        document.getElementById(`farm_id${id}`).value = farm_id;
+        document.getElementById(`breed_id${id}`).value = breed_id;
+    }
+</script>
 
 @endsection
