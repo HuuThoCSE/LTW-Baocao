@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoatController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\AreaController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -77,7 +78,12 @@ Route::middleware(['auth'])->group(function () {
     # List_Area Management
     Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
+<<<<<<< Updated upstream
     Route::delete('/areas/{areas_id}', [AreaController::class, 'delArea'])->name('listarea.del');
     Route::put('/areas/{areas_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
     Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+=======
+    Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
+    Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+>>>>>>> Stashed changes
 });

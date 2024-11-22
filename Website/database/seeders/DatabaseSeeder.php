@@ -43,5 +43,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeDevicesTableSeeder::class);
 
         $this->call(DevicesTableSeeder::class);
+
+        $this->call(AreasTableSeeder::class);
+
+
     }
 }
