@@ -101,3 +101,11 @@ php artisan make:seeder GoatTableSeeder
 php artisan migrate:fresh --seed
 ```
 
+# Khởi động cùng expose
+```
+php artisan serve --host=127.0.0.1 --port=8000
+```
+
+```
+expose share http://127.0.0.1:8000 --subdomain=goatfarm
+```
