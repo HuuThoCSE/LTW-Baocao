@@ -10,32 +10,34 @@ Bảng điều khiển
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('dashboard') }}">List of Goat</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('home') }}">List of Goat</a></li>
         </ol>
     </nav>
 </div>
 
-<h1 style="text-align: center;">Thông tin chi tiết của dê: {{ $goat->goat_name }}</h1>
+<div class="card">
+    <div class="card-header">
+        <h1 style="text-align: center;">Thông tin chi tiết của dê: {{ $goat->goat_name }}</h1>
+    </div>
 
-
-
-<div class="card mb-3">
-    <p><strong>Tên:</strong> {{ $goat->goat_name }}</p>
-    <p><strong>Tuổi:</strong> {{ $goat->goat_age }} năm</p>
-    <p><strong>Giống:</strong> {{ $goat->breed_name }}</p>
-    <p><strong>Nguồn gốc:</strong> {{ $goat->origin }}</p>
-    <p><strong>Trang trại:</strong> {{ $goat->farm_name }}</p>
-    <p><strong>Khu vực:</strong> {{ $goat->location }}</p>
-    <p><strong>Cân nặng hiện tại:</strong> {{ $goat->weight }} kg</p>
-    <img src="{{ asset('resources\img/news-' . $goat->goat_id . '.jpg') }}" 
-     alt="{{ $goat->goat_name }}" 
-     class="img-fluid"  
-     style="width: 300px; height: 200px; border-radius: 10px; border: 2px solid #000; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);" 
-     onerror="this.onerror=null;this.src='{{ asset('img/default-goat.jpg') }}';" />
+    <div class="card-body">
+        <p><strong>Tên:</strong> {{ $goat->goat_name }}</p>
+        <p><strong>Tuổi:</strong> {{ $goat->goat_age }} năm</p>
+        <p><strong>Giống:</strong> {{ $goat->breed_name }}</p>
+        <p><strong>Nguồn gốc:</strong> {{ $goat->origin }}</p>
+        <p><strong>Trang trại:</strong> {{ $goat->farm_name }}</p>
+        <p><strong>Khu vực:</strong> {{ $goat->location }}</p>
+        <p><strong>Cân nặng hiện tại:</strong> {{ $goat->weight }} kg</p>
+            <!-- <img src="{{ asset('resources\img/news-' . $goat->goat_id . '.jpg') }}" 
+            alt="{{ $goat->goat_name }}" 
+            class="img-fluid"  
+            style="width: 300px; height: 200px; border-radius: 10px; border: 2px solid #000; box-shadow: 5px 5px 15px rgba(0,0,0,0.3);" 
+            onerror="this.onerror=null;this.src='{{ asset('img/default-goat.jpg') }}';" /> -->
+    </div>
+</div>
    
 
 
-</div>
 
 <div>
     <div class="card">

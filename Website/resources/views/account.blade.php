@@ -58,7 +58,13 @@ Quản lý tài khoản
         </ol>
     </nav>
 </div><!-- End Page Title -->
-<h1>Danh Sách Tài Khoản</h1>
+    
+<div class="card">
+    <div class="card-header">
+        <h1>Danh sách tài khoản</h1>
+    </div>
+
+    <div class="card-body">
     <table border="1">
         <thead>
             <tr>
@@ -90,6 +96,8 @@ Quản lý tài khoản
             @endforeach
         </tbody>
     </table>
+    </div>
+</div>
 
 
 @endsection
