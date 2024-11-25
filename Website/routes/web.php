@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoatController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\AreaController;
 use App\Http\Controllers\APIController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
