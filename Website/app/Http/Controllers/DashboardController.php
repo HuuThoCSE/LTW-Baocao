@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Goat; // Model đại diện cho bảng goat
-use DB;
+use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function getView()

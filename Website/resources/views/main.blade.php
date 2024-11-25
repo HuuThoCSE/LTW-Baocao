@@ -403,12 +403,13 @@
     </li>
 
     </ul>
-    <li class="nav-item">
-    <a href="{{ route('login') }}">
-        <i></i>
-        <span>Login</span>
-    </a>
-</li>
+    
+    <!-- <li class="nav-item">
+      <a href="{{ route('login') }}">
+          <i></i>
+          <span>Login</span>
+      </a>
+    </li> -->
 
   </aside>
   <!-- End Sidebar-->

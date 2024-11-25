@@ -12,6 +12,7 @@ use App\Http\Controllers\GoatController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\APIController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,19 +21,17 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/goats/{id}', [GoatController::class, 'show'])->name('goats.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class, 'getView'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'getView'])->name('home');
 
     Route::get('/admin', [AdminController::class, 'getView'])->name('admin.view');
     Route::post('/admin', [AdminController::class, 'addUser'])->name('user.add');
+    Route::get('/account', [AccountController::class, 'getView'])->name('account');
     Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    
-    Route::get('/account', [AccountController::class, 'getView'])->name('account');
 
     Route::get('/admin', [AdminController::class, 'getView'])->name('Admin');
     Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
     Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
-
 
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
@@ -78,12 +77,11 @@ Route::middleware(['auth'])->group(function () {
     # List_Area Management
     Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
-<<<<<<< Updated upstream
     Route::delete('/areas/{areas_id}', [AreaController::class, 'delArea'])->name('listarea.del');
     Route::put('/areas/{areas_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
     Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
-=======
-    Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
-    Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
->>>>>>> Stashed changes
 });
+
+# API
+// Route::get('/api/farm1/zone1/barn1/sensor/humidity', [APIController::class, 'getView'])->name('api.humidity');
+Route::get('/api/sensor', [APIController::class, 'addHumidity'])->name('api.addHumidity');
