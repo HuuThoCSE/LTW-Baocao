@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
+    
     public function getView()
     {
         $users = DB::table('users')->get();

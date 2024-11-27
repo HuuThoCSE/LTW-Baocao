@@ -8,15 +8,12 @@ use App\Http\Controllers\ListFarmController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\GoatController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\APIController;
 use App\Http\Middleware\CheckAdministratorRole;
-=======
->>>>>>> Stashed changes
 
 Route::middleware([CheckAdministratorRole::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
@@ -45,10 +42,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     # Medication Management
     Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
     Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
@@ -66,7 +59,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
     Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
 
-<<<<<<< Updated upstream
     #Device Management
     Route::get('/devices', [DeviceController::class, 'getView'])->name('device.list');
     Route::get('/devices/{id}', [DeviceController::class, 'detailDevice'])->name('device.detail');
@@ -100,11 +92,9 @@ Route::middleware(['auth'])->group(function () {
 # API
 // Route::get('/api/farm1/zone1/barn1/sensor/humidity', [APIController::class, 'getView'])->name('api.humidity');
 Route::get('/api/sensor', [APIController::class, 'addHumidity'])->name('api.addHumidity');
-=======
     Route::get('/admin', [AdminController::class, 'getView'])->name('admin');
     Route::post('/admin', [AdminController::class, 'addUser'])->name('User_add');
     Route::post('/goats', [GoatController::class, 'addGoat'])->name('listgoat.add');
-});
 
 Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
 Route::get('/account', [AccountController::class, 'getView'])->name('account');
@@ -135,5 +125,3 @@ Route::put('/farms/{farm_id}', [ListFarmController::class, 'putFarm'])->name('li
 Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('listgoat.del');
 Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('listgoat.put');
 
-
->>>>>>> Stashed changes
