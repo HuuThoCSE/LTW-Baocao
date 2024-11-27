@@ -27,7 +27,7 @@
         </thead>
         <tbody>
             @foreach($devices as $device)
-                <tr align='center'>
+                <tr align='center' onclick="window.location='{{ route('device.detail', ['id' => $device->device_id]) }}'">
                     <td>{{ $device->device_id }}</td>
                     <td>{{ $device->device_name }}</td>
                     <td align='center'>
