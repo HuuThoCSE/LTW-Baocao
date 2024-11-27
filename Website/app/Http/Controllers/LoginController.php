@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -24,22 +25,34 @@ class LoginController extends Controller
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->password)) {
+
             // Mật khẩu đúng, lấy quyền từ bảng roles thông qua role_id của user
             $role = DB::table('roles')->where('id', $user->role_id)->first();
+
+            // Lưu farm_id và role_id (farm_perm) vào session
+            Session::put('farm_id', $user->farm_id);
 
             if ($role) {
                 // Kiểm tra quyền của người dùng
                 switch ($role->name) { // Dùng 'name' trong bảng roles để phân biệt quyền
                     case 'admin':
+                        Session::put('account_perm', 'admin');
                         // Quản trị viên
                         return view('admin.dashboard')->with('layout', 'main-admin');
-                    case 'moderator':
+                    case 'owner':
+                        Session::put('account_perm', 'owner');
                         // Admin
                         return view('admin.dashboard')->with('layout', 'main');
+                    case 'it':
+                        Session::put('account_perm', 'it');
+                        // IT
+                        return redirect()->route('home');
                     case 'farmer':
+                        Session::put('account_perm', 'farmer');
                         // Nông dân
                         return redirect()->route('home');
                     case 'customer':
+                        Session::put('account_perm', 'customer');
                         // Khách hàng
                         return redirect()->route('home');
                     default:
@@ -47,7 +60,6 @@ class LoginController extends Controller
                             'username' => 'Không có quyền truy cập.',
                         ]);
                 }
-                
             } else {
                 return back()->withErrors([
                     'username' => 'Tài khoản không có quyền.',
