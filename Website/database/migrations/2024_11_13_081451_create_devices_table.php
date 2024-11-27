@@ -17,7 +17,7 @@ return new class extends Migration
                   ->constrained('device_types', 'device_type_id') // Chỉ định bảng và cột khóa chính cụ thể
                   ->onDelete('cascade');
             $table->string('device_name', 50);
-            $table->string('device_token');
+            $table->string('device_token')->nullable();
             $table->string('status', 20)
                     ->default('Active');
             $table->foreignId('farm_id')
