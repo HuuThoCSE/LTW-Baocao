@@ -13,7 +13,12 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\APIController;
+use App\Http\Middleware\CheckAdministratorRole;
 
+Route::middleware([CheckAdministratorRole::class])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index']);
+    // Các route khác dành cho admin
+});
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -24,9 +29,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'getView'])->name('home');
 
     Route::get('/admin', [AdminController::class, 'getView'])->name('admin.view');
-    Route::post('/admin', [AdminController::class, 'addUser'])->name('user.add');
+    Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
+    Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
     Route::get('/account', [AccountController::class, 'getView'])->name('account');
     Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
+    Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
     Route::get('/admin', [AdminController::class, 'getView'])->name('Admin');

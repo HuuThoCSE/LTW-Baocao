@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@test.vn',
             'password'=> bcrypt('123456'),
             'farm_id' => 1,
+            'role_id' => 1,
         ]);
 
         $this->call(ZoneSeeder::class);
