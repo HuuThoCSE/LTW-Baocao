@@ -23,6 +23,8 @@ class LoginController extends Controller
         // Truy vấn cơ sở dữ liệu để lấy user theo email
         $user = DB::table('users')->where('email', $username)->first();
 
+        dd($user);
+
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->password)) {
 
