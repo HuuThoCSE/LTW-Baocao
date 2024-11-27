@@ -24,27 +24,22 @@ class LoginController extends Controller
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->password)) {
-            // Mật khẩu đúng, lấy quyền từ bảng roles
-            $role = DB::table('roles')->where('user_id', $user->id)->first();
-
-            $farm_id = $user->farm_id;
-            session(['encrypted_farm_id' => encrypt($farm_id)]);
-
-            // $farm_id = decrypt(session('encrypted_farm_id'));
+            // Mật khẩu đúng, lấy quyền từ bảng roles thông qua role_id của user
+            $role = DB::table('roles')->where('id', $user->role_id)->first();
 
             if ($role) {
                 // Kiểm tra quyền của người dùng
-                switch ($role->role) {
-                    case 0:
+                switch ($role->name) { // Dùng 'name' trong bảng roles để phân biệt quyền
+                    case 'admin':
                         // Quản trị viên
-                        return redirect()->route('home');
-                    case 1:
+                        return view('admin.dashboard')->with('layout', 'main-admin');
+                    case 'moderator':
                         // Admin
-                        return redirect()->route('home');
-                    case 2:
+                        return view('admin.dashboard')->with('layout', 'main');
+                    case 'farmer':
                         // Nông dân
                         return redirect()->route('home');
-                    case 3:
+                    case 'customer':
                         // Khách hàng
                         return redirect()->route('home');
                     default:
@@ -70,13 +65,11 @@ class LoginController extends Controller
     public function index(Request $request)
     {
         $user = $request->user(); // Lấy thông tin người dùng đã đăng nhập
-        $role = DB::table('roles')->where('user_id', $user->id)->first();
+        $role = DB::table('roles')->where('id', $user->role_id)->first();
 
         return view('home', [
-            'role' => $role ? $role->role : null,
+            'role' => $role ? $role->name : null,  // Lấy tên role thay vì id
             'userName' => $user->name, // Truyền tên người dùng vào view
         ]);
     }
-    
-
 }

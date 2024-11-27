@@ -18,6 +18,7 @@
   @include('links')
   @yield('account_style')
   @yield('dashboard_style')
+  @vite('resources/js/app.js')
   @yield('dashboard_script')
 
 <body>
@@ -262,68 +263,6 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Account</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-account" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/account">
-              <i class="bi bi-circle"></i><span>List Account</span>
-            </a>
-          </li>
-        </ul>
-    </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Device</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-device" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/devices">
-              <i class="bi bi-circle"></i><span>List Device</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-        </ul>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-goat" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Goat</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-goat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/goats">
-              <i class="bi bi-circle"></i><span>List Goat</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-farm" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i>
@@ -338,71 +277,15 @@
               <i class="bi bi-circle"></i><span>List Farm</span>
             </a>
           </li>
-          <li>
-            <a href="/areas">
-              <i class="bi bi-circle"></i><span>List Area</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>List Zone</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>List Barn</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Medication</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-medication" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/medication">
-              <i class="bi bi-circle"></i><span>List Medication</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Medication Report</span>
-            </a>
-          </li>
-        </ul>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Food</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/food">
-              <i class="bi bi-circle"></i><span>List Food</span>
-            </a>
-          </li>
-        </ul>
-    </li>
 
     </ul>
     
-      <!-- <li class="nav-item">
-        <a href="{{ route('login') }}">
-            <i></i>
-            <span>Login</span>
-        </a>
-      </li> -->
+    <!-- <li class="nav-item">
+      <a href="{{ route('login') }}">
+          <i></i>
+          <span>Login</span>
+      </a>
+    </li> -->
 
   </aside>
   <!-- End Sidebar-->
