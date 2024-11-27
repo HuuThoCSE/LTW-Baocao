@@ -17,13 +17,34 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FarmsTableSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'admin@test.vn',
-            'password'=> bcrypt('123456'),
-            'farm_id' => 1,
-            'role_id' => 1,
-        ]);
+        $users = [
+            [
+                'name' => 'Administrator',
+                'email' => 'admin@farm.vn',
+                'password' => bcrypt('123456'),
+                'farm_id' => 1,
+                'role_id' => 1,
+            ],
+            [
+                'name' => 'Owner Farm 1',
+                'email' => 'admin@farm1.vn',
+                'password' => bcrypt('123456'),
+                'farm_id' => 1,
+                'role_id' => 2,
+            ],
+            [
+                'name' => 'IT Farm 1',
+                'email' => 'it@farm1.vn',
+                'password' => bcrypt('123456'),
+                'farm_id' => 1,
+                'role_id' => 3,
+            ],
+        ];
+        
+        // Dùng lệnh Eloquent để thêm nhiều tài khoản cùng lúc
+        foreach ($users as $user) {
+            User::factory()->create($user);
+        }
 
         $this->call(ZoneSeeder::class);
 

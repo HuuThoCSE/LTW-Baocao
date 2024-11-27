@@ -27,4 +27,31 @@ class DeviceController extends Controller
         // dd($detailDevice);
         return view('device/show', ['detailDevice' => $detailDevice]);
     }
+
+    function addDevice(Request $request){
+        $device_name = $request->input('device_name');
+        $device_type = $request->input('device_type');
+        $farm_id = Session::get('farm_id');
+
+
+        // Tạo thiết bị
+        $device = Device::create([
+            'device_name' => $device_name,
+            'farm_id' => $farm_id,
+            'type_device_id' => 1,
+            'status' => 'Active',
+        ]);
+
+        // Kiểm tra xem thiết bị đã được thêm chưa
+        if ($device) {
+            return response()->json([
+                'message' => 'Thêm thiết bị thành công!',
+                'device' => $device,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Thêm thiết bị thất bại.',
+            ], 500);
+        }
+        }
 }
