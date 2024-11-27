@@ -22,7 +22,7 @@ Route::middleware([CheckAdministratorRole::class])->group(function () {
     // Các route khác dành cho admin
 });
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/goats/{id}', [GoatController::class, 'show'])->name('goats.show');
