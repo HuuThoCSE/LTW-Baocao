@@ -13,12 +13,9 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\APIController;
-<<<<<<< HEAD
 use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\BarnController;
-=======
 use App\Http\Middleware\CheckAdministratorRole;
->>>>>>> 025f8e4c9b6797c32ab1f54b93d338f0da167b27
 
 Route::middleware([CheckAdministratorRole::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
@@ -70,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/devices/{id}', [DeviceController::class, 'detailDevice'])->name('device.detail');
     Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
     Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('device.edit');
-    Route::put('/devices/{id}', [DeviceController::class, 'udpArea'])->name('device.upd');
+    Route::put('/devices/{id}', [DeviceController::class, 'udpDevice'])->name('device.upd');
     Route::put('/devices/{id}/maintenance', [DeviceController::class, 'delDevice'])->name('device.maintenance'); // Lịch sử và lịch trình bảo trì
     Route::put('/devices/{id}/status', [DeviceController::class, 'delDevice'])->name('device.putStatus');
     Route::delete('/devices/{id}/delete', [DeviceController::class, 'delDevice'])->name('device.del');

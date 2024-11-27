@@ -6,44 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Farm;
+use Illuminate\Support\Facades\Session;
+
 
 class GoatController extends Controller
 {
-    public function show($id)
-    {
-        // $goat = DB::table('goats')
-        //         ->where('goat_id', $id)
-        //         ->first();
-
-        $goat = DB::select("
-            SELECT goats.*, breeds.breed_name, farms.farm_name,farms.location,goat_weighs.weight
-            FROM goats 
-            JOIN breeds ON goats.breed_id = breeds.breed_id 
-            JOIN farms ON goats.farm_id = farms.farm_id
-            JOIN goat_weighs ON goats.goat_id = goat_weighs.goat_id
-            WHERE goats.goat_id = ?", 
-            [$id]
-        );
-        
-        
     
-        if (!$goat) {
-            abort(404);
-        }
-        
-        $goatWeights = DB::select("
-            SELECT *
-            FROM goat_weighs
-            WHERE goat_id = ?", 
-            [$id]
-        );
-
-        $farm = DB::table('farms')->where('location', $goat[0]->farm_id)->first();   
-        
-        return view('goats.show', ['goat' => $goat[0], 'goatWeights' => $goatWeights]);
-
-        
-    }
     public function getView()
     {
         // Lấy danh sách từ bảng 'goats'
@@ -53,7 +21,8 @@ class GoatController extends Controller
             ->join('breeds', 'goats.breed_id', '=', 'breeds.breed_id')
             ->select('goats.*', 'farms.farm_name', 'breeds.breed_name') // Lấy farm_name và breed_name
             ->get();
-               
+        
+            // dd(Session::get('farm_id')) ;
         // Truyền dữ liệu vào view
         return view('goats.listgoat', ['goats' => $goats]);
     }
@@ -68,6 +37,7 @@ class GoatController extends Controller
             'farm_id' => 'required|integer|exists:farms,farm_id',  // Farm ID is required, should be an integer, and must exist in the 'farms' table
             'breed_id' => 'required|integer|exists:breeds,breed_id', // Breed ID is required, should be an integer, and must exist in the 'breeds' table
         ]);
+       
     
         // Debugging: Check all request data
         // dd($request->all()); // This will show all request data and stop the script
@@ -78,9 +48,10 @@ class GoatController extends Controller
         $farm_id = $request->input('farm_id'); 
         $breed_id = $request->input('breed_id'); 
 
+        $farm_id = Session::get('farm_id');
         // Insert to database
      
-        
+    
 
         try {
             // Insert the new goat into the database
@@ -90,6 +61,9 @@ class GoatController extends Controller
                 'origin' => $origin,
                 'farm_id' => $farm_id,
                 'breed_id' => $breed_id,
+
+                'type_device_id' => 1,
+                'status' => 'Active',
             ]);
     
             // Thêm thông báo thành công
