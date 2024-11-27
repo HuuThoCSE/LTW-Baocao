@@ -351,12 +351,12 @@
             </a>
           </li>
           <li>
-            <a href="components-accordion.html">
+            <a href="/zones">
               <i class="bi bi-circle"></i><span>List Zone</span>
             </a>
           </li>
           <li>
-            <a href="components-accordion.html">
+            <a href="/barns">
               <i class="bi bi-circle"></i><span>List Barn</span>
             </a>
           </li>

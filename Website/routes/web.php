@@ -13,6 +13,8 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\ZoneController;
+use App\Http\Controllers\BarnController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -40,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
     
     # List_Goat Management
+    Route::get('/goats/create', [GoatController::class, 'showGoatForm'])->name('goats.create');
     Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
     Route::post('/goats', [GoatController::class, 'addGoat'])->name('goats.add');
     Route::get('goatdetail/{goat_id}', [GoatDetailController::class, 'getview'])->name('goatdetail');
@@ -57,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/devices/{id}', [DeviceController::class, 'detailDevice'])->name('device.detail');
     Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
     Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('device.edit');
+    Route::put('/devices/{id}', [DeviceController::class, 'udpArea'])->name('device.upd');
     Route::put('/devices/{id}/maintenance', [DeviceController::class, 'delDevice'])->name('device.maintenance'); // Lịch sử và lịch trình bảo trì
     Route::put('/devices/{id}/status', [DeviceController::class, 'delDevice'])->name('device.putStatus');
     Route::delete('/devices/{id}/delete', [DeviceController::class, 'delDevice'])->name('device.del');
@@ -77,9 +81,23 @@ Route::middleware(['auth'])->group(function () {
     # List_Area Management
     Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
-    Route::delete('/areas/{areas_id}', [AreaController::class, 'delArea'])->name('listarea.del');
-    Route::put('/areas/{areas_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+    Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
+    Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
     Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+
+     # List_Zone Management
+     Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone');
+     Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
+     Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
+     Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
+     Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+
+      # List_Barn Management
+      Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn');
+      Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
+      Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
+      Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
+      Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 });
 
 # API

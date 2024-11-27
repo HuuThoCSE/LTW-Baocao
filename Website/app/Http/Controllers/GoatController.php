@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Farm;
 
 class GoatController extends Controller
 {
@@ -23,7 +24,8 @@ class GoatController extends Controller
             WHERE goats.goat_id = ?", 
             [$id]
         );
-      
+        
+        
     
         if (!$goat) {
             abort(404);
@@ -35,8 +37,12 @@ class GoatController extends Controller
             WHERE goat_id = ?", 
             [$id]
         );
+
+        $farm = DB::table('farms')->where('location', $goat[0]->farm_id)->first();   
         
         return view('goats.show', ['goat' => $goat[0], 'goatWeights' => $goatWeights]);
+
+        
     }
     public function getView()
     {
@@ -144,4 +150,7 @@ class GoatController extends Controller
         // Chuyển hướng về trang danh sách với thông báo thành công
         return redirect()->route('goats.list')->with('success', 'Farm updated successfully.');
     }
+   
+
+ 
 }
