@@ -18,7 +18,6 @@
   @include('links')
   @yield('account_style')
   @yield('dashboard_style')
-  @vite('resources/js/app.js')
   @yield('dashboard_script')
 
 <body>
@@ -404,12 +403,12 @@
 
     </ul>
     
-    <!-- <li class="nav-item">
-      <a href="{{ route('login') }}">
-          <i></i>
-          <span>Login</span>
-      </a>
-    </li> -->
+      <!-- <li class="nav-item">
+        <a href="{{ route('login') }}">
+            <i></i>
+            <span>Login</span>
+        </a>
+      </li> -->
 
   </aside>
   <!-- End Sidebar-->
