@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\Device;
-use Illuminate\Support\Facades\Session;
+
 
 class DeviceController extends Controller
 {
