@@ -107,5 +107,11 @@ php artisan serve --host=127.0.0.1 --port=8000
 ```
 
 ```
+expose share http://127.0.0.1:8000
+
 expose share http://127.0.0.1:8000 --subdomain=goatfarm
+```
+
+```
+php artisan config:clear
 ```
