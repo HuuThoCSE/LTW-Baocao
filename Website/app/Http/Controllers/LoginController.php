@@ -17,27 +17,25 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $username = $request->input('username');
+        $email = $request->input('email');
         $password = $request->input('password');
 
         // Truy vấn cơ sở dữ liệu để lấy user theo email
-        $user = DB::table('users')->where('email', $username)->first();
-
-        dd($user);
+        $account = DB::table('users')->where('email', $email)->first();
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
-        if ($user && Hash::check($password, $user->password)) {
+        if ($account && Hash::check($password, $account->password)) {
 
             // Mật khẩu đúng, lấy quyền từ bảng roles thông qua role_id của user
-            $role = DB::table('roles')->where('id', $user->role_id)->first();
+            $role = DB::table('roles')->where('role_id', $account->role_id)->first();
 
             // Lưu farm_id và role_id (farm_perm) vào session
-            Session::put('farm_id', $user->farm_id);
+            Session::put('farm_id', $account->farm_id);
 
             if ($role) {
                 // Kiểm tra quyền của người dùng
                 switch ($role->name) { // Dùng 'name' trong bảng roles để phân biệt quyền
-                    case 'admin':
+                    case 'administrator':
                         Session::put('account_perm', 'admin');
                         // Quản trị viên
                         return view('main-admin')->with('layout', 'main-admin');
@@ -62,16 +60,18 @@ class LoginController extends Controller
                         ]);
                 }
             } else {
-                return back()->withErrors([
-                    'username' => 'Tài khoản không có quyền.',
-                ]);
+                return 'Tài khoản không có quyền.';
+                // return back()->withErrors([
+                //     'username' => 'Tài khoản không có quyền.',
+                // ]);
             }
            
         } else {
+            return 'Thông tin đăng nhập không chính xác.';
             // Sai username hoặc password
-            return back()->withErrors([
-                'username' => 'Thông tin đăng nhập không chính xác.',
-            ]);
+            // return back()->withErrors([
+            //     'username' => 'Thông tin đăng nhập không chính xác.',
+            // ]);
         }
     }
 
