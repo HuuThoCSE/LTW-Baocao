@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
                 'role_id' => 1,
             ],
             [
-                'name' => 'Owner Farm 1',
+                'name' => 'Admin Farm 1',
                 'email' => 'admin@farm1.vn',
                 'password' => bcrypt('123456'),
                 'farm_id' => 1,
@@ -38,6 +38,20 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('123456'),
                 'farm_id' => 1,
                 'role_id' => 3,
+            ],
+            [
+                'name' => 'Farmer 1',
+                'email' => 'farmer1@farm1.vn',
+                'password' => bcrypt('123456'),
+                'farm_id' => 1,
+                'role_id' => 4,
+            ],
+            [
+                'name' => 'User 1',
+                'email' => 'user1@farm1.vn',
+                'password' => bcrypt('123456'),
+                'farm_id' => 1,
+                'role_id' => 5,
             ],
         ];
         
