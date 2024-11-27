@@ -35,22 +35,22 @@ class LoginController extends Controller
             if ($role) {
                 // Kiểm tra quyền của người dùng
                 switch ($role->name) { // Dùng 'name' trong bảng roles để phân biệt quyền
-                    case 'administrator':
+                    case 1:
                         Session::put('account_perm', 'admin');
                         // Quản trị viên
                         return view('main-admin')->with('layout', 'main-admin');
-                    case 'owner':
+                    case 2:
                         Session::put('account_perm', 'owner');
                         return view('main')->with('layout', 'main');
-                    case 'it':
+                    case 3:
                         Session::put('account_perm', 'it');
                         // IT
                         return redirect()->route('home');
-                    case 'farmer':
+                    case 4:
                         Session::put('account_perm', 'farmer');
                         // Nông dân
                         return redirect()->route('home');
-                    case 'customer':
+                    case 5:
                         Session::put('account_perm', 'customer');
                         // Khách hàng
                         return redirect()->route('home');
