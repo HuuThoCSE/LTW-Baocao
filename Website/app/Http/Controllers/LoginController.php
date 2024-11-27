@@ -26,46 +26,35 @@ class LoginController extends Controller
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($account && Hash::check($password, $account->password)) {
 
-            // Mật khẩu đúng, lấy quyền từ bảng roles thông qua role_id của user
-            $role = DB::table('roles')->where('role_id', $account->role_id)->first();
-
             // Lưu farm_id và role_id (farm_perm) vào session
             Session::put('farm_id', $account->farm_id);
 
-            if ($role) {
-                // Kiểm tra quyền của người dùng
-                switch ($role->name) { // Dùng 'name' trong bảng roles để phân biệt quyền
-                    case 1:
-                        Session::put('account_perm', 'admin');
-                        // Quản trị viên
-                        return view('main-admin')->with('layout', 'main-admin');
-                    case 2:
-                        Session::put('account_perm', 'owner');
-                        return view('main')->with('layout', 'main');
-                    case 3:
-                        Session::put('account_perm', 'it');
-                        // IT
-                        return redirect()->route('home');
-                    case 4:
-                        Session::put('account_perm', 'farmer');
-                        // Nông dân
-                        return redirect()->route('home');
-                    case 5:
-                        Session::put('account_perm', 'customer');
-                        // Khách hàng
-                        return redirect()->route('home');
-                    default:
-                        return back()->withErrors([
-                            'username' => 'Không có quyền truy cập.',
-                        ]);
-                }
-            } else {
-                return 'Tài khoản không có quyền.';
-                // return back()->withErrors([
-                //     'username' => 'Tài khoản không có quyền.',
-                // ]);
+            // Kiểm tra quyền của người dùng
+            switch ($account->role_id) { // Dùng 'name' trong bảng roles để phân biệt quyền
+                case 1:
+                    Session::put('account_perm', 'admin');
+                    // Quản trị viên
+                    return view('main-admin')->with('layout', 'main-admin');
+                case 2:
+                    Session::put('account_perm', 'owner');
+                    return view('main')->with('layout', 'main');
+                case 3:
+                    Session::put('account_perm', 'it');
+                    // IT
+                    return redirect()->route('home');
+                case 4:
+                    Session::put('account_perm', 'farmer');
+                    // Nông dân
+                    return redirect()->route('home');
+                case 5:
+                    Session::put('account_perm', 'customer');
+                    // Khách hàng
+                    return redirect()->route('home');
+                default:
+                    return back()->withErrors([
+                        'username' => 'Không có quyền truy cập.',
+                    ]);
             }
-           
         } else {
             return 'Thông tin đăng nhập không chính xác.';
             // Sai username hoặc password
