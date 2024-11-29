@@ -51,7 +51,7 @@ class GoatsTableSeeder extends Seeder
                 'goat_name' => 'Celly',
                 'goat_age' => 1,
                 'farm_id' => 3,
-                'breed_id' => 5,
+                'breed_id' => 3,
                 'origin' => 'imported' // Dê này là dê được nhập
             ],
         ]);

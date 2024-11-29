@@ -99,6 +99,12 @@ php artisan make:seeder GoatTableSeeder
 ## Tạo lại table và seeder
 ```bash
 php artisan migrate:fresh --seed
+
+```
+
+## Khởi động toàn cục trong cùng một mạng nội bộ 
+```
+php artisan serve --host=0.0.0.0
 ```
 
 # Khởi động cùng expose

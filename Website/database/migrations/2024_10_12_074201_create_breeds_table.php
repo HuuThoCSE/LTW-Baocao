@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('breeds', function (Blueprint $table) {
             $table->id('breed_id');
-            $table->string('breed_name', 100);
+            $table->foreignId('farm_id')
+                    ->constrained('farms', 'farm_id')
+                    ->onDelete('cascade');
+            $table->string('breed_name_eng', 100);
+            $table->string('breed_name_vie', 100);
             $table->string('description')->nullable();
             $table->timestamps();
         });
