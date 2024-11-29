@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Session;
 class GoatController extends Controller
 {
     
+
+    
+
+
     public function getView()
     {
 

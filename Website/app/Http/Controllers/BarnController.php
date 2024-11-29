@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\DB;
 
 class BarnController extends Controller
 {
+    // Show details of a specific barn
+    public function show($id)
+    {
+        $barn = DB::table('barns')->where('barn_id', $id)->first(); // Get barn by ID
+        if (!$barn) {
+            return redirect()->route('listbarn')->with('error', 'Barn not found.');
+        }
+        return view('barn/show', ['barn' => $barn]); // Show details view
+    }
+
     public function getView()
     {
         $barns = DB::table('barns')->get(); // Get zones from the database
@@ -18,6 +28,7 @@ class BarnController extends Controller
       public function addBarn(Request $request)
       {
           $validated = $request->validate([
+       
               'barn_name' => 'required|string|max:255', // Đảm bảo trường 'barn_name' được cung cấp
               'description' => 'nullable|string', // 'description' không bắt buộc
               'farm_id' => 'required|integer', // Kiểm tra 'farm_id' là số nguyên
@@ -30,7 +41,10 @@ class BarnController extends Controller
           ]);
   
           return redirect()->route('listbarn')->with('success', 'Barn added successfully!');
-      }
+     
+    }
+    
+
   
       // Xóa một barn
       public function delBarn($id)
@@ -54,4 +68,7 @@ class BarnController extends Controller
   
           return redirect()->route('listbarn')->with('success', 'Barn updated successfully!');
       }
+
+      
 }
+

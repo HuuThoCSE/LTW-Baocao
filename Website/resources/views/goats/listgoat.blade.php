@@ -110,11 +110,7 @@ Danh sách dê
                                 @enderror
                             </div>
                            
-                            <div class="col-md-6 mb-3">
-                                <select name="farm_id" class="form-control" required>
-                                    <option value="">Select Farm</option>
-                                   
-                                </select>
+                            
                                 @error('farm_id')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
@@ -178,13 +174,7 @@ Danh sách dê
                                 <option value="born_on_farm" {{ $goat->origin == 'born_on_farm' ? 'selected' : '' }}>Born on Farm</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="farm_id{{ $goat->goat_id }}" class="form-label">Farm</label>
-                            <select id="farm_id{{ $goat->goat_id }}" name="farm_id" class="form-control">
-                                <option value="1" {{ $goat->farm_id == 1 ? 'selected' : '' }}>Vinh Long Goat Farm</option>
-                                <option value="2" {{ $goat->farm_id == 2 ? 'selected' : '' }}>Tien Giang Goat Farm</option>
-                                <option value="3" {{ $goat->farm_id == 3 ? 'selected' : '' }}>Ben Tre Goat Farm</option>
-                            </select>
+                       
                         </div>
                         <div class="mb-3">
                             <label for="breed_id{{ $goat->goat_id }}" class="form-label">Breed</label>

@@ -27,7 +27,8 @@
     </style>
 
     <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
-        <i class="bi bi-clipboard-plus"></i> Add Barn
+        <i class="bi bi-clipboard-plus"></i>
+        <span class="ms-2">Add Barn </span>
     </button>
 
     <!-- Barns Table -->
@@ -43,10 +44,12 @@
             </thead>
             <tbody>
                 @foreach($barns as $barn)
-                <tr align="center">
+                <tr align="center" onclick="window.location.href='{{ route('listbarn.show', $barn->barn_id) }}'">
                     <td>{{ $barn->barn_id }}</td>
                     <td>{{ $barn->barn_name }}</td>
                     <td>{{ $barn->description }}</td>
+                 
+
                     <td>
                         <form action="{{ route('listbarn.del', $barn->barn_id) }}" method="POST" style="display:inline;">
                             @csrf

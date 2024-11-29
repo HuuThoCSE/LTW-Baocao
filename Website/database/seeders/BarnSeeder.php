@@ -30,5 +30,12 @@ class BarnSeeder extends Seeder
             'location' => 'East Corner',
             'description' => 'Storage for larger equipment and machinery.',
         ]);
+
+        // Barn::create([
+        //     'zone_id' => 4, // Equipment Zone của Tien Giang Goat Farm
+        //     'barn_name' => 'Equipment Storage4',
+        //     'location' => 'East Corner4',
+        //     'description' => 'Storage4 for larger equipment and machinery.',
+        // ]);
     }
 }

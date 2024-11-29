@@ -31,7 +31,13 @@ Bảng điều khiển
             <div class="col-md-6">
                 <p><strong>Trang trại:</strong> {{ $goat->farm_name }}</p>
                 <p><strong>Khu vực:</strong> {{ $goat->location }}</p>
-                <p><strong>Cân nặng hiện tại:</strong> {{ $goat->weight }} kg</p>
+                <p><strong>Cân nặng hiện tại:</strong> 
+                    @if($latestWeight)
+                        {{ $latestWeight->weight }} kg
+                    @else
+                        N/A
+                    @endif
+                </p>
             </div>
         </div>
         <!-- Goat Image (if available) -->
