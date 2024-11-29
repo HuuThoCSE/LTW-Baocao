@@ -73,7 +73,11 @@ Route::middleware([CheckPermission::class . ':administrator'])->group(function (
 // Chủ nông trại
 Route::middleware([CheckPermission::class . ':farm_owner'])->group(function () {
     // List_Farm Management
-    
+    Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
+    Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
+    Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
+    Route::get('/account', [AccountController::class, 'getView'])->name('account');
+    Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
     // Các route cho chủ nông trại
 });
 
@@ -109,11 +113,7 @@ Route::middleware([CheckPermission::class . ':regular_user'])->group(function ()
 });
 
 Route::middleware([CheckPermission::class])->group(function () {
-    Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
-    Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
-    Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
-    Route::get('/account', [AccountController::class, 'getView'])->name('account');
-    Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
+    
     Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
