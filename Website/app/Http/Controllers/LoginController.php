@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -32,7 +33,9 @@ class LoginController extends Controller
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->user_password)) {
 
-            $this->storeSessionData($user);
+            Auth::loginUsingId($user->user_id);
+
+            // $this->storeSessionData($user);
 
             // Lấy quyền của người dùng từ bảng user_permissions
             $userPermissions = DB::table('user_permissions')

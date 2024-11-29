@@ -39,6 +39,7 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'redirect_to' => '/login', // Chỉnh sửa địa chỉ trang login
         ],
     ],
 
