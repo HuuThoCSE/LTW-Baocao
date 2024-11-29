@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('goat_weighs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('goat_id');
-            $table->foreign('goat_id')->references('goat_id')->on('goats');
+            $table->foreign('goat_id')
+                    ->references('goat_id')
+                    ->on('goats')
+                    ->onDelete('cascade');
             $table->float('weight');
             $table->timestamps();
         });

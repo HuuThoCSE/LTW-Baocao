@@ -3,6 +3,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BreedController;
+
 use App\Http\Controllers\ListGoatController;
 use App\Http\Controllers\GoatDetailController;
 use App\Http\Controllers\AccountController;
@@ -20,6 +22,7 @@ use App\Http\Controllers\BarnController;
 use App\Http\Middleware\CheckAdministratorRole;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
+
 
 // Middleware
 use App\Http\Middleware\CheckRole;
@@ -106,6 +109,13 @@ Route::middleware([CheckPermission::class . ':regular_user'])->group(function ()
 });
 
 Route::middleware([CheckPermission::class])->group(function () {
+
+    
+    Route::get('/breeds/list', [BreedController::class, 'getView'])->name('breed.list');
+    Route::post('/breeds/list', [BreedController::class, 'add'])->name('breed.add');
+    Route::put('/breeds/{id}', [BreedController::class, 'udp'])->name('breed.udp');
+    Route::delete('/breeds/{id}', [BreedController::class, 'del'])->name('breed.del');
+
     Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
     Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
     Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
@@ -154,8 +164,6 @@ Route::middleware([CheckPermission::class])->group(function () {
 
     #Food Management
     Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
-
-   
 
     # List_Area Management
     Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
