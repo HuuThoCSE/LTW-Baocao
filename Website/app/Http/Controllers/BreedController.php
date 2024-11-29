@@ -12,9 +12,9 @@ class BreedController extends Controller
 {
     public function getView()
     {
-        if(empty(Session::get('user_farm_id'))){
-            return redirect()->route('login');
-        }
+        // if(empty(Session::get('user_farm_id'))){
+        //     return redirect()->route('login');
+        // }
 
         $breeds = DB::table('breeds')->get();
         return view('breed.breed-list', ['breeds' => $breeds]);

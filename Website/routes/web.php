@@ -36,6 +36,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+
+
 // Các route dành riêng cho farmer (nông dân)
 Route::middleware([])->group(function () {
     Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard');
@@ -115,7 +117,12 @@ Route::middleware([CheckPermission::class . ':regular_user'])->group(function ()
     // Các route cho người dùng bình thường
 });
 
-Route::middleware([CheckPermission::class])->group(function () {
+Route::middleware('auth')->group(function () {
+
+});
+
+
+Route::middleware(['auth', CheckPermission::class])->group(function () {
 
     Route::get('/breeds/list', [BreedController::class, 'getView'])->name('breed.list');
     Route::post('/breeds/list', [BreedController::class, 'add'])->name('breed.add');
@@ -177,14 +184,14 @@ Route::middleware([CheckPermission::class])->group(function () {
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
     Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
     Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
-    Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+    // Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
      # List_Zone Management
      Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone');
      Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
      Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
      Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
-     Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+    //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
       # List_Barn Management
       Route::get('/barns/{id}', [BarnController::class, 'show'])->name('listbarn.show');
@@ -192,7 +199,7 @@ Route::middleware([CheckPermission::class])->group(function () {
       Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
       Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
       Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
-      Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+    //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 });
 
 # API
