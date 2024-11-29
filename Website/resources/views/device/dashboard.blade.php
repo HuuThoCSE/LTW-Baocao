@@ -27,8 +27,8 @@
         </thead>
         <tbody>
             @foreach($devices as $device)
-                <tr align='center' onclick="window.location='{{ route('device.detail', ['id' => $device->device_id]) }}'">
-                    <td>{{ $device->device_id }}</td>
+                <tr align='center'>
+                    <td>{{ $device->device_type_id }}</td>
                     <td>{{ $device->device_name }}</td>
                     <td align='center'>
                         <form action="{{ route('listfarm.del', $device->device_id) }}" method="POST" style="display:inline;">
