@@ -133,8 +133,6 @@ Route::middleware([CheckPermission::class])->group(function () {
     #Food Management
     Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
-   
-
     # List_Area Management
     Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');

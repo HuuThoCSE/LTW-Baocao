@@ -32,6 +32,9 @@ class LoginController extends Controller
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->user_password)) {
 
+            // Lưu farm_id của người dùng
+            Session::put('user_farm_id', $user->farm_id);
+
             // Lấy quyền của người dùng từ bảng user_permissions
             $userPermissions = DB::table('user_permissions')
                 ->where('user_id', $user->user_id)
