@@ -294,11 +294,11 @@
               <i class="bi bi-circle"></i><span>List Device</span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="components-accordion.html">
               <i class="bi bi-circle"></i><span>Accordion</span>
             </a>
-          </li>
+          </li> -->
         </ul>
     </li>
 
@@ -338,11 +338,11 @@
               <i class="bi bi-circle"></i><span>List Goat</span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="components-accordion.html">
               <i class="bi bi-circle"></i><span>Accordion</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </li>
 

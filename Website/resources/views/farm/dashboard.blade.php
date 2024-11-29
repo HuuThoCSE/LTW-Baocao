@@ -150,7 +150,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="owner_id" class="form-label">Owner ID:</label>
-                        <input type="text" name="owner_id" class="form-control" placeholder="Enter owner ID" required>
+                        <input type="text" name="owner_id" class="form-control" placeholder="Enter owner ID">
                     </div>
                     <!-- Checkbox để tạo tài khoản admin -->
                     <div class="form-check mb-3">
