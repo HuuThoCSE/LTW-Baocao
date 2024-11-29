@@ -1,4 +1,4 @@
-@extends('main')
+@extends('main-admin')
 
 @section('title', 'Bảng điều khiển')
 
@@ -129,6 +129,7 @@
 
 
 <!-- Modal Thêm Farm -->
+<!-- Modal Thêm Farm -->
 <div class="modal fade" id="addFarmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded">
@@ -151,6 +152,11 @@
                         <label for="owner_id" class="form-label">Owner ID:</label>
                         <input type="text" name="owner_id" class="form-control" placeholder="Enter owner ID" required>
                     </div>
+                    <!-- Checkbox để tạo tài khoản admin -->
+                    <div class="form-check mb-3">
+                        <input type="checkbox" name="create_admin" class="form-check-input" id="create_admin">
+                        <label class="form-check-label" for="create_admin">Tạo tài khoản admin cho farm này</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -160,6 +166,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Thông báo -->
 @if (session('success'))

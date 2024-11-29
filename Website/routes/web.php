@@ -62,15 +62,18 @@ Route::middleware([CheckPermission::class . ':administrator'])->group(function (
     Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->name('admin.register.view');
     Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
     // Các route dành cho quản trị viên
+    Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
+    Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
+    Route::post('/listfarm/add', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
+
+    Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
+    Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
 });
 
 // Chủ nông trại
 Route::middleware([CheckPermission::class . ':farm_owner'])->group(function () {
     // List_Farm Management
-    Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
-    Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
-    Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
-    Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
+    
     // Các route cho chủ nông trại
 });
 
