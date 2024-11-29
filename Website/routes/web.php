@@ -52,6 +52,8 @@ Route::middleware([CheckPermission::class])->group(function () {
 
 
 
+/// ------------------------
+
 // Admin
 Route::middleware([CheckPermission::class . ':administrator'])->group(function () {
     Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->name('admin.register.view');
@@ -144,39 +146,6 @@ Route::middleware([CheckPermission::class])->group(function () {
 # API
 // Route::get('/api/farm1/zone1/barn1/sensor/humidity', [APIController::class, 'getView'])->name('api.humidity');
 Route::get('/api/sensor', [APIController::class, 'addHumidity'])->name('api.addHumidity');
-    Route::get('/admin', [AdminController::class, 'getView'])->name('admin');
-    Route::post('/admin', [AdminController::class, 'addUser'])->name('User_add');
-    Route::post('/goats', [GoatController::class, 'addGoat'])->name('listgoat.add');
-
-Route::get('/danhsachde', [DashboardController::class, 'getViewQLD'])->name('quanlyde');
-Route::get('/account', [AccountController::class, 'getView'])->name('account');
-
-Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
-Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
-
-Route::get('/dashboard', function () {
-    // Chỉ người dùng đã đăng nhập mới có thể truy cập
-})->middleware('auth');
-
-Route::get('goatdetail/{goat_id}', [GoatDetailController::class, 'getview'])->name('goatdetail');
-Route::get('/admin', [AdminController::class, 'getView'])->name('Admin');
-# Medication Management
-
-Route::get('/medication', [MedicationController::class, 'getView'])->name('medication');
-
-
-Route::put('/medication/{id}', [MedicationController::class, 'putData'])->name('medication.put');
-
-# List_Farm Management
-Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
-Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
-Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
-Route::put('/farms/{farm_id}', [ListFarmController::class, 'putFarm'])->name('listfarm.put');
-
-# List_Goat Management
-Route::delete('/goats/{goat_id}', [ListGoatController::class, 'delGoat'])->name('listgoat.del');
-Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('listgoat.put');
-
 
 
 // Route::middleware([CheckPermission::class, 'permission:view_farm_list'])->group(function () {
@@ -193,4 +162,3 @@ Route::put('/goats/{goat_id}', [ListGoatController::class, 'putGoat'])->name('li
 //     Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
 //     // Các route khác dành cho IT nông trại
 // });
-

@@ -81,12 +81,12 @@ Quản lý tài khoản
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->user_id }}</td>
+                    <td>{{ $user->user_name }}</td>
+                    <td>{{ $user->user_email }}</td>
                     <td>{{ $user->created_at }}</td>
                     <td align='center'>
-                <form action="{{ route('account.del', $user->id) }}" method="POST" style="display:inline;">
+                <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
@@ -150,10 +150,10 @@ Quản lý tài khoản
         }
     </script>
 @foreach($users as $user)
-            <div class="modal fade" id="udpModal{{$user->id}}" tabindex="-1">
+            <div class="modal fade" id="udpModal{{$user->user_id}}" tabindex="-1">
                 <div class="modal-dialog modal-small">
                 <div class="modal-content">
-                <form id="updateForm{{$user->id}}" method="POST" action="{{ route('account.udp', ['id' => $user->id] )}}">
+                <form id="updateForm{{$user->user_id}}" method="POST" action="{{ route('account.udp', ['id' => $user->user_id] )}}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header">
@@ -163,11 +163,11 @@ Quản lý tài khoản
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name" class="form-label">Tên:</label>
-                            <input type="text" name="name" value="{{ $user->name }}" class="form-control" required>
+                            <input type="text" name="name" value="{{ $user->user_name }}" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">Email:</label>
-                            <input type="email" name="email" value="{{ $user->email }}" class="form-control" required>
+                            <input type="email" name="email" value="{{ $user->user_email }}" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="password" class="form-label">Mật khẩu:</label>
@@ -196,10 +196,10 @@ Quản lý tài khoản
             <tbody>
     @foreach ($users as $user)
         <tr style="cursor: pointer;">
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->id }}</a></td>
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->name }}</a></td>
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->email }}</a></td>
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->created_at }}</a></td>
+            <td><a href="{{ route('account.show', ['id' => $user->user_id]) }}" style="text-decoration: none; color: inherit;">{{ $user->user_id }}</a></td>
+            <td><a href="{{ route('account.show', ['id' => $user->user_id]) }}" style="text-decoration: none; color: inherit;">{{ $user->user_name }}</a></td>
+            <td><a href="{{ route('account.show', ['id' => $user->user_id]) }}" style="text-decoration: none; color: inherit;">{{ $user->user_email }}</a></td>
+            <td><a href="{{ route('account.show', ['id' => $user->user_id]) }}" style="text-decoration: none; color: inherit;">{{ $user->created_at }}</a></td>
         </tr>
     @endforeach
 
