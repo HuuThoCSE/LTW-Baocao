@@ -37,7 +37,6 @@
                 <tr align="center">
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Location</th>
                     <th>Description</th>
                     <th colspan="2">Operation</th>
                 </tr>
@@ -47,7 +46,6 @@
                 <tr align="center">
                     <td>{{ $barn->barn_id }}</td>
                     <td>{{ $barn->barn_name }}</td>
-                    <td>{{ $barn->location }}</td>
                     <td>{{ $barn->description }}</td>
                     <td>
                         <form action="{{ route('listbarn.del', $barn->barn_id) }}" method="POST" style="display:inline;">
@@ -90,10 +88,7 @@
                             <label for="barn_name" class="form-label">Name:</label>
                             <input type="text" name="barn_name" class="form-control" value="{{ $barn->barn_name }}" required>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="location" class="form-label">Location:</label>
-                            <input type="text" name="location" class="form-control" value="{{ $barn->location }}" required>
-                        </div>
+                  
                         <div class="form-group mb-3">
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3" required>{{ $barn->description }}</textarea>
@@ -126,10 +121,7 @@
                             <label for="barn_name" class="form-label">Barn Name:</label>
                             <input type="text" name="barn_name" class="form-control" required>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="location" class="form-label">Location:</label>
-                            <input type="text" name="location" class="form-control" required>
-                        </div>
+                       
                         <div class="form-group mb-3">
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3"></textarea>

@@ -16,8 +16,8 @@ class DeviceController extends Controller
     {
         $devices = DB::table('devices')
             ->join('farms', 'devices.farm_id', '=', 'farms.farm_id')
-            ->join('device_types', 'devices.type_device_id', '=', 'device_types.id')
-            ->select('devices.*', 'farms.farm_name', 'device_types.type_name')
+            ->join('device_types', 'devices.device_type_id', '=', 'device_types.id')
+            ->select('devices.*', 'farms.farm_name', 'device_types.type_device_name')
             ->get();
 
         return view('device.list', ['devices' => $devices]);
@@ -29,7 +29,7 @@ class DeviceController extends Controller
         // Validate dữ liệu
         $request->validate([
             'device_name' => 'required|string|max:255',
-            'type_device_id' => 'required|integer|exists:device_types,id',
+            'device_type_id' => 'required|integer|exists:device_types,id',
             'farm_id' => 'required|integer|exists:farms,farm_id',
         ]);
 
@@ -37,7 +37,7 @@ class DeviceController extends Controller
             // Tạo thiết bị mới
             DB::table('devices')->insert([
                 'device_name' => $request->input('device_name'),
-                'type_device_id' => $request->input('type_device_id'),
+                'device_type_id' => $request->input('device_type_id'),
                 'farm_id' => $request->input('farm_id'),
                 'status' => 'Active',
             ]);
@@ -67,14 +67,14 @@ class DeviceController extends Controller
         // Validate dữ liệu đầu vào
         $request->validate([
             'device_name' => 'required|string|max:255',
-            'type_device_id' => 'required|integer|exists:device_types,id',
+            'device_type_id' => 'required|integer|exists:device_types,id',
         ]);
 
         try {
             // Cập nhật thiết bị
             DB::table('devices')->where('device_id', $device_id)->update([
                 'device_name' => $request->input('device_name'),
-                'type_device_id' => $request->input('type_device_id'),
+                'device_type_id' => $request->input('device_type_id'),
             ]);
 
             return redirect()->route('devices.list')->with('success', 'Device updated successfully.');

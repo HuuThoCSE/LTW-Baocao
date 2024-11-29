@@ -19,14 +19,12 @@ class BarnController extends Controller
       {
           $validated = $request->validate([
               'barn_name' => 'required|string|max:255', // Đảm bảo trường 'barn_name' được cung cấp
-              'location' => 'required|string|max:255', // Đảm bảo trường 'location' được cung cấp
               'description' => 'nullable|string', // 'description' không bắt buộc
               'farm_id' => 'required|integer', // Kiểm tra 'farm_id' là số nguyên
           ]);
   
           DB::table('barns')->insert([
               'barn_name' => $validated['barn_name'],
-              'location' => $validated['location'],
               'description' => $validated['description'],
               'farm_id' => $validated['farm_id'], // Cung cấp giá trị cho 'farm_id'
           ]);
@@ -46,13 +44,11 @@ class BarnController extends Controller
       {
           $validated = $request->validate([
               'barn_name' => 'required|string|max:255', // Đảm bảo 'barn_name' được cung cấp
-              'location' => 'required|string|max:255', // 'location' phải hợp lệ
               'description' => 'nullable|string', // 'description' không bắt buộc
           ]);
   
           DB::table('barns')->where('barn_id', $barn_id)->update([
               'barn_name' => $validated['barn_name'],
-              'location' => $validated['location'],
               'description' => $validated['description'],
           ]);
   

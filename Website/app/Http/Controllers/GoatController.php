@@ -15,8 +15,6 @@ class GoatController extends Controller
     public function getView()
     {
 
-        dd(Session::get('farm_id'));
-
         // Lấy danh sách từ bảng 'goats'
         // $goats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
         $goats = DB::table('goats')
