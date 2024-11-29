@@ -67,7 +67,7 @@ Quản lý thức ăn
             document.getElementById('addFoodForm').style.display = 'block';
         }
     </script>
-@foreach($foods as $food)
+            @foreach($foods as $food)
             <div class="modal fade" id="udpModal{{$food->id}}" tabindex="-1">
                 <div class="modal-dialog modal-small">
                 <div class="modal-content">
@@ -108,6 +108,4 @@ Quản lý thức ăn
                 </div>
             </div>
             @endforeach
-
-
 @endsection

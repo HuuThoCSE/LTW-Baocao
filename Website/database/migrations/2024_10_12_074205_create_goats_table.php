@@ -22,8 +22,14 @@ return new class extends Migration
             $table->timestamps();
 
             // Khóa ngoại
-            $table->foreign('farm_id')->references('farm_id')->on('farms')->onDelete('cascade');
-            $table->foreign('breed_id')->references('breed_id')->on('breeds')->onDelete('cascade');
+            $table->foreign('farm_id')
+                ->references('farm_id')
+                ->on('farms')
+                ->onDelete('cascade');
+            $table->foreign('breed_id')
+                ->references('breed_id')
+                ->on('breeds')
+                ->onDelete('cascade');
         });
     }
 
