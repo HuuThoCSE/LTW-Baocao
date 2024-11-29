@@ -356,11 +356,6 @@
 
         <ul id="components-farm" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="/farms">
-              <i class="bi bi-circle"></i><span>List Farm</span>
-            </a>
-          </li>
-          <li>
             <a href="/areas">
               <i class="bi bi-circle"></i><span>List Area</span>
             </a>

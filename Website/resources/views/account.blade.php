@@ -66,7 +66,10 @@ Quản lý tài khoản
     <div class="card-header">
         <h1>Danh sách tài khoản</h1>
     </div>
-
+    <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addAccountModal">
+        <i class="bi bi-plus-circle"></i>
+        <span class="ms-2">Add Account</span>
+    </button>
     <div class="card-body">
     <table border="1">
         <thead>
@@ -81,12 +84,12 @@ Quản lý tài khoản
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->user_id }}</td>
+                    <td>{{ $user->user_name }}</td>
+                    <td>{{ $user->user_email }}</td>
                     <td>{{ $user->created_at }}</td>
                     <td align='center'>
-                <form action="{{ route('account.del', $user->id) }}" method="POST" style="display:inline;">
+                <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
@@ -101,107 +104,51 @@ Quản lý tài khoản
     </table>
     </div>
 </div>
-<button id="newaccBtn" class="btn btn-primary" onclick="showAddAccForm()">Đăng ký tài khoản tại đây</button>
 
-<!-- Ẩn form đăng ký mặc định -->
-<div id="addaccForm" style="display: none;">
-    <!-- Hiển thị lỗi farm_id nếu có -->
-@if ($errors->has('farm_id'))
-    <div class="alert alert-danger">
-        <ul>
-            <li>{{ $errors->first('farm_id') }}</li>
-        </ul>
-    </div>
-@endif
-
-<!-- Hiển thị lỗi email nếu có -->
-@if ($errors->has('email'))
-    <div class="alert alert-danger">
-        <ul>
-            <li>{{ $errors->first('email') }}</li>
-        </ul>
-    </div>
-@endif
 
 <!-- Form đăng ký -->
-<form action="{{ route('user.add') }}" method="POST">
-    @csrf
-    <h2>Đăng ký tài khoản</h2>
-    <label for="">Tên tài khoản</label>
-    <input type="text" name="name" class="form-control" value="{{ old('name') }}"><br>
-    <label for="">Email</label>
-    <input type="email" name="email" class="form-control" value="{{ old('email') }}" required><br>
-    <label for="">Mật khẩu</label>
-    <input type="password" name="mk" class="form-control"><br>
-    <label for="farm_id">Farm ID:</label>
-    <input type="number" name="farm_id" class="form-control" value="{{ old('farm_id') }}" required>
-    <label for="farm_id">ID quyền:</label>
-    <input type="number" name="role_id" class="form-control" value="{{ old('id') }}" required>
-    <input type="submit" value="Thêm tài khoản" class="btn btn-primary">
-</form>
 
+<div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded">
+            <form action="{{ route('user.add') }}" method="POST">
+                @csrf
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Add New Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="user_name" class="form-label">Tên tài khoản:</label>
+                        <input type="text" name="user_name" class="form-control" placeholder="Enter account name" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" name="user_email" class="form-control" placeholder="email" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="owner_id" class="form-label">Password:</label>
+                        <input type="password" name="user_password" class="form-control" placeholder="Enter password" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="owner_id" class="form-label">Farm ID:</label>
+                        <input type="number" name="farm_id" class="form-control" placeholder="Enter owner ID" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="owner_id" class="form-label">ID quyền:</label>
+                        <input type="number" name="role_id" class="form-control" placeholder="Enter owner ID" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<script>
-        function showAddAccForm() {
-            // Ẩn nút New Goat và hiện form Add Goat
-            document.getElementById('newaccBtn').style.display = 'none';
-            document.getElementById('addaccForm').style.display = 'block';
-        }
-    </script>
-@foreach($users as $user)
-            <div class="modal fade" id="udpModal{{$user->id}}" tabindex="-1">
-                <div class="modal-dialog modal-small">
-                <div class="modal-content">
-                <form id="updateForm{{$user->id}}" method="POST" action="{{ route('account.udp', ['id' => $user->id] )}}">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title">Cập nhật tài khoản</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name" class="form-label">Tên:</label>
-                            <input type="text" name="name" value="{{ $user->name }}" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email:</label>
-                            <input type="email" name="email" value="{{ $user->email }}" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="form-label">Mật khẩu:</label>
-                            <input type="password" name="password" class="form-control" placeholder="Mật khẩu mới (để trống nếu không thay đổi)">
-                        </div>
-                        <div class="form-group">
-                            <label for="farm_id" class="form-label">Farm ID:</label>
-                            <input type="text" name="farm_id" value="{{ $user->farm_id }}" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="farm_id" class="form-label">ID quyền:</label>
-                            <input type="text" name="role_id" value="{{ $user->farm_id }}" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <input class="btn btn-primary" type="submit" value="Lưu thay đổi">
-                    </div>
-                </form>
 
-                
-                </div>
-            </div>
-            @endforeach
-
-            <tbody>
-    @foreach ($users as $user)
-        <tr style="cursor: pointer;">
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->id }}</a></td>
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->name }}</a></td>
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->email }}</a></td>
-            <td><a href="{{ route('account.show', ['id' => $user->id]) }}" style="text-decoration: none; color: inherit;">{{ $user->created_at }}</a></td>
-        </tr>
-    @endforeach
 
 
 @endsection

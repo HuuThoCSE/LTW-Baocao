@@ -65,15 +65,22 @@ Route::middleware([CheckPermission::class . ':administrator'])->group(function (
     Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->name('admin.register.view');
     Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
     // Các route dành cho quản trị viên
+    Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
+    Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
+    Route::post('/listfarm/add', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
+
+    Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
+    Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
 });
 
 // Chủ nông trại
 Route::middleware([CheckPermission::class . ':farm_owner'])->group(function () {
     // List_Farm Management
-    Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
-    Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
-    Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
-    Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
+    Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
+    Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
+    Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
+    Route::get('/account', [AccountController::class, 'getView'])->name('account');
+    Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
     // Các route cho chủ nông trại
 });
 
@@ -110,7 +117,6 @@ Route::middleware([CheckPermission::class . ':regular_user'])->group(function ()
 
 Route::middleware([CheckPermission::class])->group(function () {
 
-    
     Route::get('/breeds/list', [BreedController::class, 'getView'])->name('breed.list');
     Route::post('/breeds/list', [BreedController::class, 'add'])->name('breed.add');
     Route::put('/breeds/{id}', [BreedController::class, 'udp'])->name('breed.udp');
@@ -121,6 +127,7 @@ Route::middleware([CheckPermission::class])->group(function () {
     Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
     Route::get('/account', [AccountController::class, 'getView'])->name('account');
     Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
+  
     Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 

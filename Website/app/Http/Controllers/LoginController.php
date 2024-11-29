@@ -50,6 +50,32 @@ class LoginController extends Controller
             if ($role) {
                 // Lưu role_name vào session
                 Session::put('role_name', $role->role_name);
+                // Kiểm tra quyền của người dùng
+                switch ($role->role_id) { // Dùng 'name' trong bảng roles để phân biệt quyền
+                    case 1:
+                        Session::put('account_perm', 'admin');
+                        // Quản trị viên
+                        return view('main-admin')->with('layout', 'main-admin');
+                    case 2:
+                        Session::put('account_perm', 'owner');
+                        return view('main')->with('layout', 'main');
+                    case 3:
+                        Session::put('account_perm', 'it');
+                        // IT
+                        return redirect()->route('home');
+                    case 4:
+                        Session::put('account_perm', 'farmer');
+                        // Nông dân
+                        return redirect()->route('home');
+                    case 5:
+                        Session::put('account_perm', 'customer');
+                        // Khách hàng
+                        return redirect()->route('home');
+                    default:
+                        return back()->withErrors([
+                            'username' => 'Không có quyền truy cập.',
+                        ]);
+                }
             } else {
                 // Xử lý trường hợp không tìm thấy role_name
                 Session::put('role_name', 'Role not found');
