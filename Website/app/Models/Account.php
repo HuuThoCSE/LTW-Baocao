@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Account extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'user_password',
+        'password',
         'remember_token',
     ];
 
@@ -43,15 +43,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'user_password' => 'hashed',
+            'password' => 'hashed',
         ];
-    }
-
-    /**
-     * Kiểm tra vai trò của người dùng
-     */
-    public function hasRole($role)
-    {
-        return $this->role_id === $role;
     }
 }

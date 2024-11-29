@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -10,9 +10,13 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        //
+    ->withMiddleware(function ($middleware) {
+        // Đăng ký toàn cục
+        // // Đăng ký middleware CheckRole vào chuỗi middleware
+        // // Chú ý là không dùng push(), hãy đơn giản thêm middleware vào đây
+        // $middleware->prepend(CheckRole::class); // Thêm middleware vào đầu chuỗi middleware
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->create();
