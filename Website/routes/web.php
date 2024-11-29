@@ -187,6 +187,7 @@ Route::middleware([CheckPermission::class])->group(function () {
      Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
       # List_Barn Management
+      Route::get('/barns/{id}', [BarnController::class, 'show'])->name('listbarn.show');
       Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn');
       Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
       Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
