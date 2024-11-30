@@ -113,7 +113,7 @@
     <div class="modal fade" id="addBarnModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form method="POST" action="{{ route('listbarn.add') }}">
+                <form  action="{{ route('listbarn.add') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Add New Barn</h5>
@@ -139,4 +139,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection
