@@ -6,19 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 class AccountController extends Controller
 {
     
     public function getView()
     {
         $users = DB::table('users')->get();
-        return view('account',['users' => $users]);
+
+        // Fetch roles for the dropdown list, only roles with ID 3, 4, 5
+        $adminFarmId = auth()->user()->farm_id;
+        $roles = DB::table('farm_roles')
+            ->whereIn('role_id', [3, 4, 5])  // Lọc các role_id 3, 4, 5
+            ->get();
+
+        // Truyền cả người dùng và vai trò vào view
+        return view('account', ['users' => $users, 'farm_roles' => $roles]);
+
     }
-    public function delAccount($id)
+    public function delAccount($user_id)
     {
         // Find the medication by ID and delete it
-        $account = DB::table('users')->where('id', $id);
+        $account = DB::table('users')->where('user_id', $user_id);
         
         if ($account->exists()) {
             $account->delete();
@@ -29,32 +38,50 @@ class AccountController extends Controller
     }
     public function addUser(Request $request)
 {
+    // Lấy tất cả người dùng
+    $users = DB::table('users')->get();
 
-    // Debugging: Check all request data
-    $user_name = $request->input('user_name');
-    $user_email = $request->input('user_email');
-    $user_password = $request->input('user_password');
-    $farm_id = $request->input('farm_id');
-    $role_id = $request->input('role_id'); // Lấy role_id từ request
+    // Lấy danh sách các role có role_id là 3, 4, 5
+    $roles = DB::table('farm_roles')
+            ->whereIn('role_id', [3, 4, 5])  // Lọc các role_id 3, 4, 5
+            ->get();
 
-    // Mã hóa mật khẩu
-    $user_password = Hash::make($user_password);
+    // Xác thực dữ liệu
+    $validator = Validator::make($request->all(), [
+        'user_name' => 'required|string|max:255',
+        'user_email' => [
+            'required',
+            'email',
+            'unique:users,user_email', // Kiểm tra tính duy nhất
+            // Thêm validation regex cho email có dạng name@farm.farm_id.com
+            'regex:/^[a-zA-Z0-9._%+-]+@farm\.(\d+)\.com$/',
+        ],
+        'user_password' => 'required|string|min:6',
+        'role_id' => 'required|in:3,4,5',  // Kiểm tra role_id phải là 3, 4 hoặc 5
+    ], [
+        'role_id.in' => 'Role ID phải là 3, 4 hoặc 5.',
+        'user_email.unique' => 'Email này đã được đăng ký.',
+        'user_email.regex' => 'Email phải có dạng name@farm.farm_id.com.',
+    ]);
 
-    // Insert vào bảng users
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    // Thêm tài khoản vào cơ sở dữ liệu
     DB::table('users')->insert([
-        'user_name' => $user_name,
-        'user_email' => $user_email,
-        'user_password' => $user_password,
-        'farm_id' => $farm_id,
-        'role_id' => $role_id, // Thêm role_id vào bảng users
+        'user_name' => $request->user_name,
+        'user_email' => $request->user_email,
+        'user_password' => bcrypt($request->user_password),
+        'role_id' => $request->role_id, // Chọn role_id từ dropdown
         'created_at' => now(),
         'updated_at' => now(),
     ]);
-    // Lấy danh sách người dùng và trả về view
-    $users = DB::table('users')->get();
-    dd($user_name, $user_email, $user_password, $farm_id, $role_id);
 
-    return view('account', ['users' => $users]);
+    // Truyền các role và users vào view
+    return redirect()->route('account')->with('success', 'User added successfully.');
 }
 
 
