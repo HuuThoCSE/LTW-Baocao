@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Middleware\SetLocale;
+use \Illuminate\Session\Middleware\StartSession;
 use Illuminate\Foundation\Application;
-use App\Http\Middleware\CheckRole;
 use Illuminate\Foundation\Configuration\Exceptions;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -10,13 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    // Đăng ký middleware toàn cục
     ->withMiddleware(function ($middleware) {
-        // Đăng ký toàn cục
-        // // Đăng ký middleware CheckRole vào chuỗi middleware
-        // // Chú ý là không dùng push(), hãy đơn giản thêm middleware vào đây
-        // $middleware->prepend(CheckRole::class); // Thêm middleware vào đầu chuỗi middleware
+        $middleware->prepend(StartSession::class);
+        $middleware->prepend(SetLocale::class); // Đăng ký Middleware SetLocale
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Xử lý ngoại lệ nếu cần
     })
     ->create();
+

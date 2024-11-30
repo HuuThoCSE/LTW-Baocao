@@ -10,15 +10,9 @@ class DashboardController extends Controller
 {
     public function getView()
     {
-        $name = 'Tho';
-        return view('dashboard',[]);
+        return view('dashboard');
     }
-
-    public function getViewQLD()
-    {
-        $name = 'Tho';
-        return view('quanlyde',[]);
-    }
+    
     public function getGoatData()
     {
         $data = Goat::select('farm_id', DB::raw('COUNT(goat_id) as quantity'))

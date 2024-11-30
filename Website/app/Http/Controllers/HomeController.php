@@ -9,6 +9,6 @@ class HomeController extends Controller
 {
     public function getView()
     {
-        return 'Chào cậu ^^';
+        return redirect()->route('dashboard.view');
     }
 }

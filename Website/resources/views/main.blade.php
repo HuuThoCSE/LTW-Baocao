@@ -195,7 +195,7 @@
         </li><!-- End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
-    
+
         @if(auth()->check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
@@ -227,6 +227,13 @@
             <li>
                 <hr class="dropdown-divider">
             </li>
+
+            @if(Session::get('locale') == 'vi')
+                <a href="{{ route('change.language', ['locale' => 'en']) }}">English</a>
+            @else
+                <a href="{{ route('change.language', ['locale' => 'vi']) }}">Tiếng Việt</a>
+            @endif
+
             <li>
                 <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}">
                     <i class="bi bi-box-arrow-right"></i>
@@ -259,7 +266,7 @@
       <li class="nav-item">
         <a class="nav-link " href="/">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>{{ __('messages.dashboard') }}</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -318,7 +325,7 @@
           </li>
           <!-- <li>
             <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Link Breed to Goats</span>  Liên kết giống với dê 
+              <i class="bi bi-circle"></i><span>Link Breed to Goats</span>  Liên kết giống với dê
             </a>
           </li> -->
         </ul>
@@ -413,7 +420,7 @@
     </li>
 
     </ul>
-    
+
       <!-- <li class="nav-item">
         <a href="{{ route('login') }}">
             <i></i>
