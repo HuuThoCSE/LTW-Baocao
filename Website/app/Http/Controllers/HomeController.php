@@ -9,6 +9,6 @@ class HomeController extends Controller
 {
     public function getView()
     {
-        return redirect()->route('dashboard.data');
+        return redirect()->route('dashboard.view');
     }
 }

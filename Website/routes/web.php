@@ -22,6 +22,7 @@ use App\Http\Controllers\BarnController;
 use App\Http\Middleware\CheckAdministratorRole;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\LanguageController;
 
 
 // Middleware
@@ -29,12 +30,15 @@ use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckFarmerAccess;
 use App\Http\Middleware\CheckPermission;
 
+
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
 // Các route công khai
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
 
 
 // Các route dành riêng cho farmer (nông dân)
@@ -50,7 +54,7 @@ Route::middleware([CheckPermission::class])->group(function () {
     // Các route của administrator, farm_owner, không cho phép it_farm
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('administrator.dashboard');
     Route::get('/admin/farm-list', [FarmController::class, 'list'])->name('admin.farm_list');
-    
+
     // Route dành cho nông dân
     Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard')->middleware(CheckFarmerAccess::class);
     Route::get('/farmer/tasks', [FarmerController::class, 'tasks'])->name('farmer.tasks')->middleware(CheckFarmerAccess::class);
@@ -120,12 +124,26 @@ Route::middleware('auth')->group(function () {
 
 });
 
-
 Route::get('/api/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+
+//Route::get('/change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');
+
+
+Route::middleware(['web'])->group(function () {
+    Route::get('/change-language/{locale}', function ($locale) {
+        if (in_array($locale, ['en', 'vi'])) {
+            Session::put('locale', $locale);
+            \Log::info('Session after put: ' . Session::get('locale'));
+        }
+        return redirect()->back();
+    })->name('change.language');
+
+    Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
+});
+
 
 Route::middleware(['auth', CheckPermission::class])->group(function () {
     Route::get('', [HomeController::class, 'getView'])->name('home');
-    Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
 
     Route::get('/breeds/list', [BreedController::class, 'getView'])->name('breed.list');
     Route::post('/breeds/list', [BreedController::class, 'add'])->name('breed.add');
@@ -137,7 +155,7 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
     Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
     Route::get('/account', [AccountController::class, 'getView'])->name('account');
     Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
-  
+
     Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
@@ -149,7 +167,7 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
     # Medication Management
     Route::post('/medication', [MedicationController::class, 'addData'])->name('medication_add');
     Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
-    
+
     # List_Goat Management
     Route::get('/goats/create', [GoatController::class, 'showGoatForm'])->name('goats.create');
     Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
@@ -159,7 +177,7 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
     Route::put('/goats/{goat_id}', [GoatController::class, 'udpGoat'])->name('goats.udp');
     Route::get('/goats/create', [GoatController::class, 'createGoatForm'])->name('goats.create');
 
-        
+
     #Food Management
     Route::get('/food', [FoodController::class, 'getView'])->name('food');
     Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
@@ -187,7 +205,7 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
     Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
     Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
-    
+
 
      # List_Zone Management
      Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone');

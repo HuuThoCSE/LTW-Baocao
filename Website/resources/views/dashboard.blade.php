@@ -73,7 +73,7 @@ Bảng điều khiển
     transform: scale(1.10); /* Tăng kích thước của thẻ lên 1.10 lần khi hover */
 }
 .dashboard-box {
-    
+
     border-radius: 10px;
     padding: 20px;
     margin: 20px 0;
@@ -95,6 +95,9 @@ h4 {
 @endsection
 
 @section('contents')
+    <p>Current Language: {{ App::currentLocale() }}</p>
+    <h1>{{ __('messages.dashboard') }}</h1>
+
 <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>
@@ -125,7 +128,7 @@ h4 {
         <div class="description">
         <a href="{{ route('goats.list') }}">Khám phá các giống dê tốt nhất tại đây!</a>
         </div>
-        
+
     </div>
     <div class="image-card">
         <div class="image-container">
@@ -135,7 +138,7 @@ h4 {
         <div class="description">
         <a href="{{ route('listfarm') }}">Hệ thống trang trại tiên tiến nhất!</a>
         </div>
-        
+
     </div>
     <div class="image-card">
         <div class="image-container">
@@ -145,7 +148,7 @@ h4 {
         <div class="description">
         <a href="{{ route('medication') }}">Các Thuốc Thiết Yếu Dành Cho Dê</a>
         </div>
-        
+
     </div>
 </div>
 
@@ -172,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return; // Ngừng nếu không có dữ liệu
             }
 
-            const labels = data.map(item => item.farm ? item.farm.farm_name : 'Chưa xác định'); 
+            const labels = data.map(item => item.farm ? item.farm.farm_name : 'Chưa xác định');
             const quantities = data.map(item => Math.round(item.quantity)); // Làm tròn xuống số nguyên gần nhất
 
             // Tính giá trị lớn nhất trong số lượng dê để sử dụng trong trục Y
@@ -215,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 display: true,
                                 text: 'Tên Chuồng'
                             }
-                            
+
                         }
                     }
                 }
