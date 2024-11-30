@@ -107,6 +107,15 @@ Quản lý tài khoản
 
 
 <!-- Form đăng ký -->
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -130,13 +139,18 @@ Quản lý tài khoản
                         <label for="owner_id" class="form-label">Password:</label>
                         <input type="password" name="user_password" class="form-control" placeholder="Enter password" required>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="owner_id" class="form-label">Farm ID:</label>
-                        <input type="number" name="farm_id" class="form-control" placeholder="Enter owner ID" required>
+                    <div class="form-group">
+                    <label for="farm_id">Farm ID</label>
+                    <input type="text" name="farm_id" class="form-control" value="{{ auth()->user()->farm_id }}" readonly>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="owner_id" class="form-label">ID quyền:</label>
-                        <input type="number" name="role_id" class="form-control" placeholder="Enter owner ID" required>
+                    <div class="form-group">
+                        <label for="role_id">Role</label>
+                        <select name="role_id" class="form-control" required>
+                        <option value="">Select Role</option>
+                        @foreach($farm_roles as $role)
+                            <option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
+                        @endforeach
+                    </select>
                     </div>
                 </div>
                 <div class="modal-footer">
