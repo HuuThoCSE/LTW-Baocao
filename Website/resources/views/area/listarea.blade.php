@@ -80,7 +80,7 @@
     
     
 
-    <!-- Modal thêm mới -->
+    Modal thêm mới
     <div class="modal fade" id="addAreaModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -141,4 +141,7 @@
     </div>
     @endforeach
 </div>
+
+
+
 @endsection
