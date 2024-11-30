@@ -30,7 +30,6 @@ use App\Http\Middleware\CheckFarmerAccess;
 use App\Http\Middleware\CheckPermission;
 
 // Các route công khai
-Route::get('', [HomeController::class, 'getView'])->name('home');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -122,7 +121,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/api/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+
 Route::middleware(['auth', CheckPermission::class])->group(function () {
+    Route::get('', [HomeController::class, 'getView'])->name('home');
+    Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
 
     Route::get('/breeds/list', [BreedController::class, 'getView'])->name('breed.list');
     Route::post('/breeds/list', [BreedController::class, 'add'])->name('breed.add');
@@ -184,7 +187,7 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
     Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
     Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
-    // Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+    
 
      # List_Zone Management
      Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone');
