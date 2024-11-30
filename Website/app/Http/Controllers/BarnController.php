@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\DB;
 
 class BarnController extends Controller
 {
+
+    public function index()
+    {
+        $barns = Barn::all(); // Lấy danh sách chuồng
+        $zones = Zone::all(); // Lấy danh sách khu vực (zones)
+        
+        return view('barns.index', compact('barns', 'zones'));
+    }
+
     // Show details of a specific barn
     public function show($id)
     {

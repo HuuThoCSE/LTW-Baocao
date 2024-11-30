@@ -7,24 +7,24 @@
     <!-- Tiêu đề -->
     <h1 class="text-center mb-4">Manage Areas</h1>
     <style>
-/* Add hover effect for buttons */
-.btn:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease-in-out;
-}
+        /* Add hover effect for buttons */
+        .btn:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-}
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
 
-.btn-danger:hover {
-    background-color: #c82333;
-}
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
 
-.btn-success:hover {
-    background-color: #218838;
-}
-</style>
+        .btn-success:hover {
+            background-color: #218838;
+        }
+    </style>
     <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addAreaModal">
         <i class="bi bi-clipboard-plus"></i>
         <span class="ms-2">Add Area</span>
