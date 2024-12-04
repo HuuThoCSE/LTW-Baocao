@@ -227,7 +227,7 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-              
+
                 @if(Session::get('locale') == 'vi')
                     <a href="{{ route('change.language', ['locale' => 'en']) }}">English</a>
                 @else
@@ -378,8 +378,8 @@
                 </a>
               </li>
             </ul>
-        </li>     
-        <?php endif; ?> 
+        </li>
+        <?php endif; ?>
 
         <!-- Chỉ có Administator, Owner và Fammer mới hiểm thị Medication -->
         <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
@@ -388,7 +388,7 @@
                 <i class="bi bi-menu-button-wide"></i>
                   <span>Medication</span>
                   <i class="bi bi-chevron-down ms-auto">
-                </i>  
+                </i>
               </a>
 
               <ul id="components-medication" class="nav-content collapse " data-bs-parent="#sidebar-nav">
