@@ -2,7 +2,7 @@
 
 @section('title', 'Manage Areas')
 
-@section('contents')
+@section('content')
 <style>
         /*Tạo hiệu ứng lửa xanh cho tiêu đề */
         @keyframes greenFire {

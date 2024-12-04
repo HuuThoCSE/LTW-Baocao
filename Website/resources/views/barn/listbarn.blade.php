@@ -2,7 +2,7 @@
 
 @section('title', 'Manage Barns')
 
-@section('contents')
+@section('content')
 <style>
         /*Tạo hiệu ứng lửa xanh cho tiêu đề */
         @keyframes greenFire {
@@ -149,18 +149,18 @@
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
                         </div>
-
                         <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Zone:</label>
                             <select id="zone_id" name="zone_id" class="form-select" required>
-                                <option value="" disabled selected>Select Zone</option>
+                                <option value="" >Select Zone</option>
                                 @foreach($zones as $zone)
                                     <option value="{{ $zone->zone_id }}">{{ $zone->zone_name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class="form-group mb-3">
+                        <!-- Đoạn mã cho Area được ẩn ban đầu -->
+                        <div class="form-group mb-3" id="area_div" style="display: none;">
                             <label for="area_id" class="form-label">Area:</label>
                             <select id="area_id" name="area_id" class="form-select" required>
                                 <option value="" disabled selected>Select Area</option>
@@ -176,46 +176,61 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Bắt sự kiện thay đổi Zone
-            $('#zone_id').change(function () {
-                const zoneId = $(this).val();
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Ẩn phần Area khi trang vừa tải
+        $('#area_div').hide();
 
-                // Nếu Zone được chọn
-                if (zoneId) {
-                    $.ajax({
-                        url: '/get-areas-by-zone', // URL của API
-                        type: 'POST',
-                        data: {
-                            zone_id: zoneId,
-                            _token: '{{ csrf_token() }}' // CSRF Token
-                        },
-                        success: function (response) {
-                            // Xóa các option cũ
-                            $('#area_id').html('<option value="" disabled selected>Select Area</option>');
+        // Bắt sự kiện thay đổi lựa chọn của Zone
+        $('#zone_id').change(function () {
+            const zoneId = $(this).val();  // Lấy giá trị zone_id được chọn
 
-                            // Kiểm tra xem có Area không
-                            if (response.length > 0) {
-                                response.forEach(function(areas) {
-                                    $('#area_id').append('<option value="'+areas.area_id+'">'+areas.name+'</option>');
-                                });
-                            } else {
-                                $('#area_id').html('<option value="" disabled>No areas available</option>');
-                            }
-                        },
-                        error: function () {
-                            $('#area_id').html('<option value="" disabled>An error occurred</option>');
+            // Nếu zoneId có giá trị (nghĩa là Zone đã được chọn)
+            if (zoneId) {
+                // Hiển thị dropdown Area
+                $('#area_div').show();
+
+                // Gửi AJAX để lấy dữ liệu các Area từ zoneId
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/barn/add', // Đảm bảo đường dẫn API chính xác
+                    type: 'POST',
+                    data: {
+                        zone_id: zoneId,
+                        _token: '{{ csrf_token() }}' // CSRF Token để bảo mật
+                    },
+                    success: function(data) {
+                        // Reset dropdown Area
+                        $('#area_id').empty();
+
+                        $('#area_id').append('<option value="">Select Area</option>');
+                        
+
+                        // Kiểm tra nếu có dữ liệu Area
+                        if (data.length > 0) {
+                            data.forEach(function(areas) {
+                                // Thêm các Option vào dropdown Area
+                                
+                                $('#area_id').append(
+                                `<option value="${areas.areas_id}">${areas.areas_id} - ${areas.areas_name}</option>`
+                            );
+                            });
+                        } else {
+                            $('#area_id').html('<option value="" disabled>No areas available</option>');
                         }
-                    });
-                } else {
-                    // Nếu không chọn Zone
-                    $('#area_id').html('<option value="" disabled selected>Select Area</option>');
-                }
-            });
+                    },
+                    error: function () {
+                        // Nếu có lỗi, hiển thị thông báo lỗi trong dropdown
+                        $('#area_id').html('<option value="" disabled>An error occurred</option>');
+                    }
+                });
+            } else {
+                // Nếu không chọn Zone, ẩn dropdown Area
+                $('#area_div').hide();
+            }
         });
-    </script>
+    });
+</script>
 
 
 @endsection

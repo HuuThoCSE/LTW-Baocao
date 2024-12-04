@@ -280,7 +280,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
-                <span>Account</span>
+                <span>{{ __('messages.account_manager') }}</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
 
@@ -373,12 +373,12 @@
                 </a>
               </li>
               <li>
-                <a href="/area">
+                <a href="{{ route('listarea.dashboard')}}">
                   <i class="bi bi-circle"></i><span>List Area</span>
                 </a>
               </li>
               <li>
-                <a href="/barn">
+                <a href="{{ route('listbarn.dashboard')}}">
                   <i class="bi bi-circle"></i><span>List Barn</span>
                 </a>
               </li>

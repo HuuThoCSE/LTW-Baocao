@@ -5,6 +5,8 @@ return [
     'title' => 'Goat Farm Management',
     'dashboard' => 'Dashboard',
     'goats' => 'Goats',
+    'account_manager' => 'Account Manager'
+  
     'add_goat' => 'Add Goat',
     'edit_goat' => 'Edit Goat',
     'delete_goat' => 'Delete Goat',
