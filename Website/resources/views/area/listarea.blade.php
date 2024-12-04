@@ -46,14 +46,14 @@
             <tbody>
                 @foreach($areas as $area)
                 <tr align="center">
-                    <td>{{ $area->id }}</td>
+                    <td>{{ $area->area_id }}</td>
                     <td>{{ $area->name }}</td>
                     <td>{{ $area->description }}</td>
                     <td>{{ $area->created_at }}</td>
                     <td>{{ $area->updated_at }}</td>
                     <td>
                         <!-- Nút xóa -->
-                        <form action="{{ route('listarea.del', $area->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('listarea.del', $area->area_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" 

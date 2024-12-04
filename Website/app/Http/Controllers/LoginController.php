@@ -35,7 +35,7 @@ class LoginController extends Controller
 
             Auth::loginUsingId($user->user_id);
 
-            // $this->storeSessionData($user);
+            $this->storeSessionData($user);
 
             // Lấy quyền của người dùng từ bảng user_permissions
             $userPermissions = DB::table('user_permissions')
