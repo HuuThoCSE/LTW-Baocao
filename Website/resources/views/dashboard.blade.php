@@ -112,7 +112,7 @@ h4 {
         </div>
         <hr>
         <div class="description">
-        <a href="{{ route('food') }}" >Khám phá các loại thức ăn tốt nhất cho dê tại đây!</a>
+        <a href="{{ route('food.list') }}" >Khám phá các loại thức ăn tốt nhất cho dê tại đây!</a>
         </div>
     </div>
 

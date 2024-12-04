@@ -237,7 +237,7 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::get('/goats/create', [GoatController::class, 'createGoatForm'])->name('goats.create');
 
         #Food Management
-        Route::get('/food', [FoodController::class, 'getView'])->name('food');
+        Route::get('/food', [FoodController::class, 'getView'])->name('food.list');
         Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
         Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
 });
