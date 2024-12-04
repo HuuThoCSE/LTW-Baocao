@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,8 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class AccountController extends Controller
 {
 
-    public function getView()
-    {
+    public function getView(){
         $userFarmId = session('user_farm_id');
 
         $users = DB::table('users')
@@ -21,13 +19,13 @@ class AccountController extends Controller
             ->get();
 
         // Fetch roles for the dropdown list, only roles with ID 3, 4, 5
-        $adminFarmId = auth()->user()->farm_id;
+//        $adminFarmId = auth()->user()->farm_id;
         $roles = DB::table('farm_roles')
             ->whereIn('role_id', [3, 4, 5])  // Lọc các role_id 3, 4, 5
             ->get();
 
         // Truyền cả người dùng và vai trò vào view
-        return view('account', ['users' => $users, 'farm_roles' => $roles]);
+        return view('account.dashboard', ['users' => $users, 'farm_roles' => $roles]);
 
     }
     public function delAccount($user_id)
@@ -43,6 +41,8 @@ class AccountController extends Controller
         }
     }
     public function addUser(Request $request){
+        $farm_id = session('user_farm_id');
+
         // Lấy tất cả người dùng
         $users = DB::table('users')->get();
 
@@ -51,22 +51,24 @@ class AccountController extends Controller
                 ->whereIn('role_id', [3, 4, 5])  // Lọc các role_id 3, 4, 5
                 ->get();
 
+//        dd($request);
+
         // Xác thực dữ liệu
         $validator = Validator::make($request->all(), [
             'user_name' => 'required|string|max:255',
             'user_email' => [
                 'required',
-                'emails',
+                'email',
                 'unique:users,user_email', // Kiểm tra tính duy nhất
                 // Thêm validation regex cho emails có dạng name@farm.farm_id.com
-                'regex:/^[a-zA-Z0-9._%+-]+@farm\.(\d+)\.com$/',
+                'regex:/^[a-zA-Z0-9._%+-]+@farm(\d+)\.vn$/', // Dùng (\d+) để kiểm tra farm_id không dùng .(\d+)
             ],
             'user_password' => 'required|string|min:6',
             'role_id' => 'required|in:3,4,5',  // Kiểm tra role_id phải là 3, 4 hoặc 5
         ], [
             'role_id.in' => 'Role ID phải là 3, 4 hoặc 5.',
             'user_email.unique' => 'Email này đã được đăng ký.',
-            'user_email.regex' => 'Email phải có dạng name@farm.farm_id.com.',
+            'user_email.regex' => 'Email phải có dạng name@farm(farm_id).vn.',
         ]);
 
         if ($validator->fails()) {
@@ -81,6 +83,7 @@ class AccountController extends Controller
             'user_email' => $request->user_email,
             'user_password' => bcrypt($request->user_password),
             'role_id' => $request->role_id, // Chọn role_id từ dropdown
+            'farm_id' => $farm_id, // Lấy farm_id từ session
             'created_at' => now(),
             'updated_at' => now(),
         ]);
