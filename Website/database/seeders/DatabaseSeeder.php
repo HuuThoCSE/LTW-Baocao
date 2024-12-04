@@ -156,6 +156,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             ZoneSeeder::class,
+            AreasTableSeeder::class,
             BarnSeeder::class,
             BreedsTableSeeder::class,
             GoatsTableSeeder::class,
@@ -163,7 +164,6 @@ class DatabaseSeeder extends Seeder
             GoatWeighsTableSeeder::class,
             TypeDevicesTableSeeder::class,
             DevicesTableSeeder::class,
-            AreasTableSeeder::class
         ]);
     }
 }

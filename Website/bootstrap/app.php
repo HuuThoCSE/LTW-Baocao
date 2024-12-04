@@ -13,8 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     // Đăng ký middleware toàn cục
     ->withMiddleware(function ($middleware) {
-        $middleware->prepend(StartSession::class);
-        $middleware->prepend(SetLocale::class); // Đăng ký Middleware SetLocale
+        // $middleware->prepend(StartSession::class);
+        // $middleware->prepend(SetLocale::class); // Đăng ký Middleware SetLocale
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // Xử lý ngoại lệ nếu cần
