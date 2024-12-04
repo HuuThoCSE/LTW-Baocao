@@ -41,7 +41,7 @@ Quản lý thuốc
     @endforeach
 </table>
 
-<form action="{{ route('medication_add') }}" method="POST">
+<form action="{{ route('medication.add') }}" method="POST">
     @csrf
     <h1>Thêm thuốc</h1>
     <label for="">Mã thuốc</label>
