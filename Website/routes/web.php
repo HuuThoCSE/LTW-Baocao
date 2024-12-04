@@ -128,18 +128,15 @@ Route::middleware(['web'])->group(function () {
         }
         return redirect()->back();
     })->name('change.language');
-
-    Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
 });
 
 
-Route::middleware(['auth', CheckPermission::class])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Admin
     Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
     Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
     Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
-
 
     // Chủ nông trại
     Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
@@ -172,7 +169,6 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
         Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
         Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
         Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
-        //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
         # List_Area Management
         Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
@@ -191,6 +187,7 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
         Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
 
     // Chung chung
+        Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
         Route::get('', [HomeController::class, 'getView'])->name('home');
 
         Route::get('/breeds/list', [BreedController::class, 'getView'])->name('breed.list');
@@ -215,8 +212,6 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
         Route::get('/food', [FoodController::class, 'getView'])->name('food');
         Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
         Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
-
-    //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 });
 
 # API
