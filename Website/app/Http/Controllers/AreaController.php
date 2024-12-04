@@ -71,5 +71,23 @@ class AreaController extends Controller
 
         return redirect()->route('listarea.dashboard')->with('success', 'Area updated successfully!');
     }
+    public function getAreasByZone(Request $request)
+    {
+        // Lấy zone_id từ request
+        $zoneId = $request->zone_id;
+        
+        // Kiểm tra nếu zone_id có giá trị
+        if ($zoneId) {
+            $areas = Area::where('zone_id', $zoneId)->get(); // Lấy các area dựa trên zone_id
+
+            // Trả về dữ liệu dưới dạng JSON
+            return response()->json($areas);
+        }
+
+        // Nếu không có zone_id, trả về mảng rỗng
+        return response()->json([]);
+    }
+
+
 
 }

@@ -200,7 +200,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
         Route::delete('/areas/{area_id}', [AreaController::class, 'delArea'])->name('listarea.del');
         Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
-        Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
+        Route::post('/areas.get-by-zone', [AreaController::class, 'getAreasByZone']);
+
+
 
         #Food Management
         Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');

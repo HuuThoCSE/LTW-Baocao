@@ -186,7 +186,7 @@
                 // Nếu Zone được chọn
                 if (zoneId) {
                     $.ajax({
-                        url: '/get-areas-by-zone', // URL của API
+                        url: '/areas.get-by-zone', // URL của API
                         type: 'POST',
                         data: {
                             zone_id: zoneId,
@@ -198,8 +198,8 @@
 
                             // Kiểm tra xem có Area không
                             if (response.length > 0) {
-                                response.forEach(function(areas) {
-                                    $('#area_id').append('<option value="'+areas.area_id+'">'+areas.name+'</option>');
+                                response.forEach(function(area) {
+                                    $('#area_id').append('<option value="'+area.area_id+'">'+area.name+'</option>');
                                 });
                             } else {
                                 $('#area_id').html('<option value="" disabled>No areas available</option>');
