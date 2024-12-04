@@ -2,7 +2,7 @@
 
 @section('title', 'List of Device')
 
-@section('contents')
+@section('content')
 <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>

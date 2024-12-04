@@ -4,7 +4,7 @@
 Quản lý thức ăn
 @endsection
 
-@section('contents')
+@section('content')
 
 @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
@@ -95,7 +95,7 @@ Quản lý thức ăn
                         <label for="expiry_date" class="col-form-label">Thời hạn sử dụng:</label>
                         <td><input type="text" name="expiry_date" class="form-control" placeholder="Thời hạn sử dụng"></td>
                     </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -104,7 +104,7 @@ Quản lý thức ăn
                     </div>
                 </div>
                 </form>
-                
+
                 </div>
             </div>
             @endforeach

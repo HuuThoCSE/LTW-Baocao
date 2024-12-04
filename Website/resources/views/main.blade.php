@@ -270,97 +270,83 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Account</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-account" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/account">
-              <i class="bi bi-circle"></i><span>List Account</span>
+        <!-- Chỉ có Administator với Owner mới hiểm thị Account -->
+        <?php if (session('user_role') == 1 || session('user_role') == 2): ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>Account</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
-          </li>
-        </ul>
-    </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Device</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
+            <ul id="components-account" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="/account">
+                        <i class="bi bi-circle"></i><span>List Account</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <?php endif; ?>
 
-        <ul id="components-device" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/devices">
-              <i class="bi bi-circle"></i><span>List Device</span>
+        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 3): ?>
+          <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-menu-button-wide"></i>
+                <span>Device</span>
+                <i class="bi bi-chevron-down ms-auto">
+              </i>
             </a>
-          </li>
-          <!-- <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
+
+            <ul id="components-device" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="/devices">
+                  <i class="bi bi-circle"></i><span>List Device</span>
+                </a>
+              </li>
+              <!-- <li>
+                <a href="components-accordion.html">
+                  <i class="bi bi-circle"></i><span>Accordion</span>
+                </a>
+              </li> -->
+            </ul>
+        </li>
+        <?php endif; ?>
+
+        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-breed" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-menu-button-wide"></i>
+                    <span>Breed Management</span> <!-- Quản lý giống -->
+                    <i class="bi bi-chevron-down ms-auto">
+                  </i>
+                </a>
+
+                <ul id="components-breed" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="{{ route('breed.list') }}">
+                      <i class="bi bi-circle"></i><span>Breed List</span>
+                    </a>
+                  </li>
+                  <!-- <li>
+                    <a href="components-accordion.html">
+                      <i class="bi bi-circle"></i><span>Link Breed to Goats</span>  Liên kết giống với dê
+                    </a>
+                  </li> -->
+                </ul>
+            </li>
+        <?php endif; ?>
+
+        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-goat" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-menu-button-wide"></i>
+                <span>Goat</span>
+                <i class="bi bi-chevron-down ms-auto">
+              </i>
             </a>
-          </li> -->
-        </ul>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-breed" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Breed Management</span> <!-- Quản lý giống -->
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-breed" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('breed.list') }}">
-              <i class="bi bi-circle"></i><span>Breed List</span>
-            </a>
-          </li>
-          <!-- <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Link Breed to Goats</span>  Liên kết giống với dê
-            </a>
-          </li> -->
-        </ul>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-goat" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Goat</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
-        <ul id="components-goat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/goats">
-              <i class="bi bi-circle"></i><span>List Goat</span>
-            </a>
-          </li>
-          <!-- <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li> -->
-        </ul>
-      </li>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-farm" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Location</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
-
+        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 3): ?>
         <ul id="components-farm" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="/zones">
@@ -378,48 +364,70 @@
             <a href="/barns">
               <i class="bi bi-circle"></i><span>List Barn</span>
             </a>
-          </li>
-        </ul>
-      </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Medication</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
+            <ul id="components-farm" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="/areas">
+                  <i class="bi bi-circle"></i><span>List Area</span>
+                </a>
+              </li>
+              <li>
+                <a href="/zones">
+                  <i class="bi bi-circle"></i><span>List Zone</span>
+                </a>
+              </li>
+              <li>
+                <a href="/barns">
+                  <i class="bi bi-circle"></i><span>List Barn</span>
+                </a>
+              </li>
+            </ul>
+        </li>
+        <?php endif; ?>
 
-        <ul id="components-medication" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/medication">
-              <i class="bi bi-circle"></i><span>List Medication</span>
+        <!-- Chỉ có Administator, Owner và Fammer mới hiểm thị Medication -->
+        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+          <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-menu-button-wide"></i>
+                <span>Medication</span>
+                <i class="bi bi-chevron-down ms-auto">
+              </i>
             </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Medication Report</span>
-            </a>
-          </li>
-        </ul>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i>
-            <span>Food</span>
-            <i class="bi bi-chevron-down ms-auto">
-          </i>
-        </a>
+            <ul id="components-medication" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="/medication">
+                  <i class="bi bi-circle"></i><span>List Medication</span>
+                </a>
+              </li>
+              <li>
+                <a href="components-accordion.html">
+                  <i class="bi bi-circle"></i><span>Medication Report</span>
+                </a>
+              </li>
+            </ul>
+            </li>
+          <?php endif; ?>
 
-        <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="/food">
-              <i class="bi bi-circle"></i><span>List Food</span>
-            </a>
-          </li>
-        </ul>
-    </li>
+          <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-menu-button-wide"></i>
+                    <span>Food</span>
+                    <i class="bi bi-chevron-down ms-auto">
+                  </i>
+                </a>
+
+                <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="/food">
+                      <i class="bi bi-circle"></i><span>List Food</span>
+                    </a>
+                  </li>
+                </ul>
+            </li>
+            <?php endif; ?>
 
     </ul>
 
@@ -435,7 +443,7 @@
 
   <main id="main" class="main">
 
-  @yield('contents')
+  @yield('content')
 
   </main><!-- End #main -->
 

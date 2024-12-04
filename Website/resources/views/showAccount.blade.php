@@ -4,7 +4,7 @@
 Thông tin tài khoản
 @endsection
 
-@section('contents')
+@section('content')
 <div class="pagetitle">
     <h1>Thông tin tài khoản</h1>
     <nav>

@@ -2,7 +2,24 @@
 
 @section('title', 'Bảng điều khiển')
 
-@section('contents')
+<!-- Thông báo -->
+@if (session('success'))
+    <div class="alert alert-success mt-3 rounded shadow-sm">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger mt-3 rounded shadow-sm">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@section('content')
 <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>
@@ -32,13 +49,13 @@
     background-color: #218838;
 }
 </style>
-    
+
 
 <!-- Danh sách các trang trại -->
 <div class="container mt-5">
     <h2 class="text-center mb-4">List of Farms</h2>
 </div>
-    <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addFarmModal">
+    <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addFarmModal" id="btn-add">
         <i class="bi bi-plus-circle"></i>
         <span class="ms-2">Add Farm</span>
     </button>
@@ -49,7 +66,6 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Location</th>
-                <th>Owner</th>
                 <th colspan="2">Operations</th>
             </tr>
         </thead>
@@ -59,7 +75,6 @@
                 <td>{{ $farm->farm_id }}</td>
                 <td>{{ $farm->farm_name }}</td>
                 <td>{{ $farm->location }}</td>
-                <td>{{ $farm->owner_id }}</td>
                 <td>
                     <!-- Nút xóa -->
                     <form action="{{ route('listfarm.del', $farm->farm_id) }}" method="POST" style="display:inline;">
@@ -82,6 +97,56 @@
             @endforeach
         </tbody>
     </table>
+</div>
+
+<!-- Modal Thêm Farm -->
+<div class="modal fade" id="addFarmModal" tabindex="-1" aria-labelledby="addFarmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="addFarmForm">
+                @csrf
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addFarmModalLabel">Add New Farm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Hiển thị lỗi chung -->
+                    <div id="error-alert" class="alert alert-danger d-none"></div>
+
+                    <!-- Form inputs -->
+                    <div class="form-group mb-3">
+                        <label for="farm_name" class="form-label">Farm Name:</label>
+                        <input type="text" name="farm_name" class="form-control" placeholder="Enter farm name" id="farm_name">
+                        <span class="text-danger error-farm_name"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="location" class="form-label">Location:</label>
+                        <textarea name="location" class="form-control" placeholder="Enter location" id="location"></textarea>
+                        <span class="text-danger error-location"></span>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="hidden" name="chb_old_owner" value="off">
+                        <input type="checkbox" name="chb_old_owner" id="chb_old_owner" class="form-check-input" value="on">
+                        <label class="form-check-label" for="chb_old_owner">Owner đã có farm</label>
+                    </div>
+
+                    <div class="form-mb-3" id="select_old_owner">
+                        <label for="sel_owner_id" class="form-label">Owner:</label>
+                        <select name="sel_owner_id" id="sel_owner_id" class="form-select">
+                            <option value="">Select Owner</option>
+                        </select>
+                        <span class="text-danger error-sel_owner_id"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Farm</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- Modal cập nhật -->
@@ -111,8 +176,10 @@
                         </select>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="owner_id" class="form-label">Owner ID:</label>
-                        <input type="text" name="owner_id" class="form-control" value="{{ $farm->owner_id }}" required>
+                        <label for="owner_id" class="form-label">Owner:</label>
+                        <select name="udp_sel_owner_id" id="udp_sel_owner_id" class="form-select">
+                            <option value="">Select Owner</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -125,60 +192,87 @@
 </div>
 @endforeach
 
-<!-- Form thêm mới -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#btn-add').on('click', function () {
+            $.ajax({
+                url: '{{ route('api.getOwners') }}',
+                method: 'GET',
+                success: function (data) {
+                    // Xóa các option cũ trong select
+                    $('#sel_owner_id').empty();
 
+                    // Thêm option mặc định
+                    $('#sel_owner_id').append('<option value="">Select Owner</option>');
 
-<!-- Modal Thêm Farm -->
-<!-- Modal Thêm Farm -->
-<div class="modal fade" id="addFarmModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg rounded">
-            <form action="{{ route('listfarm.add') }}" method="POST">
-                @csrf
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Add New Farm</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label for="farm_name" class="form-label">Farm Name:</label>
-                        <input type="text" name="farm_name" class="form-control" placeholder="Enter farm name" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="location" class="form-label">Location:</label>
-                        <textarea name="location" class="form-control" placeholder="Enter location" required></textarea>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="owner_id" class="form-label">Owner ID:</label>
-                        <input type="text" name="owner_id" class="form-control" placeholder="Enter owner ID">
-                    </div>
-                    <!-- Checkbox để tạo tài khoản admin -->
-                    <div class="form-check mb-3">
-                        <input type="checkbox" name="create_admin" class="form-check-input" id="create_admin">
-                        <label class="form-check-label" for="create_admin">Tạo tài khoản admin cho farm này</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Farm</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                    // Kiểm tra và thêm dữ liệu
+                    // console.log(data); // Kiểm tra dữ liệu trả về
+                    if (Array.isArray(data)) {
+                        data.forEach(function (owner) {
+                            $('#sel_owner_id').append(
+                                `<option value="${owner.user_id}">${owner.user_id} - ${owner.user_name}</option>`
+                            );
+                        });
+                    } else {
+                        console.error('API không trả về mảng:', data);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                },
+            });
+        });
 
+        $('#select_old_owner').hide(); // Ẩn phần tử ban đầu
 
-<!-- Thông báo -->
-@if (session('success'))
-<div class="alert alert-success mt-3 rounded shadow-sm">
-    {{ session('success') }}
-</div>
-@endif
+        $('#chb_old_owner').on('change', function () {
+            if ($(this).is(':checked')) {
+                $('#select_old_owner').show(); // Hiển thị
+            } else {
+                $('#select_old_owner').hide(); // Ẩn
+            }
+        });
 
-@if (session('error'))
-<div class="alert alert-danger mt-3 rounded shadow-sm">
-    {{ session('error') }}
-</div>
-@endif
+        $('#addFarmForm').on('submit', function (e) {
+            e.preventDefault(); // Ngăn reload trang
+
+            // Lấy dữ liệu form
+            let formData = $(this).serialize();
+
+            // Gửi dữ liệu qua AJAX
+            $.ajax({
+                url: '{{ route('listfarm.add') }}',
+                method: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Nếu thành công, hiển thị thông báo và đóng modal
+                    $('#error-alert').addClass('d-none'); // Ẩn lỗi
+                    $('.text-danger').text(''); // Xóa lỗi cụ thể
+                    alert(response.message); // Hiển thị thông báo thành công
+                    $('#addFarmModal').modal('hide'); // Đóng modal
+                    location.reload(); // Reload lại trang để cập nhật danh sách farm
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseJSON); // Log lỗi để kiểm tra
+
+                    // Nếu có lỗi, hiển thị trong modal
+                    let errors = xhr.responseJSON.errors;
+
+                    // Hiển thị lỗi chung
+                    $('#error-alert').removeClass('d-none').text('Có lỗi xảy ra. Vui lòng kiểm tra các trường bên dưới.');
+
+                    // Hiển thị lỗi cụ thể từng trường
+                    $('.text-danger').text(''); // Reset lỗi cũ
+                    if (errors) {
+                        $.each(errors, function (key, value) {
+                            $('.error-' + key).text(value[0]);
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

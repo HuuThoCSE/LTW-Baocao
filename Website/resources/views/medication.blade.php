@@ -4,7 +4,7 @@
 Quản lý thuốc
 @endsection
 
-@section('contents')
+@section('content')
 
 @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>

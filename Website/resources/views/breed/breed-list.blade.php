@@ -2,7 +2,7 @@
 
 @section('title', 'List of Breed')
 
-@section('contents')
+@section('content')
 
 @if(session('success'))
     <div class="alert alert-success">
@@ -58,7 +58,7 @@
                         <form action="{{ route('breed.del', $breed->breed_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" 
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
                                     class="btn btn-danger btn-sm d-flex align-items-center">
                                 <i class="ri-delete-bin-5-line"></i>
                                 <span class="ms-2">Delete</span>
@@ -66,9 +66,9 @@
                         </form>
                     </td>
                     <td>
-                        <button class="btn btn-success btn-sm" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#updateBreedModal" 
+                        <button class="btn btn-success btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#updateBreedModal"
                             data-id="{{$breed->breed_id}}"
                             data-breed_name_eng="{{$breed->breed_name_eng}}"
                             data-breed_name_vie="{{$breed->breed_name_vie}}"
@@ -158,7 +158,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Lắng nghe sự kiện khi modal được kích hoạt
     var updateBreedModal = document.getElementById('updateBreedModal');
-    
+
     updateBreedModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget; // Nút "Update" được nhấn
         var breedId = button.getAttribute('data-id'); // Lấy ID giống breed_id
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Cập nhật URL của form với breed_id
         var formAction = "/breeds/" + breedId; // Xây dựng URL trực tiếp trong JavaScript
         console.log("Form Action: ", formAction); // Kiểm tra URL của form
-        
+
         // Cập nhật action của form
         var updateBreedForm = updateBreedModal.querySelector('#updateBreedForm');
         updateBreedForm.setAttribute('action', formAction);

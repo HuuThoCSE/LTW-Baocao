@@ -75,7 +75,7 @@
                         <form action="{{ route('listarea.del', $area->area_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" 
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
                                     class="btn btn-danger btn-sm d-flex align-items-center">
                                 <i class="ri-delete-bin-5-line"></i>
                                 <span class="ms-2">Delete</span>
@@ -96,8 +96,8 @@
     </div>
 
     <!-- Form thêm mới -->
-    
-    
+
+
 
     <!-- # Modal thêm mới -->
     <div class="modal fade" id="addAreaModal" tabindex="-1" aria-hidden="true">
