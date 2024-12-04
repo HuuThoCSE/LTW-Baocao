@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Session;
 
 class GoatController extends Controller
 {
-    
-
-    
-
-
     public function getView()
     {
 
@@ -24,10 +19,9 @@ class GoatController extends Controller
         $goats = DB::table('goats')
             ->join('farms', 'goats.farm_id', '=', 'farms.farm_id')
             ->join('breeds', 'goats.breed_id', '=', 'breeds.breed_id')
-            ->select('goats.*', 'farms.farm_name', 'breeds.breed_name') // Lấy farm_name và breed_name
+            ->select('goats.*', 'farms.farm_name', 'breeds.breed_name_vie') // Lấy farm_name và breed_name
             ->get();
-        
-            // dd(Session::get('farm_id')) ;
+
         // Truyền dữ liệu vào view
         return view('goats.listgoat', ['goats' => $goats]);
     }
@@ -42,21 +36,21 @@ class GoatController extends Controller
             'farm_id' => 'required|integer|exists:farms,farm_id',  // Farm ID is required, should be an integer, and must exist in the 'farms' table
             'breed_id' => 'required|integer|exists:breeds,breed_id', // Breed ID is required, should be an integer, and must exist in the 'breeds' table
         ]);
-       
-    
+
+
         // Debugging: Check all request data
         // dd($request->all()); // This will show all request data and stop the script
-   
+
         $goat_name = $request->input('goat_name');
         $goat_age = $request->input('goat_age');
         $origin = $request->input('origin');
-        $farm_id = $request->input('farm_id'); 
-        $breed_id = $request->input('breed_id'); 
+        $farm_id = $request->input('farm_id');
+        $breed_id = $request->input('breed_id');
 
         $farm_id = Session::get('farm_id');
         // Insert to database
-     
-    
+
+
 
         try {
             // Insert the new goat into the database
@@ -70,7 +64,7 @@ class GoatController extends Controller
                 'type_device_id' => 1,
                 'status' => 'Active',
             ]);
-    
+
             // Thêm thông báo thành công
             return redirect()->route('goats.list')->with('success', 'Goat added successfully');
         } catch (\Exception $e) {
@@ -81,13 +75,13 @@ class GoatController extends Controller
 
     }
 
-    
+
     public function delGoat($goat_id)
     {
-        
+
     // Find the goat by its ID
     $goat = DB::table('goats')->where('goat_id', $goat_id)->first();
-    
+
     if ($goat) {
         // Delete the goat if found
         DB::table('goats')->where('goat_id', $goat_id)->delete();
@@ -97,7 +91,7 @@ class GoatController extends Controller
         return redirect()->back()->with('error', 'Goat not found.');
     }
 
-        
+
     }
     public function udpGoat(Request $request, $goat_id)
     {
@@ -106,13 +100,13 @@ class GoatController extends Controller
         $goat_age = $request->input('goat_age');
         $origin = $request->input('origin');
         $farm_id = $request->input('farm_id'); // Lấy farm_id từ form
-        $breed_id = $request->input('breed_id'); 
+        $breed_id = $request->input('breed_id');
 
         // Kiểm tra farm_id có tồn tại không
         if (!$farm_id) {
             return redirect()->back()->with('error', 'Farm ID is missing.');
         }
-    
+
         // Cập nhật bảng farms
          // Cập nhật thông tin cho con dê
         $updated = DB::table('goats')->where('goat_id', $goat_id)->update([
@@ -122,14 +116,14 @@ class GoatController extends Controller
             'farm_id' => $farm_id, // Cập nhật farm_id cho con dê
             'breed_id' => $breed_id, // Cập nhật breed_id nếu cần
         ]);
-    
+
         // Truy xuất lại danh sách
         $farms = DB::table('goats')->get();
-    
+
         // Chuyển hướng về trang danh sách với thông báo thành công
         return redirect()->route('goats.list')->with('success', 'Farm updated successfully.');
     }
-   
 
- 
+
+
 }

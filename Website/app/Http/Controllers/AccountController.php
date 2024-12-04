@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class AccountController extends Controller
 {
-    
+
     public function getView()
     {
-        $users = DB::table('users')->get();
+        $userFarmId = session('user_farm_id');
+
+        $users = DB::table('users')
+            ->where('user_id', '!=', 1) // Bỏ qua tài khoản có id = 1
+            ->where('farm_id', $userFarmId) // Chỉ lấy tài khoản có farm_id bằng với session user_farm_id
+            ->get();
 
         // Fetch roles for the dropdown list, only roles with ID 3, 4, 5
         $adminFarmId = auth()->user()->farm_id;
@@ -28,7 +33,7 @@ class AccountController extends Controller
     {
         // Find the medication by ID and delete it
         $account = DB::table('users')->where('user_id', $user_id);
-        
+
         if ($account->exists()) {
             $account->delete();
             return redirect()->back()->with('success', 'Medication deleted successfully.');
