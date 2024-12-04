@@ -22,6 +22,12 @@ class ZoneSeeder extends Seeder
         ]);
 
         Zone::create([
+            'farm_id' => 1,
+            'zone_name' => 'Breeding Zone',
+            'description' => 'For mother and baby goats',
+        ]);
+
+        Zone::create([
             'farm_id' => 2, // Ben Tre Goat Farm
             'zone_name' => 'Equipment Zone',
             'description' => 'Area for storing and maintaining equipment.',

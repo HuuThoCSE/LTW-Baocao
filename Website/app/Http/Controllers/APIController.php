@@ -25,4 +25,12 @@ class APIController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function getAreasByZone(Request $request)
+    {
+        // Lấy danh sách areas theo zone_id
+        $areas = Area::where('zone_id', $request->zone_id)->get();
+
+        // Trả về dữ liệu dưới dạng JSON
+        return response()->json($areas);
+    }
 }

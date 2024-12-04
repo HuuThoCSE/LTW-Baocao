@@ -3,12 +3,29 @@
 @section('title', 'Manage Barns')
 
 @section('contents')
-<div class="container mt-4">
-    <!-- Table heading -->
-    <h1 class="text-center mb-4">Manage Barns</h1>
-    <style>
+<style>
+        /*Tạo hiệu ứng lửa xanh cho tiêu đề */
+        @keyframes greenFire {
+            0% {
+                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00cc00, 0 0 40px #00cc00, 0 0 50px #009900;
+            }
+            100% {
+                text-shadow: 0 0 10px #00cc00, 0 0 20px #00cc00, 0 0 30px #009900, 0 0 40px #009900, 0 0 50px #006600;
+            }
+        }
+
+        /* Style thẻ h1 với hiệu ứng */
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 4rem;
+            color: #00ff00; /* Màu chữ mặc định */
+            text-transform: uppercase;
+            animation: greenFire 1.5s infinite alternate; /* Áp dụng hiệu ứng lửa */
+            
+        }
     /* Add hover effect for buttons */
     .btn:hover {
+
         transform: scale(1.1);
         transition: transform 0.3s ease-in-out;
     }
@@ -25,7 +42,10 @@
         background-color: #218838;
     }
     </style>
-
+<div class="container mt-4">
+    <!-- Table heading -->
+    <h1 class="text-center mb-4">Manage Barns</h1>
+    
     <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
         <i class="bi bi-clipboard-plus"></i>
         <span class="ms-2">Add Barn </span>
@@ -131,17 +151,19 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="location" class="form-label">Location:</label>
-                            <input type="text" name="location" class="form-control" placeholder="Enter location">
-                        </div>
-
-                        <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Zone:</label>
-                            <select name="zone_id" class="form-select" required>
+                            <select id="zone_id" name="zone_id" class="form-select" required>
                                 <option value="" disabled selected>Select Zone</option>
                                 @foreach($zones as $zone)
                                     <option value="{{ $zone->zone_id }}">{{ $zone->zone_name }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="area_id" class="form-label">Area:</label>
+                            <select id="area_id" name="area_id" class="form-select" required>
+                                <option value="" disabled selected>Select Area</option>
                             </select>
                         </div>
                     </div>
@@ -153,6 +175,47 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Bắt sự kiện thay đổi Zone
+            $('#zone_id').change(function () {
+                const zoneId = $(this).val();
+
+                // Nếu Zone được chọn
+                if (zoneId) {
+                    $.ajax({
+                        url: '/get-areas-by-zone', // URL của API
+                        type: 'POST',
+                        data: {
+                            zone_id: zoneId,
+                            _token: '{{ csrf_token() }}' // CSRF Token
+                        },
+                        success: function (response) {
+                            // Xóa các option cũ
+                            $('#area_id').html('<option value="" disabled selected>Select Area</option>');
+
+                            // Kiểm tra xem có Area không
+                            if (response.length > 0) {
+                                response.forEach(function(areas) {
+                                    $('#area_id').append('<option value="'+areas.area_id+'">'+areas.name+'</option>');
+                                });
+                            } else {
+                                $('#area_id').html('<option value="" disabled>No areas available</option>');
+                            }
+                        },
+                        error: function () {
+                            $('#area_id').html('<option value="" disabled>An error occurred</option>');
+                        }
+                    });
+                } else {
+                    // Nếu không chọn Zone
+                    $('#area_id').html('<option value="" disabled selected>Select Area</option>');
+                }
+            });
+        });
+    </script>
 
 
 @endsection

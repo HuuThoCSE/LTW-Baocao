@@ -202,8 +202,11 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
     # List_Area Management
     Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
     Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
-    Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
-    Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+    Route::delete('/areas/{area_id}', [AreaController::class, 'delArea'])->name('listarea.del');
+    Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+    // routes/web.php
+    Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
+
 
 
      # List_Zone Management
@@ -211,6 +214,7 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
      Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
      Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
      Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
+     Route::post('/get-area-by-zone', [ZoneController::class, 'getAreaByZone']);
     //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
       # List_Barn Management
