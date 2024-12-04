@@ -415,15 +415,15 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
-                    <span>Food</span>
+                    <span>{{ __('messages.food_management') }}</span>
                     <i class="bi bi-chevron-down ms-auto">
                   </i>
                 </a>
 
                 <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
-                    <a href="/food">
-                      <i class="bi bi-circle"></i><span>List Food</span>
+                    <a href="{{ route('food.list') }}">
+                      <i class="bi bi-circle"></i><span>{{ __('messages.food_list') }}</span>
                     </a>
                   </li>
                 </ul>
