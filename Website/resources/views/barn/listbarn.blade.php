@@ -113,7 +113,7 @@
     <div class="modal fade" id="addBarnModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form  action="{{ route('listbarn.add') }}" method="POST">
+                <form action="{{ route('listbarn.add') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Add New Barn</h5>
@@ -122,12 +122,27 @@
                     <div class="modal-body">
                         <div class="form-group mb-3">
                             <label for="barn_name" class="form-label">Barn Name:</label>
-                            <input type="text" name="barn_name" class="form-control" required>
+                            <input type="text" name="barn_name" class="form-control" placeholder="Enter barn name" required>
                         </div>
-                       
+
                         <div class="form-group mb-3">
                             <label for="description" class="form-label">Description:</label>
-                            <textarea name="description" class="form-control" rows="3"></textarea>
+                            <textarea name="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="location" class="form-label">Location:</label>
+                            <input type="text" name="location" class="form-control" placeholder="Enter location">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="zone_id" class="form-label">Zone:</label>
+                            <select name="zone_id" class="form-select" required>
+                                <option value="" disabled selected>Select Zone</option>
+                                @foreach($zones as $zone)
+                                    <option value="{{ $zone->zone_id }}">{{ $zone->zone_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -138,7 +153,6 @@
             </div>
         </div>
     </div>
-</div>
 
 
 @endsection

@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class BarnController extends Controller
 {
+
+    public function index()
+    {
+        $barns = Barn::all(); // Lấy danh sách chuồng
+        $zones = Zone::all(); // Lấy danh sách khu vực (zones)
+        
+        return view('barns.index', compact('barns', 'zones'));
+    }
+
     // Show details of a specific barn
     public function show($id)
     {
@@ -20,8 +30,21 @@ class BarnController extends Controller
 
     public function getView()
     {
-        $barns = DB::table('barns')->get(); // Get zones from the database
-        return view('barn/listbarn', ['barns' => $barns]); // Pass the zones to the view
+       
+        $farm_id = Session::get('user_farm_id');
+
+        // Lấy zones thuộc farm_id
+        $zones = DB::table('zones')->where('farm_id', $farm_id)->get();
+
+        $barns = DB::table('barns')
+            ->join('areas', 'barns.area_id', '=', 'areas.area_id')
+            ->join('zones', 'areas.zone_id', '=', 'zones.zone_id')
+            ->join('farms', 'zones.farm_id', '=', 'farms.farm_id')
+            ->where('farms.farm_id', $farm_id) // Chỉ định rõ bảng chứa farm_id
+            ->select('barns.*') // Chọn các cột cần thiết
+            ->get(); 
+        
+        return view('barn/listbarn', ['barns' => $barns, 'zones' => $zones]); // Pass the zones to the view
     }
     
       // Thêm mới một barn

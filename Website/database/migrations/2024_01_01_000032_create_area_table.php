@@ -11,7 +11,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('areas', function (Blueprint $table) {
-            $table->id();
+            $table->id('area_id');
+            $table->foreignId('zone_id')
+                ->constrained('zones', 'zone_id')
+                ->onDelete('cascade');
             $table->string('name');  // Tên khu vực (Vinh Long, Tiền Giang, v.v.)
             $table->text('description')->nullable();  // Mô tả khu vực (tùy chọn)
             $table->timestamps();  // Các trường created_at và updated_at
