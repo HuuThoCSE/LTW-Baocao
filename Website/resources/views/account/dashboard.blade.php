@@ -71,9 +71,9 @@ Quản lý tài khoản
         <span class="ms-2">Add Account</span>
     </button>
     <div class="card-body">
-    <table border="1">
+    <table>
         <thead>
-            <tr>
+            <tr style="text-align: center">
                 <th>ID</th>
                 <th>Tên</th>
                 <th>Email</th>
@@ -88,16 +88,14 @@ Quản lý tài khoản
                     <td>{{ $user->user_name }}</td>
                     <td>{{ $user->user_email }}</td>
                     <td>{{ $user->created_at }}</td>
-                    <td align='center'>
-                <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-            <td>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
-            </td>
+                    <td class="d-flex justify-content-center">
+                        <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger me-2">Delete</button>
+                        </form>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -120,7 +118,7 @@ Quản lý tài khoản
 <div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded">
-            <form action="{{ route('user.add') }}" method="POST">
+            <form action="{{ route('account.add') }}" method="POST">
                 @csrf
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Add New Account</h5>
@@ -138,10 +136,6 @@ Quản lý tài khoản
                     <div class="form-group mb-3">
                         <label for="owner_id" class="form-label">Password:</label>
                         <input type="password" name="user_password" class="form-control" placeholder="Enter password" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="farm_id">Farm ID</label>
-                    <input type="text" name="farm_id" class="form-control" value="{{ auth()->user()->farm_id }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="role_id">Role</label>
