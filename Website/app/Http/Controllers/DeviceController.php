@@ -14,13 +14,34 @@ class DeviceController extends Controller
     // Hiển thị danh sách thiết bị
     public function getView()
     {
-        $devices = DB::table('devices')
-            ->join('farms', 'devices.farm_id', '=', 'farms.farm_id')
-            ->join('device_types', 'devices.device_type_id', '=', 'device_types.id')
-            ->select('devices.*', 'farms.farm_name', 'device_types.type_device_name')
+        // Lấy farm_id từ seccion
+        $farm_id = Session::get('farm_id');
+
+        // Lấy danh sách thiết bị với farm id qua table device_types lấy type_device_name
+        $devices = Device::where('farm_id', $farm_id)
+            ->join('device_types', 'devices.device_type_id', '=', 'device_types.device_type_id')
+            ->select('devices.*', 'device_types.type_device_name')
             ->get();
 
-        return view('device.list', ['devices' => $devices]);
+//        dd($devices);
+
+//        $devices = DB::table('devices')
+//            ->join('farms', 'devices.farm_id', '=', 'farms.farm_id')
+//            ->join('device_types', 'devices.device_type_id', '=', 'device_types.device_type_id')
+//            ->select('devices.*', 'farms.farm_name', 'device_types.type_device_name')
+//            ->get();
+
+        return view('device.dashboard', ['devices' => $devices]);
+    }
+
+    public function detailDevice($id)
+    {
+        // Lấy chi tiết thiết bị với $id
+        $deviceDetail = Device::find($id)
+            ->join('device_types', 'devices.device_type_id', '=', 'device_types.device_type_id')
+            ->select('devices.*', 'device_types.type_device_name')
+            ->first();
+        return view('device.detail', ['deviceDetail' => $deviceDetail]);
     }
 
     // Thêm thiết bị

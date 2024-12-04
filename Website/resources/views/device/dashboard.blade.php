@@ -22,14 +22,22 @@
             <tr align='center'>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Type</th>
+                <th>Zone</th>
+                <th>Barn</th>
+                <th>Status</th>
                 <th colspan="2">Operation</th>
             </tr>
         </thead>
         <tbody>
             @foreach($devices as $device)
-                <tr align='center'>
+                <tr align='center' onclick="window.location='{{ route('device.detail', ['id' => $device->device_id]) }}'">
                     <td>{{ $device->device_type_id }}</td>
                     <td>{{ $device->device_name }}</td>
+                    <td>{{ $device->type_device_name }}</td>
+                    <td>{{ $device->zone_id }}</td>
+                    <td>{{ $device->barn_id }}</td>
+                    <td>{{ $device->status }}</td>
                     <td align='center'>
                         <form action="{{ route('listfarm.del', $device->device_id) }}" method="POST" style="display:inline;">
                             @csrf
@@ -40,9 +48,9 @@
                     <td align='center'>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal{{$device->device_id}}" >Update</button>
                     </td>
-                </tr>     
+                </tr>
             @endforeach
-        </tbody>   
+        </tbody>
     </table>
 </div>
 
