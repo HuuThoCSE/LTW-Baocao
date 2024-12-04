@@ -4,7 +4,7 @@
 Danh sách dê
 @endsection
 
-@section('contents')
+@section('content')
 <h1 class="text-center mb-4">List of Goats</h1>
 <style>
 /* Add hover effect for buttons */

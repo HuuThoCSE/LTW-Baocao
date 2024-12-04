@@ -195,7 +195,7 @@
         </li><!-- End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
-    
+
         @if(auth()->check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
@@ -278,7 +278,7 @@
           </li>
 
     </ul>
-    
+
     <!-- <li class="nav-item">
       <a href="{{ route('login') }}">
           <i></i>
@@ -291,7 +291,7 @@
 
   <main id="main" class="main">
 
-  @yield('contents')
+  @yield('content')
 
   </main><!-- End #main -->
 

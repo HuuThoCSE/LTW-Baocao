@@ -2,7 +2,7 @@
 
 @section('title', 'Manage Barns')
 
-@section('contents')
+@section('content')
 <div class="container mt-4">
     <!-- Table heading -->
     <h1 class="text-center mb-4">Manage Barns</h1>
@@ -48,13 +48,13 @@
                     <td>{{ $barn->barn_id }}</td>
                     <td>{{ $barn->barn_name }}</td>
                     <td>{{ $barn->description }}</td>
-                 
+
 
                     <td>
                         <form action="{{ route('listbarn.del', $barn->barn_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" 
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
                                     class="btn btn-danger btn-sm d-flex align-items-center">
                                 <i class="ri-delete-bin-5-line"></i>
                                 <span class="ms-2">Delete</span>
@@ -62,7 +62,7 @@
                         </form>
                     </td>
                     <td>
-                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" 
+                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal"
                                 data-bs-target="#udpModal{{$barn->barn_id}}">
                             <i class="bi bi-pencil-square"></i>
                             <span class="ms-2">Update</span>
@@ -91,7 +91,7 @@
                             <label for="barn_name" class="form-label">Name:</label>
                             <input type="text" name="barn_name" class="form-control" value="{{ $barn->barn_name }}" required>
                         </div>
-                  
+
                         <div class="form-group mb-3">
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3" required>{{ $barn->description }}</textarea>
@@ -108,7 +108,7 @@
     @endforeach
 
     <!-- Add New Barn Form -->
-    
+
     <!-- Modal for adding a new barn -->
     <div class="modal fade" id="addBarnModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

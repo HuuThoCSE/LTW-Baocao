@@ -4,7 +4,7 @@
 Register User
 @endsection
 
-@section('contents')
+@section('content')
 @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
 @elseif (session('error'))
@@ -20,12 +20,12 @@ Register User
             <label for="name" class="form-label">Name:</label>
             <input type="text" name="name" id="" class="form-control" required placeholder="Tên truy cập">
         </div>
-        
+
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
             <input type="email" name="email" id="" class="form-control" required placeholder="Email">
         </div>
-        
+
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
             <input type="password" name="password" id="" class="form-control" required placeholder="Mật khẩu">
@@ -36,6 +36,6 @@ Register User
         </div>
     </form>
 
-    
+
 </div>
-@endsection  
+@endsection

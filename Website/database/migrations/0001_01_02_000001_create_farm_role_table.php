@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('farm_roles', function (Blueprint $table) {
             $table->id('role_id');
-            $table->string('role_name');
+            $table->string('role_name')->unique();
             $table->string('farm_id')->nullable();
             $table->timestamps();
         });

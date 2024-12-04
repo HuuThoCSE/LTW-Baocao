@@ -448,7 +448,7 @@
 
   <main id="main" class="main">
 
-  @yield('contents')
+  @yield('content')
 
   </main><!-- End #main -->
 
