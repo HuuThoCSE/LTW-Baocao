@@ -95,9 +95,6 @@ h4 {
 @endsection
 
 @section('content')
-    <p>Current Language: {{ App::currentLocale() }}</p>
-    <h1>{{ __('messages.dashboard') }}</h1>
-
 <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>

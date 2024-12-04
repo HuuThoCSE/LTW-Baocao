@@ -12,15 +12,15 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="{{ asset('/assets/img/favicon/favicon.ico') }}" rel="icon">
+  <link href="{{ asset('/assets/img/favicon/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
   @include('links')
   @yield('account_style')
   @yield('dashboard_style')
   @yield('dashboard_script')
 
-<body>
+  <body>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -194,12 +194,23 @@
 
         </li><!-- End Messages Nav -->
 
+          <li class="nav-item">
+              @if(Session::get('locale') == 'vi')
+                  <a class="nav-link nav-icon" href="{{ route('change.language', ['locale' => 'en']) }}">
+                      <img src="{{asset('/assets/img/lang-united-kingdom.png')}}" alt="English" width="32" height="32">
+                  </a>
+              @else
+                  <a class="nav-link nav-icon"  href="{{ route('change.language', ['locale' => 'vi']) }}" >
+                      <img src="{{asset('/assets/img/lang-vietnam.png')}}" alt="Vietnamese" width="32" height="32">
+                  </a>
+              @endif
+          </li>
+
         <li class="nav-item dropdown pe-3">
 
           @if(auth()->check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                 <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span> <!-- Hiển thị tên người dùng -->
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
@@ -227,12 +238,6 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-
-                @if(Session::get('locale') == 'vi')
-                    <a href="{{ route('change.language', ['locale' => 'en']) }}">English</a>
-                @else
-                    <a href="{{ route('change.language', ['locale' => 'vi']) }}">Tiếng Việt</a>
-                @endif
 
                 <li>
                     <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}">
