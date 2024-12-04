@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Middleware\SetLocale;
-use App\Http\Middleware\CheckRole;
-use \Illuminate\Session\Middleware\StartSession;
+use App\Http\Middleware\LocaleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 
@@ -14,9 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     // Đăng ký middleware toàn cục
     ->withMiddleware(function ($middleware) {
-        // $middleware->prepend(StartSession::class);
-        // $middleware->prepend(SetLocale::class); // Đăng ký Middleware SetLocale
-//        $middleware->prepend(CheckRole::class);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // Xử lý ngoại lệ nếu cần

@@ -21,7 +21,7 @@
             color: #00ff00; /* Màu chữ mặc định */
             text-transform: uppercase;
             animation: greenFire 1.5s infinite alternate; /* Áp dụng hiệu ứng lửa */
-            
+
         }
     /* Add hover effect for buttons */
     .btn:hover {
@@ -45,7 +45,7 @@
 <div class="container mt-4">
     <!-- Table heading -->
     <h1 class="text-center mb-4">Manage Barns</h1>
-    
+
     <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
         <i class="bi bi-clipboard-plus"></i>
         <span class="ms-2">Add Barn </span>
@@ -159,7 +159,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <div class="form-group mb-3">
                             <label for="area_id" class="form-label">Area:</label>
                             <select id="area_id" name="area_id" class="form-select" required>
