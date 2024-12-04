@@ -349,7 +349,8 @@
                 <a href="/goats">
                   <i class="bi bi-circle"></i><span>List Goat</span>
                 </a>
-            </li>
+              </li>
+            </ul>
         </li>
         <?php endif; ?>
 
@@ -358,52 +359,53 @@
             <a class="nav-link collapsed" data-bs-target="#components-location" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
                 <span>Location</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
+              <i class="bi bi-chevron-down ms-auto"></i>
             </a>
+
             <ul id="components-location" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
                 <a href="/zones">
                   <i class="bi bi-circle"></i><span>List Zone</span>
                 </a>
               </li>
-            <ul id="components-location" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           
               <li>
                 <a href="/areas">
                   <i class="bi bi-circle"></i><span>List Area</span>
                 </a>
               </li>
-            <ul id="components-location" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+           
               <li>
                 <a href="/barns">
                   <i class="bi bi-circle"></i><span>List Barn</span>
                 </a>
               </li>
-
+            </ul>
         </li>     
         <?php endif; ?> 
 
         <!-- Chỉ có Administator, Owner và Fammer mới hiểm thị Medication -->
         <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
           <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
-              <i class="bi bi-menu-button-wide"></i>
-                <span>Medication</span>
-                <i class="bi bi-chevron-down ms-auto">
-              </i>
-            </a>
+              <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                  <span>Medication</span>
+                  <i class="bi bi-chevron-down ms-auto">
+                </i>  
+              </a>
 
-            <ul id="components-medication" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-              <li>
-                <a href="/medication">
-                  <i class="bi bi-circle"></i><span>List Medication</span>
-                </a>
-              </li>
-              <li>
-                <a href="components-accordion.html">
-                  <i class="bi bi-circle"></i><span>Medication Report</span>
-                </a>
-              </li>
-            </ul>
+              <ul id="components-medication" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="/medication">
+                    <i class="bi bi-circle"></i><span>List Medication</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="components-accordion.html">
+                    <i class="bi bi-circle"></i><span>Medication Report</span>
+                  </a>
+                </li>
+              </ul>
             </li>
           <?php endif; ?>
 
@@ -424,9 +426,7 @@
                   </li>
                 </ul>
             </li>
-            <?php endif; ?>
-
-    </ul>
+          <?php endif; ?>
 
       <!-- <li class="nav-item">
         <a href="{{ route('login') }}">
