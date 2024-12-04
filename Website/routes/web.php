@@ -197,7 +197,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
 
         # List_Zone Management
-        Route::get('/zones', [ZoneController::class, 'getView'])->name('zones.dashboard');
+        Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone.dashboard');
         Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
         Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
         Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
