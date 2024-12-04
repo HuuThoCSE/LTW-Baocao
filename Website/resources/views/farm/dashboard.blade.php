@@ -127,6 +127,11 @@
                     </div>
 
                     <div class="form-check mb-3">
+                        <label class="form-check-label" for="inp_email">Email:</label>
+                        <input type="email" name="inp_email" id="inp_email" class="form-check-input" placeholder="Nhập email người nhận tài khoản.">
+                    </div>
+
+                    <div class="form-check mb-3">
                         <input type="hidden" name="chb_old_owner" value="off">
                         <input type="checkbox" name="chb_old_owner" id="chb_old_owner" class="form-check-input" value="on">
                         <label class="form-check-label" for="chb_old_owner">Owner đã có farm</label>
