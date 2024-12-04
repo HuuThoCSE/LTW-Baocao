@@ -2,11 +2,26 @@
 
 @section('title', 'Manage Areas')
 
-@section('content')
-<div class="container mt-4">
-    <!-- Tiêu đề -->
-    <h1 class="text-center mb-4">Manage Areas</h1>
-    <style>
+@section('contents')
+<style>
+        /*Tạo hiệu ứng lửa xanh cho tiêu đề */
+        @keyframes greenFire {
+            0% {
+                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00cc00, 0 0 40px #00cc00, 0 0 50px #009900;
+            }
+            100% {
+                text-shadow: 0 0 10px #00cc00, 0 0 20px #00cc00, 0 0 30px #009900, 0 0 40px #009900, 0 0 50px #006600;
+            }
+        }
+
+        /* Style thẻ h1 với hiệu ứng */
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 4rem;
+            color: #00ff00; /* Màu chữ mặc định */
+            text-transform: uppercase;
+            animation: greenFire 1.5s infinite alternate; /* Áp dụng hiệu ứng lửa */
+        }
         /* Add hover effect for buttons */
         .btn:hover {
             transform: scale(1.1);
@@ -24,7 +39,11 @@
         .btn-success:hover {
             background-color: #218838;
         }
-    </style>
+</style>
+<div class="container mt-4">
+    <!-- Tiêu đề -->
+    <h1 class="text-center mb-4">Manage Areas</h1>
+    
     <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addAreaModal">
         <i class="bi bi-clipboard-plus"></i>
         <span class="ms-2">Add Area</span>
@@ -65,7 +84,7 @@
                     </td>
                     <td>
                         <!-- Nút cập nhật -->
-                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$area->id}}">
+                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$area->area_id}}">
                             <i class="bi bi-pencil-square"></i>
                             <span class="ms-2">Update</span>
                         </button>
@@ -80,7 +99,7 @@
 
 
 
-    Modal thêm mới
+    <!-- # Modal thêm mới -->
     <div class="modal fade" id="addAreaModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -99,6 +118,15 @@
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3" required></textarea>
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="zone_id" class="form-label">Zone:</label>
+                            <select id="zone_id" name="zone_id" class="form-select" required>
+                                <option value="" disabled selected>Select Zone</option>
+                                @foreach($zones as $zone)
+                                    <option value="{{ $zone->zone_id }}">{{ $zone->zone_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -111,10 +139,10 @@
 
     <!-- Modal cập nhật -->
     @foreach($areas as $area)
-    <div class="modal fade" id="udpModal{{$area->id}}" tabindex="-1">
+    <div class="modal fade" id="udpModal{{$area->area_id}}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form id="updateForm{{$area->id}}" method="POST" action="{{ route('listarea.udp', ['id' => $area->id]) }}">
+                <form id="updateForm{{$area->area_id}}" method="POST" action="{{ route('listarea.udp', ['area_id' => $area->area_id]) }}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-primary text-white">

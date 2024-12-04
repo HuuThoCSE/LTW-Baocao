@@ -133,6 +133,38 @@ Route::middleware(['web'])->group(function () {
 });
 
 
+    # Medication Management
+    Route::get('/medication', [MedicationController::class, 'getView'])->name('medication');
+    Route::put('/medication/{id}', [MedicationController::class, 'putData'])->name('medication.put');
+
+    #Food Management
+    Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
+
+    # List_Area Management
+    Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
+    Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
+    Route::delete('/areas/{area_id}', [AreaController::class, 'delArea'])->name('listarea.del');
+    Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+    // routes/web.php
+    Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
+
+
+
+     # List_Zone Management
+     Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone');
+     Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
+     Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
+     Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
+     Route::post('/get-area-by-zone', [ZoneController::class, 'getAreaByZone']);
+    //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
+
+      # List_Barn Management
+      Route::get('/barns/{id}', [BarnController::class, 'show'])->name('listbarn.show');
+      Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn');
+      Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
+      Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
+      Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
+    //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data')
 
 
 Route::middleware(['auth'])->group(function () {
