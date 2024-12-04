@@ -92,7 +92,6 @@ Route::middleware([CheckPermission::class . ':farm_owner'])->group(function () {
 // IT nông trại
 Route::middleware([CheckPermission::class . ':farm_it'])->group(function () {
     // Device Management
-    Route::get('/devices', [DeviceController::class, 'getView'])->name('device.list');
     Route::get('/devices/{id}', [DeviceController::class, 'detailDevice'])->name('device.detail');
     Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
     Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('device.edit');
