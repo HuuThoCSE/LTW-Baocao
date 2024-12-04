@@ -2,7 +2,7 @@
 
 @section('title', 'List of Zones')
 
-@section('contents')
+@section('content')
 <style>
     /*Tạo hiệu ứng lửa xanh cho tiêu đề */
     @keyframes greenFire {
