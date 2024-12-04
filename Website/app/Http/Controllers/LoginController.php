@@ -24,11 +24,15 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $user_email = $request->input('emails');
+        $user_email = $request->input('email');
         $password = $request->input('password');
+
+//        dd($request->all());
 
         // Truy vấn cơ sở dữ liệu để lấy user theo emails
         $user = DB::table('users')->where('user_email', $user_email)->first();
+
+//        dd($user);
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->user_password)) {
