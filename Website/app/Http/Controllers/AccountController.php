@@ -56,9 +56,9 @@ class AccountController extends Controller
             'user_name' => 'required|string|max:255',
             'user_email' => [
                 'required',
-                'email',
+                'emails',
                 'unique:users,user_email', // Kiểm tra tính duy nhất
-                // Thêm validation regex cho email có dạng name@farm.farm_id.com
+                // Thêm validation regex cho emails có dạng name@farm.farm_id.com
                 'regex:/^[a-zA-Z0-9._%+-]+@farm\.(\d+)\.com$/',
             ],
             'user_password' => 'required|string|min:6',

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    
+
     public function getView()
     {
         $users = DB::table('users')->get();
@@ -22,11 +22,11 @@ class AdminController extends Controller
     {
         // Debugging: Check all request data
         $name = $request->input('name');
-        $email = $request->input('email');
+        $email = $request->input('emails');
         $password= $request->input('password');
         // $request->validate([
         //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'emails' => 'required|string|emails|max:255|unique:users',
         //     'password' => [
         //         'required',
         //         'string',
@@ -44,7 +44,7 @@ class AdminController extends Controller
         // Insert to database
         DB::table('users')->insert([
             'name' => $name,
-            'email' => $email,
+            'emails' => $email,
             'password' => $password,
             'created_at' => now(),
             'updated_at' => now(),

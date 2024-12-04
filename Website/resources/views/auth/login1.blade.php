@@ -110,7 +110,7 @@
         <input type="submit" value="Đăng Nhập" class="form-submit">
         @if ($errors->any())
             <div style="color: red; text-align: center; margin-top: 15px;">
-                {{ $errors->first('email') }}
+                {{ $errors->first('emails') }}
             </div>
         @endif
     </form>

@@ -16,14 +16,14 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('emails', 'password');
 
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/');
         }
 
         return back()->withErrors([
-            'email' => 'Thông tin đăng nhập không chính xác',
+            'emails' => 'Thông tin đăng nhập không chính xác',
         ]);
     }
 
