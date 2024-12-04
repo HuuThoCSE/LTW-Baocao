@@ -46,18 +46,18 @@ class DeviceController extends Controller
 
     // Thêm thiết bị
     public function addDevice(Request $request)
-    {
-        // Validate dữ liệu
-        $request->validate([
-            'device_name' => 'required|string|max:255',
-            'device_type_id' => 'required|integer|exists:device_types,id',
-            'farm_id' => 'required|integer|exists:farms,farm_id',
-        ]);
+            {
+                // Validate dữ liệu
+                $request->validate([
+                    'device_name' => 'required|string|max:255',
+                    'device_type_id' => 'required|integer|exists:device_types,id',
+                    'farm_id' => 'required|integer|exists:farms,farm_id',
+                ]);
 
-        try {
-            // Tạo thiết bị mới
-            DB::table('devices')->insert([
-                'device_name' => $request->input('device_name'),
+                try {
+                    // Tạo thiết bị mới
+                    DB::table('devices')->insert([
+                        'device_name' => $request->nput('device_name'),
                 'device_type_id' => $request->input('device_type_id'),
                 'farm_id' => $request->input('farm_id'),
                 'status' => 'Active',
