@@ -56,4 +56,20 @@ class ZoneController extends Controller
 
         return redirect()->route('listzone')->with('success', 'Zone updated successfully!');
     }
+
+    public function getAreaByZone(Request $request)
+    {
+        // Lấy zone_id từ request
+        $zone_id = $request->input('zone_id');
+
+        // Truy vấn để lấy area tương ứng
+        $area = DB::table('zones')
+            ->join('areas', 'zones.area_id', '=', 'areas.area_id')
+            ->where('zones.zone_id', $zone_id)
+            ->select('areas.area_id', 'areas.area_name') // Chỉ lấy thông tin cần thiết
+            ->first();
+
+        // Trả về JSON để AJAX xử lý
+        return response()->json($area);
+    }
 }

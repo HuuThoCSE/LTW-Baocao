@@ -13,13 +13,13 @@ class GoatController extends Controller
 {
     public function getView()
     {
-
+        
         // Lấy danh sách từ bảng 'goats'
         // $goats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
         $goats = DB::table('goats')
             ->join('farms', 'goats.farm_id', '=', 'farms.farm_id')
             ->join('breeds', 'goats.breed_id', '=', 'breeds.breed_id')
-            ->select('goats.*', 'farms.farm_name', 'breeds.breed_name_vie') // Lấy farm_name và breed_name
+            ->select('goats.*', 'farms.farm_name', 'breeds.breed_name_vie')
             ->get();
 
         // Truyền dữ liệu vào view
@@ -60,7 +60,6 @@ class GoatController extends Controller
                 'origin' => $origin,
                 'farm_id' => $farm_id,
                 'breed_id' => $breed_id,
-
                 'type_device_id' => 1,
                 'status' => 'Active',
             ]);
