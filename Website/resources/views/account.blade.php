@@ -71,9 +71,9 @@ Quản lý tài khoản
         <span class="ms-2">Add Account</span>
     </button>
     <div class="card-body">
-    <table border="1">
+    <table>
         <thead>
-            <tr>
+            <tr style="text-align: center">
                 <th>ID</th>
                 <th>Tên</th>
                 <th>Email</th>
@@ -88,16 +88,14 @@ Quản lý tài khoản
                     <td>{{ $user->user_name }}</td>
                     <td>{{ $user->user_email }}</td>
                     <td>{{ $user->created_at }}</td>
-                    <td align='center'>
-                <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-            <td>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
-            </td>
+                    <td class="d-flex justify-content-center">
+                        <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger me-2">Delete</button>
+                        </form>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
