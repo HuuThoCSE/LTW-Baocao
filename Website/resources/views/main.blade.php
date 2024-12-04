@@ -363,17 +363,17 @@
             </a>
             <ul id="components-location" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
-                <a href="/zones">
+                <a href="{{ route('zones.dashboard')}}">
                   <i class="bi bi-circle"></i><span>List Zone</span>
                 </a>
               </li>
               <li>
-                <a href="/areas">
+                <a href="/area">
                   <i class="bi bi-circle"></i><span>List Area</span>
                 </a>
               </li>
               <li>
-                <a href="/barns">
+                <a href="/barn">
                   <i class="bi bi-circle"></i><span>List Barn</span>
                 </a>
               </li>

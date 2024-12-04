@@ -151,10 +151,6 @@ Route::middleware(['web'])->group(function () {
 
 
      # List_Zone Management
-     Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone');
-     Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
-     Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
-     Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
      Route::post('/get-area-by-zone', [ZoneController::class, 'getAreaByZone']);
     //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
@@ -201,7 +197,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
 
         # List_Zone Management
-        Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone');
+        Route::get('/zones', [ZoneController::class, 'getView'])->name('zones.dashboard');
         Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
         Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
         Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
@@ -212,7 +208,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
         Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
         Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
-        
+
         #Food Management
         Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
