@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('farm_id');
             $table->string('farm_name', 100);
             $table->string('location', 100);
-            $table->unsignedBigInteger('owner_id');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@
 Bảng điều khiển
 @endsection
 
-@section('contents')
+@section('content')
 <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>
@@ -31,7 +31,7 @@ Bảng điều khiển
             <div class="col-md-6">
                 <p><strong>Trang trại:</strong> {{ $goat->farm_name }}</p>
                 <p><strong>Khu vực:</strong> {{ $goat->location }}</p>
-                <p><strong>Cân nặng hiện tại:</strong> 
+                <p><strong>Cân nặng hiện tại:</strong>
                     @if($latestWeight)
                         {{ $latestWeight->weight }} kg
                     @else
@@ -42,8 +42,8 @@ Bảng điều khiển
         </div>
         <!-- Goat Image (if available) -->
         <div class="text-center mt-3">
-            <img src="{{ asset('resources/img/news-' . $goat->goat_id . '.jpg') }}" alt="{{ $goat->goat_name }}" class="img-fluid" 
-            style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);" 
+            <img src="{{ asset('resources/img/news-' . $goat->goat_id . '.jpg') }}" alt="{{ $goat->goat_name }}" class="img-fluid"
+            style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);"
             onerror="this.onerror=null;this.src='{{ asset('img/default-goat.jpg') }}';" />
         </div>
     </div>

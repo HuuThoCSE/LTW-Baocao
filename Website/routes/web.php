@@ -8,7 +8,7 @@ use App\Http\Controllers\BreedController;
 use App\Http\Controllers\ListGoatController;
 use App\Http\Controllers\GoatDetailController;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\ListFarmController;
+use App\Http\Controllers\FarmController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
@@ -34,6 +34,10 @@ use App\Http\Middleware\CheckPermission;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+
+// API
+Route::get('/api/account/owners', [AccountController::class, 'getOwners'])->name('api.getOwners');
+
 
 // Các route công khai
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -68,12 +72,10 @@ Route::middleware([CheckPermission::class . ':administrator'])->group(function (
     Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->name('admin.register.view');
     Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register');
     // Các route dành cho quản trị viên
-    Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
-    Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
-    Route::post('/listfarm/add', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
-
-    Route::delete('/farms/{farm_id}', [ListFarmController::class, 'delFarm'])->name('listfarm.del');
-    Route::put('/farms/{farm_id}', [ListFarmController::class, 'udpFarm'])->name('listfarm.udp');
+    Route::get('/farms', [FarmController::class, 'getView'])->name('listfarm');
+    Route::post('/farms/add', [FarmController::class, 'addFarm'])->name('listfarm.add');
+    Route::delete('/farms/{farm_id}', [FarmController::class, 'delFarm'])->name('listfarm.del');
+    Route::put('/farms/{farm_id}', [FarmController::class, 'udpFarm'])->name('listfarm.udp');
 });
 
 // Chủ nông trại
@@ -131,19 +133,21 @@ Route::middleware(['web'])->group(function () {
 });
 
 
+
+
 Route::middleware(['auth'])->group(function () {
 
     // Admin
-    Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
-    Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
-    Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
+        Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
+        Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
+        Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
 
-    // Chủ nông trại
-    Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
-    Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
-    Route::get('/account', [AccountController::class, 'getView'])->name('account');
-    Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
-    Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
+        // Chủ nông trại
+        Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
+        Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
+        Route::get('/account', [AccountController::class, 'getView'])->name('account');
+        Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
+        Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
 
     // IT nông trại
         #Device Management
@@ -190,6 +194,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
         Route::get('', [HomeController::class, 'getView'])->name('home');
 
+        Route::get('/farms/{id}', [FarmController::class, 'show'])->name('farms.show'); // Chi tiết farm theo id
+
         Route::get('/breeds/list', [BreedController::class, 'getView'])->name('breed.list');
         Route::post('/breeds/list', [BreedController::class, 'add'])->name('breed.add');
         Route::put('/breeds/{id}', [BreedController::class, 'udp'])->name('breed.udp');
@@ -220,12 +226,12 @@ Route::get('/api/sensor', [APIController::class, 'addHumidity'])->name('api.addH
 
 
 // Route::middleware([CheckPermission::class, 'permission:view_farm_list'])->group(function () {
-//     Route::get('/farms', [ListFarmController::class, 'getView'])->name('listfarm');
+//     Route::get('/farms', [FarmController::class, 'getView'])->name('listfarm');
 //     // Các route khác của farmer
 // });
 
 // Route::middleware([CheckPermission::class, 'permission:edit_farm_list'])->group(function () {
-//     Route::post('/farms', [ListFarmController::class, 'addFarm'])->name('listfarm.add');
+//     Route::post('/farms', [FarmController::class, 'addFarm'])->name('listfarm.add');
 //     // Các route khác của farm owner hoặc admin
 // });
 

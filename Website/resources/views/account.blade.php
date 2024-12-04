@@ -51,7 +51,7 @@ Quản lý tài khoản
     }
 </style>
 @endsection
-@section('contents')
+@section('content')
 <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>
@@ -61,7 +61,7 @@ Quản lý tài khoản
         </ol>
     </nav>
 </div><!-- End Page Title -->
-    
+
 <div class="card">
     <div class="card-header">
         <h1>Danh sách tài khoản</h1>

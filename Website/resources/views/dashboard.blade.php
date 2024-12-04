@@ -94,7 +94,7 @@ h4 {
 </style>
 @endsection
 
-@section('contents')
+@section('content')
     <p>Current Language: {{ App::currentLocale() }}</p>
     <h1>{{ __('messages.dashboard') }}</h1>
 
