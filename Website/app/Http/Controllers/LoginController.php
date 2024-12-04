@@ -24,10 +24,10 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $user_email = $request->input('email');
+        $user_email = $request->input('emails');
         $password = $request->input('password');
 
-        // Truy vấn cơ sở dữ liệu để lấy user theo email
+        // Truy vấn cơ sở dữ liệu để lấy user theo emails
         $user = DB::table('users')->where('user_email', $user_email)->first();
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
@@ -101,7 +101,7 @@ class LoginController extends Controller
             }
         } else {
             // Nếu đăng nhập thất bại, trả lại thông báo lỗi
-            return back()->withErrors(['email' => 'Thông tin đăng nhập không chính xác.']);
+            return back()->withErrors(['emails' => 'Thông tin đăng nhập không chính xác.']);
         }
     }
 
