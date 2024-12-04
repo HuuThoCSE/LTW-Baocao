@@ -48,13 +48,13 @@ class AreaController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea')->with('success', 'Area added successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area added successfully!');
     }
 
-    public function delArea($id)
+    public function delArea($area_id)
     {
-        DB::table('areas')->where('id', $id)->delete();
-        return redirect()->route('listarea')->with('success', 'Area deleted successfully!');
+        DB::table('areas')->where('area_id', $area_id)->delete();
+        return redirect()->route('listarea.dashboard')->with('success', 'Area deleted successfully!');
     }
     public function udpArea(Request $request, $area_id)
     {
@@ -63,13 +63,13 @@ class AreaController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        DB::table('areas')->where('id', $area_id)->update([
+        DB::table('areas')->where('area_id', $area_id)->update([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea')->with('success', 'Area updated successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area updated successfully!');
     }
 
 }

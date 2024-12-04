@@ -141,10 +141,7 @@ Route::middleware(['web'])->group(function () {
     Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
     # List_Area Management
-    Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
-    Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
-    Route::delete('/areas/{area_id}', [AreaController::class, 'delArea'])->name('listarea.del');
-    Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+  
     // routes/web.php
     Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
 
@@ -155,11 +152,7 @@ Route::middleware(['web'])->group(function () {
     //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
       # List_Barn Management
-      Route::get('/barns/{id}', [BarnController::class, 'show'])->name('listbarn.show');
-      Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn');
-      Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
-      Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
-      Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
+     
     //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data')
 
 
@@ -203,10 +196,10 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
 
         # List_Area Management
-        Route::get('/areas', [AreaController::class, 'getView'])->name('listarea');
+        Route::get('/areas', [AreaController::class, 'getView'])->name('listarea.dashboard');
         Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
-        Route::delete('/areas/{id}', [AreaController::class, 'delArea'])->name('listarea.del');
-        Route::put('/areas/{id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+        Route::delete('/areas/{area_id}', [AreaController::class, 'delArea'])->name('listarea.del');
+        Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
         Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
 
         #Food Management
@@ -214,10 +207,12 @@ Route::middleware(['auth'])->group(function () {
 
         # List_Barn Management
         Route::get('/barns/{id}', [BarnController::class, 'show'])->name('listbarn.show');
-        Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn');
+        Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn.dashboard');
         Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
         Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
         Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
+        
+      
 
     // Chung chung
         Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');

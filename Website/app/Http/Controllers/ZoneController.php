@@ -31,14 +31,14 @@ class ZoneController extends Controller
 
         ]);
 
-        return redirect()->route('listzone')->with('success', 'Zone added successfully!');
+        return redirect()->route('listzone.dashboard')->with('success', 'Zone added successfully!');
     }
 
     // Delete a zone
-    public function delZone($id)
+    public function delZone($zone_id)
     {
-        DB::table('zones')->where('zone_id', $id)->delete(); // Ensure using correct 'zone_id'
-        return redirect()->route('listzone')->with('success', 'Zone deleted successfully!');
+        DB::table('zones')->where('zone_id', $zone_id)->delete(); // Ensure using correct 'zone_id'
+        return redirect()->route('listzone.dashboard')->with('success', 'Zone deleted successfully!');
     }
 
     // Update an existing zone
@@ -54,7 +54,7 @@ class ZoneController extends Controller
             'description' => $validated['description'],
         ]);
 
-        return redirect()->route('listzone')->with('success', 'Zone updated successfully!');
+        return redirect()->route('listzone.dashboard')->with('success', 'Zone updated successfully!');
     }
 
     public function getAreaByZone(Request $request)

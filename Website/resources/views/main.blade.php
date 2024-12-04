@@ -368,12 +368,12 @@
                 </a>
               </li>
               <li>
-                <a href="/area">
+                <a href="{{ route('listarea.dashboard')}}">
                   <i class="bi bi-circle"></i><span>List Area</span>
                 </a>
               </li>
               <li>
-                <a href="/barn">
+                <a href="{{ route('listbarn.dashboard')}}">
                   <i class="bi bi-circle"></i><span>List Barn</span>
                 </a>
               </li>
