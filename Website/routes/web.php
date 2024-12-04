@@ -5,7 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BreedController;
 
-use App\Http\Controllers\ListGoatController;
 use App\Http\Controllers\GoatDetailController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\FarmController;
@@ -19,19 +18,14 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\APIController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\BarnController;
-use App\Http\Middleware\CheckAdministratorRole;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\LanguageController;
-
 
 // Middleware
-use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckFarmerAccess;
 use App\Http\Middleware\CheckPermission;
 
-
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -47,8 +41,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Các route dành riêng cho farmer (nông dân)
 Route::middleware([])->group(function () {
-    Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard');
-    Route::get('/farmer/tasks', [FarmerController::class, 'tasks'])->name('farmer.tasks');
+//    Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard');
+//    Route::get('/farmer/tasks', [FarmerController::class, 'tasks'])->name('farmer.tasks');
     Route::get('/farmer/goats', [GoatController::class, 'farmerGfarmeroats'])->name('farmer.goats');
     Route::post('/farmer/goats', [GoatController::class, 'addGoat'])->name('farmer.goats.add');
     Route::put('/farmer/goats/{id}', [GoatController::class, 'updateGoat'])->name('farmer.goats.update');
@@ -60,8 +54,8 @@ Route::middleware([CheckPermission::class])->group(function () {
     Route::get('/admin/farm-list', [FarmController::class, 'list'])->name('admin.farm_list');
 
     // Route dành cho nông dân
-    Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard')->middleware(CheckFarmerAccess::class);
-    Route::get('/farmer/tasks', [FarmerController::class, 'tasks'])->name('farmer.tasks')->middleware(CheckFarmerAccess::class);
+//    Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard')->middleware(CheckFarmerAccess::class);
+//    Route::get('/farmer/tasks', [FarmerController::class, 'tasks'])->name('farmer.tasks')->middleware(CheckFarmerAccess::class);
     Route::get('/farmer/goats', [GoatController::class, 'farmerGoats'])->name('farmer.goats')->middleware(CheckFarmerAccess::class);
 });
 
@@ -126,7 +120,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/change-language/{locale}', function ($locale) {
         if (in_array($locale, ['en', 'vi'])) {
             Session::put('locale', $locale);
-            \Log::info('Session after put: ' . Session::get('locale'));
+            Log::info('Session after put: ' . Session::get('locale'));
         }
         return redirect()->back();
     })->name('change.language');
@@ -157,7 +151,6 @@ Route::middleware(['web'])->group(function () {
       # List_Barn Management
       Route::get('/barns/{id}', [BarnController::class, 'show'])->name('listbarn.show');
       Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn');
-      Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
       Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
       Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
     //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data')
@@ -171,9 +164,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
 
         // Chủ nông trại
-        Route::post('/account', [AccountController::class, 'addUser'])->name('user.add');
-        Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
         Route::get('/account', [AccountController::class, 'getView'])->name('account');
+        Route::post('/account', [AccountController::class, 'addUser'])->name('account.add');
+        Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
         Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
         Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
 

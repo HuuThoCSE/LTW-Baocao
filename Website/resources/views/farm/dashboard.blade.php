@@ -126,9 +126,9 @@
                         <span class="text-danger error-location"></span>
                     </div>
 
-                    <div class="form-check mb-3">
+                    <div class="form-group mb-3">
                         <label class="form-check-label" for="inp_email">Email:</label>
-                        <input type="email" name="inp_email" id="inp_email" class="form-check-input" placeholder="Nhập email người nhận tài khoản.">
+                        <input type="email" name="inp_email" id="inp_email" class="form-control" placeholder="Nhập email người nhận tài khoản.">
                     </div>
 
                     <div class="form-check mb-3">

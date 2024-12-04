@@ -118,7 +118,7 @@ Quản lý tài khoản
 <div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded">
-            <form action="{{ route('user.add') }}" method="POST">
+            <form action="{{ route('account.add') }}" method="POST">
                 @csrf
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Add New Account</h5>
@@ -136,10 +136,6 @@ Quản lý tài khoản
                     <div class="form-group mb-3">
                         <label for="owner_id" class="form-label">Password:</label>
                         <input type="password" name="user_password" class="form-control" placeholder="Enter password" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="farm_id">Farm ID</label>
-                    <input type="text" name="farm_id" class="form-control" value="{{ auth()->user()->farm_id }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="role_id">Role</label>
