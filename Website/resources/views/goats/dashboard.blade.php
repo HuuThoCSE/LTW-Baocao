@@ -84,21 +84,24 @@ Danh sách dê
                     <h5 class="modal-title">Add New Goat</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
                     <div class="card p-4 shadow-sm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <input type="text" name="goat_name" class="form-control" placeholder="Goat Name" required>
                                 @error('goat_name')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-6 mb-3">
                                 <input type="number" name="goat_age" class="form-control" placeholder="Goat Age" required>
                                 @error('goat_age')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-6 mb-3">
                                 <select name="origin" class="form-control" required>
                                     <option value="Select">Select Origin</option>
@@ -106,36 +109,36 @@ Danh sách dê
                                     <option value="born_on_farm">Born on Farm</option>
                                 </select>
                                 @error('origin')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
 
-
+                            <!-- Farm ID Input -->
+                            <div class="col-md-6 mb-3">
+                                <select name="farm_id" class="form-control" required>
+                                    <option value="">Select Farm</option>
+                                    <!-- Populate with farms dynamically -->
+                                </select>
                                 @error('farm_id')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
-
 
                             <div class="col-md-6 mb-3">
                                 <select name="breed_id" class="form-control" required>
                                     <option value="">Select Breed</option>
-                                    <option value="1">Saanen</option>
-                                    <option value="2">Boer</option>
-                                    <option value="3">Nubian</option>
-                                    <option value="4">Alpine</option>
-                                    <option value="5">Anglo-Nubian</option>
-                                    <option value="6">LaMancha</option>
-                                    <option value="7">Bách Thảo</option>
-                                    <option value="8">Cỏ</option>
+                                    @foreach($breeds as $breed)
+                                        <option value="{{ $breed->breed_id }}">{{ $breed->breed_name_vie }}</option>
+                                    @endforeach
                                 </select>
                                 @error('breed_id')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Add Goat</button>

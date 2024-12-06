@@ -13,17 +13,20 @@ class GoatController extends Controller
 {
     public function getView()
     {
-        
+
         // Lấy danh sách từ bảng 'goats'
         // $goats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
+
+        $breeds = DB::table('farm_breeds')->get(); // Lấy danh sách các giống dê
+
         $goats = DB::table('goats')
             ->join('farms', 'goats.farm_id', '=', 'farms.farm_id')
-            ->join('breeds', 'goats.breed_id', '=', 'breeds.breed_id')
-            ->select('goats.*', 'farms.farm_name', 'breeds.breed_name_vie')
+            ->join('farm_breeds', 'goats.breed_id', '=', 'farm_breeds.breed_id')
+            ->select('goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie')
             ->get();
 
         // Truyền dữ liệu vào view
-        return view('goats.listgoat', ['goats' => $goats]);
+        return view('goats.dashboard', ['goats' => $goats, 'breeds' => $breeds]);
     }
 
     public function addGoat(Request $request)
