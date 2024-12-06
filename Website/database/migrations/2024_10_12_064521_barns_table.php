@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('barns', function (Blueprint $table) {
+        Schema::create('farm_barns', function (Blueprint $table) {
             $table->id('barn_id');
             $table->foreignId('area_id')
-                ->constrained('areas', 'area_id')
+                ->constrained('farm_areas', 'area_id')
                 ->onDelete('cascade'); // Liên kết đến bảng areas
-            $table->string('barn_name', 50); // Tên chuồng trại (VD: Barn A, Barn B)
+            $table->string('barn_name', 50); // Tên chuồng trại (VD: BarnModel A, BarnModel B)
             $table->foreignId('farm_id')
                 ->constrained('farms', 'farm_id')
                 ->onDelete('cascade');

@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Barn Details')
+@section('title', 'BarnModel Details')
 
 @section('content')
 <div class="container mt-4">
@@ -17,7 +17,7 @@
             <p><strong>Area ID:</strong> {{ $barn->area_id }}</p>
         </div>
         <div class="card-footer">
-            <a href="{{ route('listbarn') }}" class="btn btn-secondary">Back to List</a>
+            <a href="{{ route('barn.dashboard') }}" class="btn btn-secondary">Back to List</a>
         </div>
     </div>
 </div>

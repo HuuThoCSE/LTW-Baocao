@@ -378,7 +378,7 @@
                 </a>
               </li>
               <li>
-                <a href="{{ route('listbarn.dashboard')}}">
+                <a href="{{ route('barn.dashboard')}}">
                   <i class="bi bi-circle"></i><span>List Barn</span>
                 </a>
               </li>

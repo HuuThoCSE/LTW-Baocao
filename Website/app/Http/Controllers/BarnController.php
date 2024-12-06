@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AreaModel;
+use App\Models\BarnModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -21,9 +23,9 @@ class BarnController extends Controller
     // Show details of a specific barn
     public function show($id)
     {
-        $barn = DB::table('barns')->where('barn_id', $id)->first(); // Get barn by ID
+        $barn = DB::table('farm_barns')->where('barn_id', $id)->first(); // Get barn by ID
         if (!$barn) {
-            return redirect()->route('listbarn')->with('error', 'Barn not found.');
+            return redirect()->route('barn.list')->with('error', 'BarnModel not found.');
         }
         return view('barn/show', ['barn' => $barn]); // Show details view
     }
@@ -36,43 +38,54 @@ class BarnController extends Controller
         // Lấy zones thuộc farm_id
         $zones = DB::table('zones')->where('farm_id', $farm_id)->get();
 
-        $barns = DB::table('barns')
-            ->join('areas', 'barns.area_id', '=', 'areas.area_id')
-            ->join('zones', 'areas.zone_id', '=', 'zones.zone_id')
+        $ares = AreaModel::all()->where('farm_id', $farm_id);
+
+        $barns = DB::table('farm_barns')
+            ->join('farm_areas', 'farm_barns.area_id', '=', 'farm_areas.area_id')
+            ->join('zones', 'farm_areas.zone_id', '=', 'zones.zone_id')
             ->join('farms', 'zones.farm_id', '=', 'farms.farm_id')
             ->where('farms.farm_id', $farm_id) // Chỉ định rõ bảng chứa farm_id
-            ->select('barns.*') // Chọn các cột cần thiết
+            ->select('farm_barns.*') // Chọn các cột cần thiết
             ->get();
 
-        return view('barn/listbarn', ['barns' => $barns, 'zones' => $zones]); // Pass the zones to the view
+        return view('barn.dashboard', ['barns' => $barns, 'zones' => $zones, 'areas' => $ares]); // Pass the zones to the view
     }
 
       // Thêm mới một barn
       public function addBarn(Request $request)
       {
+//          dd($request->all());
+
           $validated = $request->validate([
+              'area_id' => 'required|integer', // Đảm bảo trường 'area_id' được cung cấp
               'barn_name' => 'required|string|max:255', // Đảm bảo trường 'barn_name' được cung cấp
-              'description' => 'nullable|string', // 'description' không bắt buộc
+              'description' => 'nullable|string', // 'description' không buộc
           ]);
 
           $farm_id = Session::get('user_farm_id');
 
-          DB::table('barns')->insert([
-              'barn_name' => $validated['barn_name'],
-              'description' => $validated['description'],
-              'farm_id' => $validated['farm_id'], // Cung cấp giá trị cho 'farm_id'
+//          DB::table('barns')->insert([
+//              'barn_name' => $validated['barn_name'],
+//              'description' => $validated['description'],
+//              'farm_id' =>  $farm_id, // Cung cấp giá trị cho 'farm_id'
+//          ]);
+
+          BarnModel::create([
+            'area_id' => $validated['area_id'],
+            'barn_name' => $validated['barn_name'],
+            'description' => $validated['description'],
+            'farm_id' =>  $farm_id, // Cung cấp giá trị cho 'farm_id'
           ]);
 
-          return redirect()->route('listbarn.dashboard')->with('success', 'Barn added successfully!');
+          return redirect()->route('barn.dashboard')->with('success', 'BarnModel added successfully!');
     }
-
 
 
       // Xóa một barn
       public function delBarn($barn_id)
       {
-          DB::table('barns')->where('barn_id', $barn_id)->delete(); // Xóa bản ghi theo 'barn_id'
-          return redirect()->route('listbarn.dashboard')->with('success', 'Barn deleted successfully!');
+          DB::table('farm_barns')->where('barn_id', $barn_id)->delete(); // Xóa bản ghi theo 'barn_id'
+          return redirect()->route('barn.dashboard')->with('success', 'BarnModel deleted successfully!');
       }
 
       // Cập nhật một barn
@@ -83,12 +96,12 @@ class BarnController extends Controller
               'description' => 'nullable|string', // 'description' không bắt buộc
           ]);
 
-          DB::table('barns')->where('barn_id', $barn_id)->update([
+          DB::table('farm_barns')->where('barn_id', $barn_id)->update([
               'barn_name' => $validated['barn_name'],
               'description' => $validated['description'],
           ]);
 
-          return redirect()->route('listbarn.dashboard')->with('success', 'Barn updated successfully!');
+          return redirect()->route('barn.dashboard')->with('success', 'BarnModel updated successfully!');
       }
 
 
