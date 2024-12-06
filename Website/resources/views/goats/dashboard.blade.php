@@ -35,6 +35,7 @@ Danh sách dê
             <li class="breadcrumb-item">List of Goat</li>
             </ol>
         </nav>
+        
 </div><!-- End Page Title --> 
     <section class="section">
         <div class="row">
@@ -90,8 +91,8 @@ Danh sách dê
                                 </tbody>
                             </table>
                         </div>
-
-    <!-- Add Goat Modal -->
+    <!-- Add GoatModel Modal -->
+    
     <div class="modal fade" id="addGoatModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

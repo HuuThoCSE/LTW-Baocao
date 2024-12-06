@@ -43,7 +43,7 @@ class AreaController extends Controller
         DB::table('areas')->insert([
             'name' => $validated['name'],
             'description' => $validated['description'],
-            'zone_id' => $validated['zone_id'], 
+            'zone_id' => $validated['zone_id'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -75,7 +75,7 @@ class AreaController extends Controller
     {
         // Lấy zone_id từ request
         $zoneId = $request->zone_id;
-        
+
         // Kiểm tra nếu zone_id có giá trị
         if ($zoneId) {
             $areas = Area::where('zone_id', $zoneId)->get(); // Lấy các area dựa trên zone_id

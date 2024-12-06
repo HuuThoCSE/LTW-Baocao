@@ -110,7 +110,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'huutho.cse@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Goat Farm Management System'),
+        'name' => env('MAIL_FROM_NAME', 'GoatModel FarmModel Management System'),
     ],
 
 ];

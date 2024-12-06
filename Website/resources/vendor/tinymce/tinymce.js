@@ -7257,7 +7257,7 @@
       });
       registerOption('iframe_aria_text', {
         processor: 'string',
-        default: 'Rich Text Area. Press ALT-0 for help.'
+        default: 'Rich Text AreaModel. Press ALT-0 for help.'
       });
       registerOption('setup', { processor: 'function' });
       registerOption('init_instance_callback', { processor: 'function' });
@@ -29158,7 +29158,7 @@
       return iframeHTML;
     };
     const createIframe = (editor, boxInfo) => {
-      const iframeTitle = Env.browser.isFirefox() ? getIframeAriaText(editor) : 'Rich Text Area';
+      const iframeTitle = Env.browser.isFirefox() ? getIframeAriaText(editor) : 'Rich Text AreaModel';
       const translatedTitle = editor.translate(iframeTitle);
       const tabindex = getOpt(SugarElement.fromDom(editor.getElement()), 'tabindex').bind(toInt);
       const ifr = createIframeElement(editor.id, translatedTitle, getIframeAttrs(editor), tabindex).dom;

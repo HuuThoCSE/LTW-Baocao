@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-        
+
     /* Add hover effect for buttons */
     .btn:hover {
 
@@ -193,7 +193,7 @@
         document.getElementById('addButton').addEventListener('click', function(event) {
             var zone = document.getElementById('zone_id').value;
             var area = document.getElementById('area_id').value;
-            
+
             // Kiểm tra nếu Zone hoặc Area không được chọn
             if (zone === "") {
                 event.preventDefault(); // Ngừng gửi form
@@ -211,6 +211,6 @@
             }
 
         });
-        
+
     </script>
 @endsection

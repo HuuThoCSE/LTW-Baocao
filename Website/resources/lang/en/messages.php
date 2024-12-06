@@ -2,25 +2,25 @@
 
 return [
     'welcome' => 'Welcome to our application!',
-    'title' => 'Goat Farm Management',
+    'title' => 'GoatModel FarmModel Management',
     'dashboard' => 'Dashboard',
     'goat' => 'Goats',
-    'goat_list' => 'List of Goat',
+    'goat_list' => 'List of GoatModel',
 
     'account_manager' => 'Account',
     'account_list' => 'List of Account',
 
-    'add_goat' => 'Add Goat',
-    'edit_goat' => 'Edit Goat',
-    'delete_goat' => 'Delete Goat',
+    'add_goat' => 'Add GoatModel',
+    'edit_goat' => 'Edit GoatModel',
+    'delete_goat' => 'Delete GoatModel',
 
-    'breed' => 'Breed',
-    'breed_list' => 'List of Breed',
-    'add_breed' => 'Add Breed',
-    'edit_breed' => 'Edit Breed',
-    'farm_areas' => 'Farm Areas',
-    'add_area' => 'Add Area',
-    'edit_area' => 'Edit Area',
+    'breed' => 'BreedModel',
+    'breed_list' => 'List of BreedModel',
+    'add_breed' => 'Add BreedModel',
+    'edit_breed' => 'Edit BreedModel',
+    'farm_areas' => 'FarmModel Areas',
+    'add_area' => 'Add AreaModel',
+    'edit_area' => 'Edit AreaModel',
 
     'equipment' => 'Equipment',
     'add_equipment' => 'Add Equipment',
@@ -30,6 +30,7 @@ return [
     'language' => 'Language',
     'profile' => 'Profile',
     'logout' => 'Logout',
+
 
     'barn' => 'Barn',
     'add_barn' => 'Add Barn',
@@ -81,7 +82,7 @@ return [
     'delete_equipment' => 'Delete Equipment',
     'equipment_list' => 'Equipment List',
     'equipment_details' => 'Equipment Details',
-    'area' => 'Area',
+    'area' => 'AreaModel',
     'status' => 'Status',
     'maintenance' => 'Maintenance',
 
