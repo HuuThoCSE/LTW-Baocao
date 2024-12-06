@@ -149,6 +149,7 @@
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
                         </div>
+
                         <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Zone:</label>
                             <select id="zone_id" name="zone_id" class="form-select" required>
@@ -158,9 +159,10 @@
                                 @endforeach
                             </select>
                         </div>
+                       
 
-                        <!-- Đoạn mã cho Area được ẩn ban đầu -->
-                        <div class="form-group mb-3" id="area_div" style="display: none;">
+                         <!-- Đoạn mã cho Area được ẩn ban đầu  -->
+                         <div class="form-group mb-3" id="area_div" style="display: none;">
                             <label for="area_id" class="form-label">Area:</label>
                             <select id="area_id" name="area_id" class="form-select" required>
                                 <option value="" disabled selected>Select Area</option>

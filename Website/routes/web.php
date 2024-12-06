@@ -182,8 +182,8 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         # Medication Management
         Route::post('/medication', [MedicationController::class, 'addData'])->name('medication.add');
         Route::get('/medication', [MedicationController::class, 'getView'])->name('medication');
-        Route::put('/medication/{id}', [MedicationController::class, 'putData'])->name('medication.put');
-        Route::delete('/medication/{id}', [MedicationController::class, 'delData'])->name('medication.del');
+        Route::put('/medication/{medication_id}', [MedicationController::class, 'putData'])->name('medication.put');
+        Route::delete('/medication/{medication_id}', [MedicationController::class, 'delData'])->name('medication.del');
 
         # List_Zone Management
         Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone.dashboard');
