@@ -4,7 +4,25 @@
 
 @section('content')
 <style>
-        /
+        /*Tạo hiệu ứng lửa xanh cho tiêu đề */
+        @keyframes greenFire {
+            0% {
+                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00cc00, 0 0 40px #00cc00, 0 0 50px #009900;
+            }
+            100% {
+                text-shadow: 0 0 10px #00cc00, 0 0 20px #00cc00, 0 0 30px #009900, 0 0 40px #009900, 0 0 50px #006600;
+            }
+        }
+
+        /* Style thẻ h1 với hiệu ứng */
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 4rem;
+            color: #00ff00; /* Màu chữ mặc định */
+            text-transform: uppercase;
+            animation: greenFire 1.5s infinite alternate; /* Áp dụng hiệu ứng lửa */
+
+        }
     /* Add hover effect for buttons */
     .btn:hover {
 
@@ -24,20 +42,9 @@
         background-color: #218838;
     }
     </style>
-<div class="pagetitle">
-<h1>List of Barns</h1>
-<nav>
-    <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-    <li class="breadcrumb-item">Location</li>
-    <li class="breadcrumb-item">List Barn</li>
-    
-    </ol>
-</nav>
-</div><!-- End Page Title --> 
 <div class="container mt-4">
     <!-- Table heading -->
-   
+    <h1 class="text-center mb-4">Manage Barns</h1>
 
     <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
         <i class="bi bi-clipboard-plus"></i>
@@ -74,7 +81,7 @@
                     </td>
                     <td>
                         <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal"
-                                data-bs-target="#udpModal{{$barn->barn_id}}" onclick="event.stopPropagation();">
+                                data-bs-target="#udpModal{{$barn->barn_id}}">
                             <i class="bi bi-pencil-square"></i>
                             <span class="ms-2">Update</span>
                         </button>
@@ -140,7 +147,6 @@
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
                         </div>
-
                         <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Zone:</label>
                             <select id="zone_id" name="zone_id" class="form-select">
@@ -150,7 +156,6 @@
                                 @endforeach
                             </select>
                         </div>
-                       
 
                         <!-- Đoạn mã cho Area được ẩn ban đầu -->
                         <div class="form-group mb-3">
