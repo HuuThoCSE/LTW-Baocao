@@ -248,9 +248,10 @@
 
             $('.datatable').DataTable({
                 "paging": true,        // Bật phân trang
-                "searching": true,     // Bật tìm kiếm
+                searching: true,    // Tắt tìm kiếm của DataTables
                 "ordering": true,      // Bật sắp xếp
                 dom: 'Bfrtip',         // Định dạng bố cục (Buttons, filter, table, pagination)
+                info: false,         // Tắt thông báo "Showing ... entries"
                 buttons: [
                     {
                         extend: 'copyHtml5',
