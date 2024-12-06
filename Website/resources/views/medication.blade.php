@@ -51,7 +51,7 @@ Quản lý thuốc
     <input type="submit" value="Thêm thuốc" class="btn btn-primary">
 </form>
 
-<div class="modal fade" id="udpModal" tabindex="-1">
+<!-- <div class="modal fade" id="udpModal" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
 
@@ -73,6 +73,38 @@ Quản lý thuốc
         </div>
       </div>
     </div>
-  </div><!-- End Basic Modal-->
+  </div>End Basic Modal -->
+
+<!-- Modal cập nhật Zone -->
+@foreach($medications as $medication)
+<div class="modal fade" id="udpModal{{$medication->medication_id}}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('medication.put', ['id' => $medication->medication_id]) }}">
+                @csrf
+                @method('PUT')
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Update Medication</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="medication_code" class="form-label">Mã thuốc:</label>
+                        <input type="text" name="medication_code" class="form-control" value="{{ $medication->medication_code }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="medication_name" class="form-label">Description:</label>
+                        <input type="text" name="medication_code" class="form-control" value="{{ $medication->medication_name }}" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 @endsection

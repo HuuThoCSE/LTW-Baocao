@@ -45,13 +45,13 @@ class MedicationController extends Controller
         }
     }
 
-    public function udpData(Request $request, $id)
+    public function udpData(Request $request, $medication_id)
     {
         // Update medicaion
         $medication_code = $request->input('medication_code');
         $medication_name = $request->input('medication_name');
 
-        DB::table('medications')->where('id', $id)->update(['$medication_code', '$medication_name']);
+        DB::table('medications')->where('medication_id', $medication_id)->update(['$medication_code', '$medication_name']);
 
         // DB::statement("UPDATE medications 
         // SET medication_code = '$medication_code', medication_name = '$medication_name' WHERE id = $id");

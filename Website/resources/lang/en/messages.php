@@ -4,7 +4,6 @@ return [
     'welcome' => 'Welcome to our application!',
     'title' => 'Goat Farm Management',
     'dashboard' => 'Dashboard',
-
     'goat' => 'Goats',
     'goat_list' => 'List of Goat',
 
