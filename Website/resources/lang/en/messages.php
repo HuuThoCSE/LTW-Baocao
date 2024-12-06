@@ -31,10 +31,6 @@ return [
     'profile' => 'Profile',
     'logout' => 'Logout',
 
-    'barn' => 'BarnModel',
-    'add_barn' => 'Add BarnModel',
-    'edit_barn' => 'Edit BarnModel',
-    'delete_barn' => 'Delete BarnModel',
     'barn' => 'Barn',
     'add_barn' => 'Add Barn',
     'edit_barn' => 'Edit Barn',
