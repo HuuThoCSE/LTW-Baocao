@@ -13,7 +13,7 @@ class BreedsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('breeds')->insert([
+        DB::table('farm_breeds')->insert([
             [
                 'farm_id' => 1,
                 'breed_name_eng' => 'Bách Thảo',
@@ -34,8 +34,8 @@ class BreedsTableSeeder extends Seeder
             ],
             [
                 'farm_id' => 1,
-                'breed_name_eng' => 'Boer lửa', 
-                'breed_name_vie' => 'Boer lửa', 
+                'breed_name_eng' => 'Boer lửa',
+                'breed_name_vie' => 'Boer lửa',
                 'description' => 'Màu nâu.',
             ],
         ]);
