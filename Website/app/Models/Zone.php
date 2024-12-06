@@ -24,7 +24,7 @@ class Zone extends Model
 
     public function barns()
     {
-        return $this->hasMany(Barn::class, 'zone_id');
+        return $this->hasMany(BarnModel::class, 'zone_id');
     }
 
     public function devices()

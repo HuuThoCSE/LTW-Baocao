@@ -64,14 +64,12 @@
             </thead>
             <tbody>
                 @foreach($barns as $barn)
-                <tr align="center" onclick="window.location.href='{{ route('listbarn.show', $barn->barn_id) }}'">
+                <tr align="center" onclick="window.location.href='{{ route('barn.show', $barn->barn_id) }}'">
                     <td>{{ $barn->barn_id }}</td>
                     <td>{{ $barn->barn_name }}</td>
                     <td>{{ $barn->description }}</td>
-
-
                     <td>
-                        <form action="{{ route('listbarn.del', $barn->barn_id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('barn.del', $barn->barn_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
@@ -99,7 +97,7 @@
     <div class="modal fade" id="udpModal{{$barn->barn_id}}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form id="updateForm{{$barn->barn_id}}" method="POST" action="{{ route('listbarn.udp', ['id' => $barn->barn_id]) }}">
+                <form id="updateForm{{$barn->barn_id}}" method="POST" action="{{ route('barn.udp', ['id' => $barn->barn_id]) }}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-primary text-white">
@@ -127,13 +125,13 @@
     </div>
     @endforeach
 
-    <!-- Add New Barn Form -->
+    <!-- Add New BarnModel Form -->
 
     <!-- Modal for adding a new barn -->
     <div class="modal fade" id="addBarnModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ route('listbarn.add') }}" method="POST">
+                <form action="{{ route('barn.add') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Add New Barn</h5>
@@ -151,7 +149,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Zone:</label>
-                            <select id="zone_id" name="zone_id" class="form-select" required>
+                            <select id="zone_id" name="zone_id" class="form-select">
                                 <option value="" >Select Zone</option>
                                 @foreach($zones as $zone)
                                     <option value="{{ $zone->zone_id }}">{{ $zone->zone_name }}</option>
@@ -160,10 +158,13 @@
                         </div>
 
                         <!-- Đoạn mã cho Area được ẩn ban đầu -->
-                        <div class="form-group mb-3" id="area_div" style="display: none;">
-                            <label for="area_id" class="form-label">Area:</label>
-                            <select id="area_id" name="area_id" class="form-select" required>
-                                <option value="" disabled selected>Select Area</option>
+                        <div class="form-group mb-3">
+                            <label for="zone_id" class="form-label">Area:</label>
+                            <select id="area_id" name="area_id" class="form-select">
+                                <option value="" >Select Area</option>
+                                @foreach($areas as $area)
+                                    <option value="{{ $area->area_id }}">{{ $area->area_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -175,62 +176,4 @@
             </div>
         </div>
     </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Ẩn phần Area khi trang vừa tải
-        $('#area_div').hide();
-
-        // Bắt sự kiện thay đổi lựa chọn của Zone
-        $('#zone_id').change(function () {
-            const zoneId = $(this).val();  // Lấy giá trị zone_id được chọn
-
-            // Nếu zoneId có giá trị (nghĩa là Zone đã được chọn)
-            if (zoneId) {
-                // Hiển thị dropdown Area
-                $('#area_div').show();
-
-                // Gửi AJAX để lấy dữ liệu các Area từ zoneId
-                $.ajax({
-                    url: 'http://127.0.0.1:8000/barn/add', // Đảm bảo đường dẫn API chính xác
-                    type: 'POST',
-                    data: {
-                        zone_id: zoneId,
-                        _token: '{{ csrf_token() }}' // CSRF Token để bảo mật
-                    },
-                    success: function(data) {
-                        // Reset dropdown Area
-                        $('#area_id').empty();
-
-                        $('#area_id').append('<option value="">Select Area</option>');
-                        
-
-                        // Kiểm tra nếu có dữ liệu Area
-                        if (data.length > 0) {
-                            data.forEach(function(areas) {
-                                // Thêm các Option vào dropdown Area
-                                
-                                $('#area_id').append(
-                                `<option value="${areas.areas_id}">${areas.areas_id} - ${areas.areas_name}</option>`
-                            );
-                            });
-                        } else {
-                            $('#area_id').html('<option value="" disabled>No areas available</option>');
-                        }
-                    },
-                    error: function () {
-                        // Nếu có lỗi, hiển thị thông báo lỗi trong dropdown
-                        $('#area_id').html('<option value="" disabled>An error occurred</option>');
-                    }
-                });
-            } else {
-                // Nếu không chọn Zone, ẩn dropdown Area
-                $('#area_div').hide();
-            }
-        });
-    });
-</script>
-
-
 @endsection

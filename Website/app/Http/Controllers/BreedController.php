@@ -33,7 +33,7 @@ class BreedController extends Controller
             'breed_name_vie' => 'required|string|max:255',
             'description' => 'nullable|string|max:500',  // Optional field
         ]);
-        
+
 
         try {
             // Insert the new breed into the database
@@ -47,7 +47,7 @@ class BreedController extends Controller
             // Return success message and redirect
             return redirect()->route('breed.list')->with('success', 'Breed added successfully');
         } catch (\Exception $e) {
-            // Log the error for debugging
+            // LogModel the error for debugging
             \Log::error('Error inserting breed: ' . $e->getMessage());
 
             // Return error message and redirect
@@ -90,18 +90,18 @@ class BreedController extends Controller
         try {
             // Tìm breed theo ID
             $breed = Breed::find($id);
-    
+
             // Kiểm tra nếu không tìm thấy breed
             if (!$breed) {
                 return redirect()->back()->with('error', 'Breed not found.');
             }
-    
+
             // Thực hiện xóa breed
             $breed->delete();
-    
+
             // Nếu thành công, quay lại trang danh sách với thông báo thành công
             return redirect()->route('breed.list')->with('success', 'Breed deleted successfully.');
-            
+
         } catch (\Exception $e) {
             // Nếu có lỗi, quay lại trang danh sách với thông báo lỗi
             return redirect()->route('breed.list')->with('error', 'Error occurred while deleting breed: ' . $e->getMessage());

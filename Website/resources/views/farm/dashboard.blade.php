@@ -259,7 +259,7 @@
                     location.reload(); // Reload lại trang để cập nhật danh sách farm
                 },
                 error: function (xhr) {
-                    console.log(xhr.responseJSON); // Log lỗi để kiểm tra
+                    console.log(xhr.responseJSON); // LogModel lỗi để kiểm tra
 
                     // Nếu có lỗi, hiển thị trong modal
                     let errors = xhr.responseJSON.errors;
