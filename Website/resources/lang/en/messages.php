@@ -5,22 +5,22 @@ return [
     'title' => 'GoatModel FarmModel Management',
     'dashboard' => 'Dashboard',
     'goat' => 'Goats',
-    'goat_list' => 'List of GoatModel',
+    'goat_list' => 'List Goat',
 
     'account_manager' => 'Account',
     'account_list' => 'List of Account',
 
-    'add_goat' => 'Add GoatModel',
-    'edit_goat' => 'Edit GoatModel',
-    'delete_goat' => 'Delete GoatModel',
+    'add_goat' => 'Add Goat',
+    'edit_goat' => 'Edit Goat',
+    'delete_goat' => 'Delete Goat',
 
-    'breed' => 'BreedModel',
-    'breed_list' => 'List of BreedModel',
-    'add_breed' => 'Add BreedModel',
-    'edit_breed' => 'Edit BreedModel',
-    'farm_areas' => 'FarmModel Areas',
-    'add_area' => 'Add AreaModel',
-    'edit_area' => 'Edit AreaModel',
+    'breed' => 'Breed',
+    'breed_list' => 'List of Breed',
+    'add_breed' => 'Add Breed',
+    'edit_breed' => 'Edit Breed',
+    'farm_areas' => 'Farm Areas',
+    'add_area' => 'Add Area',
+    'edit_area' => 'Edit Area',
 
     'equipment' => 'Equipment',
     'add_equipment' => 'Add Equipment',
@@ -31,7 +31,7 @@ return [
     'profile' => 'Profile',
     'logout' => 'Logout',
 
-
+    'barn_list' => 'List of Barn',
     'barn' => 'Barn',
     'add_barn' => 'Add Barn',
     'edit_barn' => 'Edit Barn',
@@ -80,7 +80,7 @@ return [
 
     'update_equipment' => 'Update Equipment',
     'delete_equipment' => 'Delete Equipment',
-    'equipment_list' => 'Equipment List',
+    'equipment_list' => 'List Equipment',
     'equipment_details' => 'Equipment Details',
     'area' => 'AreaModel',
     'status' => 'Status',

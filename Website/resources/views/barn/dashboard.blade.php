@@ -64,7 +64,7 @@
                                     <td>{{ $barn->barn_name }}</td>
                                     <td>{{ $barn->description }}</td>
                                     <td>
-                                        <form action="{{ route('breed.del', $barn->barn_id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('barn.del', $barn->barn_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
