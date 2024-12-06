@@ -234,7 +234,7 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         #Food Management
         Route::get('/food', [FoodController::class, 'getView'])->name('food.list');
         Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
-        Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
+        Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('food.udp');
 });
 
 # API

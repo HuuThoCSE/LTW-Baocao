@@ -38,7 +38,7 @@ class BarnController extends Controller
         // Lấy zones thuộc farm_id
         $zones = DB::table('zones')->where('farm_id', $farm_id)->get();
 
-        $ares = AreaModel::all()->where('farm_id', $farm_id);
+        $areas = AreaModel::all()->where('farm_id', $farm_id);
 
         $barns = DB::table('farm_barns')
             ->join('farm_areas', 'farm_barns.area_id', '=', 'farm_areas.area_id')
@@ -48,7 +48,7 @@ class BarnController extends Controller
             ->select('farm_barns.*') // Chọn các cột cần thiết
             ->get();
 
-        return view('barn.dashboard', ['barns' => $barns, 'zones' => $zones, 'areas' => $ares]); // Pass the zones to the view
+        return view('barn.dashboard', ['barns' => $barns, 'zones' => $zones, 'areas' => $areas]); // Pass the zones to the view
     }
 
       // Thêm mới một barn
