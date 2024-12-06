@@ -15,15 +15,15 @@ class FarmsTableSeeder extends Seeder
     {
         DB::table('farms')->insert([
             [
-                'farm_name' => 'Vinh Long Goat Farm',
+                'farm_name' => 'Nông trại Vĩnh Long',
                 'location' => 'Vinh Long Province',
             ],
             [
-                'farm_name' => 'Tien Giang Goat Farm',
+                'farm_name' => 'Nông trại Tiền Giang',
                 'location' => 'Tien Giang Province',
             ],
             [
-                'farm_name' => 'Ben Tre Goat Farm',
+                'farm_name' => 'Nông trại dê Bến Tre',
                 'location' => 'Ben Tre Province',
             ]
         ]);

@@ -13,24 +13,24 @@ class AreasTableSeeder extends Seeder
     {
         DB::table('areas')->insert([
             [
-                
-                
-                'name' => 'Vinh Long Goat Farm',
+
+
+                'name' => 'Vinh Long GoatModel FarmModel',
                 'description' => 'A farm located in Vinh Long province, specializing in goat breeding.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [   
-               
-                
-                'name' => 'Tien Giang Goat Farm',
+            [
+
+
+                'name' => 'Tien Giang GoatModel FarmModel',
                 'description' => 'A goat farm located in Tien Giang province.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [ 
-                
-                'name' => 'Ben Tre Goat Farm',
+            [
+
+                'name' => 'Ben Tre GoatModel FarmModel',
                 'description' => 'A well-known goat farm located in Ben Tre.',
                 'created_at' => now(),
                 'updated_at' => now(),

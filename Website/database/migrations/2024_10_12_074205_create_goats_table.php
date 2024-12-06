@@ -11,24 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('goats', function (Blueprint $table) {
+        Schema::create('farm_goats', function (Blueprint $table) {
             $table->id('goat_id');
             $table->string('goat_name', 100);
             $table->integer('goat_age');
             $table->string('breed_color', 100)->nullable();
             $table->enum('origin', ['imported', 'born_on_farm']);
-            $table->unsignedBigInteger('farm_id');
-            $table->unsignedBigInteger('breed_id');
             $table->timestamps();
 
             // Khóa ngoại
-            $table->foreign('farm_id')
-                ->references('farm_id')
-                ->on('farms')
+            $table->foreignId('farm_id')
+                ->constrained('farms', 'farm_id')
                 ->onDelete('cascade');
-            $table->foreign('breed_id')
-                ->references('breed_id')
-                ->on('farm_breeds')
+
+            $table->foreignId('breed_id')
+                ->constrained('farm_breeds', 'breed_id')
                 ->onDelete('cascade');
         });
     }

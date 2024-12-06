@@ -39,8 +39,8 @@ Quản lý thức ăn
                 </form>
             </td>
             <td align='center'>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal{{$food->id}}" >Update</button>
-                    </td>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal{{$food->id}}" >Update</button>
+            </td>
 </tr>
     @endforeach
 </table>
@@ -62,7 +62,7 @@ Quản lý thức ăn
 </div>
 <script>
         function showAddFoodForm() {
-            // Ẩn nút New Goat và hiện form Add Goat
+            // Ẩn nút New GoatModel và hiện form Add GoatModel
             document.getElementById('newFoodBtn').style.display = 'none';
             document.getElementById('addFoodForm').style.display = 'block';
         }

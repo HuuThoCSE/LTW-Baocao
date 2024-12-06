@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use App\Models\Breed;
+use App\Models\BreedModel;
 
 class BreedController extends Controller
 {
@@ -41,11 +41,11 @@ class BreedController extends Controller
                 'breed_name_eng' => $request->breed_name_eng,  // Input from form
                 'breed_name_vie' => $request->breed_name_vie,  // Input from form
                 'description' => $request->description,        // Input from form
-                'farm_id' => $farm_id,                         // Farm ID from session
+                'farm_id' => $farm_id,                         // FarmModel ID from session
             ]);
 
             // Return success message and redirect
-            return redirect()->route('breed.list')->with('success', 'Breed added successfully');
+            return redirect()->route('breed.list')->with('success', 'BreedModel added successfully');
         } catch (\Exception $e) {
             // LogModel the error for debugging
             \Log::error('Error inserting breed: ' . $e->getMessage());
@@ -65,11 +65,11 @@ class BreedController extends Controller
         ]);
 
         // Tìm giống (breed) theo ID
-        $breed = Breed::find($id);
+        $breed = BreedModel::find($id);
 
         // Kiểm tra xem giống có tồn tại hay không
         if (!$breed) {
-            return redirect()->route('breed.list')->with('error', 'Breed not found.');
+            return redirect()->route('breed.list')->with('error', 'BreedModel not found.');
         }
 
         // Cập nhật thông tin giống
@@ -81,7 +81,7 @@ class BreedController extends Controller
         $breed->save();
 
         // Quay lại với thông báo thành công
-        return redirect()->route('breed.list')->with('success', 'Breed updated successfully.');
+        return redirect()->route('breed.list')->with('success', 'BreedModel updated successfully.');
     }
 
     // Delete a breed
@@ -89,18 +89,18 @@ class BreedController extends Controller
     {
         try {
             // Tìm breed theo ID
-            $breed = Breed::find($id);
+            $breed = BreedModel::find($id);
 
             // Kiểm tra nếu không tìm thấy breed
             if (!$breed) {
-                return redirect()->back()->with('error', 'Breed not found.');
+                return redirect()->back()->with('error', 'BreedModel not found.');
             }
 
             // Thực hiện xóa breed
             $breed->delete();
 
             // Nếu thành công, quay lại trang danh sách với thông báo thành công
-            return redirect()->route('breed.list')->with('success', 'Breed deleted successfully.');
+            return redirect()->route('breed.list')->with('success', 'BreedModel deleted successfully.');
 
         } catch (\Exception $e) {
             // Nếu có lỗi, quay lại trang danh sách với thông báo lỗi
