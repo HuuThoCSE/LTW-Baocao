@@ -52,7 +52,7 @@ Danh sách dê
                             <table class="table datatable table-striped table-bordered table-hover mt-3">
                                 <thead class="text-center">
                                     <tr>
-                                        <th>Id</th>
+                                        <th>ID</th>
                                         <th>Name</th>
                                         <th>Age</th>
                                         <th>Origin</th>
@@ -81,7 +81,8 @@ Danh sách dê
                                         </td>
                                         <td>
                                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#udpModal{{ $goat->goat_id }}" onclick="event.stopPropagation();">
-                                                <i class="bi bi-pencil-fill"></i> Update
+                                                <i class="bi bi-pencil-fill"></i>
+                                                Update
                                             </button>
                                         </td>
                                     </tr>
