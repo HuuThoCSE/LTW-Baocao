@@ -59,6 +59,9 @@
         <i class="bi bi-plus-circle"></i>
         <span class="ms-2">Add Farm</span>
     </button>
+
+    <hr class="my-4">
+
 <div class="table-responsive shadow-sm rounded">
     <table class="table table-striped table-hover align-middle">
         <thead class="table-dark text-center">

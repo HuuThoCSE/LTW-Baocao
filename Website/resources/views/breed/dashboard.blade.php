@@ -31,6 +31,9 @@
     <div class="col-lg-12">
     <div class="card">
 
+        <hr class="my-4">
+
+        <!-- Table with stripped rows -->
         <div class="card-body">
             <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addModal">
                 <i class="bi bi-clipboard-plus"></i>Add Breed

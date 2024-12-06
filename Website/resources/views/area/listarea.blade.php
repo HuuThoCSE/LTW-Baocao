@@ -49,6 +49,8 @@
         <span class="ms-2">Add Area</span>
     </button>
 
+    <hr class="my-4">
+
     <!-- Bảng danh sách các khu vực -->
     <div class="table-responsive shadow-sm rounded">
         <table class="table table-striped table-hover align-middle">
@@ -63,7 +65,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($areas as $area)
+                @foreach($farm_areas as $area)
                 <tr align="center">
                     <td>{{ $area->area_id }}</td>
                     <td>{{ $area->name }}</td>
@@ -138,7 +140,7 @@
     </div>
 
     <!-- Modal cập nhật -->
-    @foreach($areas as $area)
+    @foreach($farm_areas as $area)
     <div class="modal fade" id="udpModal{{$area->area_id}}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
