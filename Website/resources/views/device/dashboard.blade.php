@@ -62,7 +62,7 @@
                             <td>{{ $device->barn_id }}</td>
                             <td>{{ $device->status }}</td>
                             <td >
-                                <form action="{{ route('listfarm.del', $device->device_id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('device.del', $device->device_type_id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
@@ -75,7 +75,7 @@
                             <td >
                                 <button class="btn btn-success btn-sm"  
                                 data-bs-toggle="modal" 
-                                data-bs-target="#udpModal{{$device->device_id}}" >
+                                data-bs-target="#udpModal{{$device->device_type_id}}" >
                                 <i class="bi bi-pencil-square"></i>
                                 Update
                             </button>

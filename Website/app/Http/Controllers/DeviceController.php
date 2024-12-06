@@ -56,30 +56,30 @@ class DeviceController extends Controller
 
                 try {
                     // Tạo thiết bị mới
-                    DB::table('devices')->insert([
+                    DB::table('device')->insert([
                         'device_name' => $request->nput('device_name'),
-                'device_type_id' => $request->input('device_type_id'),
-                'farm_id' => $request->input('farm_id'),
-                'status' => 'Active',
+                        'device_type_id' => $request->input('device_type_id'),
+                        'farm_id' => $request->input('farm_id'),
+                        'status' => 'Active',
             ]);
 
-            return redirect()->route('devices.list')->with('success', 'Device added successfully.');
+            return redirect()->route('device.list')->with('success', 'Device added successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('devices.list')->with('error', 'Failed to add device. Please try again.');
+            return redirect()->route('device.list')->with('error', 'Failed to add device. Please try again.');
         }
     }
 
     // Xóa thiết bị
     public function delDevice($device_id)
     {
-        $device = DB::table('devices')->where('device_id', $device_id)->first();
+        $device = DB::table('device')->where('device_id', $device_id)->first();
 
         if ($device) {
-            DB::table('devices')->where('device_id', $device_id)->delete();
-            return redirect()->route('devices.list')->with('success', 'Device deleted successfully.');
+            DB::table('device')->where('device_id', $device_id)->delete();
+            return redirect()->route('device.list')->with('success', 'Device deleted successfully.');
         }
 
-        return redirect()->route('devices.list')->with('error', 'Device not found.');
+        return redirect()->route('device.list')->with('error', 'Device not found.');
     }
 
     // Cập nhật thiết bị
@@ -93,14 +93,14 @@ class DeviceController extends Controller
 
         try {
             // Cập nhật thiết bị
-            DB::table('devices')->where('device_id', $device_id)->update([
+            DB::table('device')->where('device_id', $device_id)->update([
                 'device_name' => $request->input('device_name'),
                 'device_type_id' => $request->input('device_type_id'),
             ]);
 
-            return redirect()->route('devices.list')->with('success', 'Device updated successfully.');
+            return redirect()->route('device.list')->with('success', 'Device updated successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('devices.list')->with('error', 'Failed to update device. Please try again.');
+            return redirect()->route('device.list')->with('error', 'Failed to update device. Please try again.');
         }
     }
 }
