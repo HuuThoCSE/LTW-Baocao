@@ -44,7 +44,6 @@ Quản lý thức ăn
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-
                     <div class="card-header">
                         <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addFoodModal">
                             <i class="bi bi-clipboard-plus"></i> 
