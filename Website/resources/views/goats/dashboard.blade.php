@@ -89,8 +89,7 @@ Danh sách dê
                                 </tbody>
                             </table>
                         </div>
-
-    <!-- Add Goat Modal -->
+    <!-- Add GoatModel Modal -->
     <div class="modal fade" id="addGoatModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -129,33 +128,11 @@ Danh sách dê
                                     @enderror
                                 </div>
 
-                                <!-- Farm ID Input -->
-                                <div class="col-md-6 mb-3">
-                                    <select name="farm_id" class="form-control" required>
-                                        <option value="">Select Farm</option>
-                                        <!-- Populate with farms dynamically -->
-                                    </select>
-                                    @error('farm_id')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                            <div class="col-md-6 mb-3">
-                                <select name="origin" class="form-control" required>
-                                    <option value="Select">Select Origin</option>
-                                    <option value="imported">Imported</option>
-                                    <option value="born_on_farm">Born on Farm</option>
-                                </select>
-                                @error('origin')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <div class="col-md-6 mb-3">
                                 <select name="breed_id" class="form-control" required>
                                     <option value="">Select Breed</option>
                                     @foreach($breeds as $breed)
-                                        <option value="{{ $breed->breed_id }}">{{ $breed->breed_name_vie }}</option>
+                                        <option value="{{ $breed->breed_id }}">{{ $breed->breed_id }} - {{ $breed->breed_name_vie }}</option>
                                     @endforeach
                                 </select>
                                 @error('breed_id')
@@ -174,7 +151,7 @@ Danh sách dê
         </div>
     </div>
 
-<!-- Update Goat Modal -->
+<!-- Update GoatModel Modal -->
 @foreach($goats as $goat)
 <div class="modal fade" id="udpModal{{ $goat->goat_id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">

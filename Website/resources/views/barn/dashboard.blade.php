@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-        
+
     /* Add hover effect for buttons */
     .btn:hover {
 
@@ -161,7 +161,7 @@
                             </select>
                         </div>
 
-                        <!-- Đoạn mã cho Area được ẩn ban đầu -->
+                        <!-- Đoạn mã cho AreaModel được ẩn ban đầu -->
                         <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Area:</label>
                             <select id="area_id" name="area_id" class="form-select">
@@ -193,24 +193,24 @@
         document.getElementById('addButton').addEventListener('click', function(event) {
             var zone = document.getElementById('zone_id').value;
             var area = document.getElementById('area_id').value;
-            
-            // Kiểm tra nếu Zone hoặc Area không được chọn
+
+            // Kiểm tra nếu Zone hoặc AreaModel không được chọn
             if (zone === "") {
                 event.preventDefault(); // Ngừng gửi form
                 document.getElementById('error-message-zone').style.display = 'block'; // Hiển thị thông báo lỗi cho Zone
-                document.getElementById('error-message-area').style.display = 'none'; // Ẩn thông báo lỗi cho Area
+                document.getElementById('error-message-area').style.display = 'none'; // Ẩn thông báo lỗi cho AreaModel
             } else {
             document.getElementById('error-message-zone').style.display = 'none'; // Ẩn thông báo lỗi cho Zone nếu đã chọn
-                // Tiếp tục kiểm tra Area nếu Zone đã được chọn
+                // Tiếp tục kiểm tra AreaModel nếu Zone đã được chọn
                 if (area === "") {
                     event.preventDefault(); // Ngừng gửi form
-                    document.getElementById('error-message-area').style.display = 'block'; // Hiển thị thông báo lỗi cho Area
+                    document.getElementById('error-message-area').style.display = 'block'; // Hiển thị thông báo lỗi cho AreaModel
                 } else {
-                    document.getElementById('error-message-area').style.display = 'none'; // Ẩn thông báo lỗi cho Area nếu đã chọn
+                    document.getElementById('error-message-area').style.display = 'none'; // Ẩn thông báo lỗi cho AreaModel nếu đã chọn
                 }
             }
 
         });
-        
+
     </script>
 @endsection

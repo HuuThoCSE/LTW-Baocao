@@ -43,18 +43,18 @@ class AreaController extends Controller
         DB::table('areas')->insert([
             'name' => $validated['name'],
             'description' => $validated['description'],
-            'zone_id' => $validated['zone_id'], 
+            'zone_id' => $validated['zone_id'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea.dashboard')->with('success', 'Area added successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel added successfully!');
     }
 
     public function delArea($area_id)
     {
         DB::table('areas')->where('area_id', $area_id)->delete();
-        return redirect()->route('listarea.dashboard')->with('success', 'Area deleted successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel deleted successfully!');
     }
     public function udpArea(Request $request, $area_id)
     {
@@ -69,13 +69,13 @@ class AreaController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea.dashboard')->with('success', 'Area updated successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel updated successfully!');
     }
     public function getAreasByZone(Request $request)
     {
         // Lấy zone_id từ request
         $zoneId = $request->zone_id;
-        
+
         // Kiểm tra nếu zone_id có giá trị
         if ($zoneId) {
             $areas = Area::where('zone_id', $zoneId)->get(); // Lấy các area dựa trên zone_id

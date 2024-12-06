@@ -20,7 +20,9 @@
   @yield('dashboard_style')
   @yield('dashboard_script')
 
-  <body>
+</head>
+
+<body>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -210,7 +212,7 @@
 
           @if(auth()->check()) <!-- Kiểm tra xem người dùng đã đăng nhập chưa -->
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
@@ -242,7 +244,7 @@
                 <li>
                     <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}">
                         <i class="bi bi-box-arrow-right"></i>
-                        <span>Sign Out</span>
+                        <span>{{ __('messages.logout') }}</span>
                     </a>
                 </li>
             </ul>
@@ -335,7 +337,7 @@
                   </li>
                   <!-- <li>
                     <a href="components-accordion.html">
-                      <i class="bi bi-circle"></i><span>Link Breed to Goats</span>  Liên kết giống với dê
+                      <i class="bi bi-circle"></i><span>Link BreedModel to Goats</span>  Liên kết giống với dê
                     </a>
                   </li> -->
                 </ul>
@@ -379,7 +381,7 @@
               </li>
               <li>
                 <a href="{{ route('barn.dashboard')}}">
-                  <i class="bi bi-circle"></i><span>List Barn</span>
+                  <i class="bi bi-circle"></i><span>{{ __('messages.barn_list') }}</span>
                 </a>
               </li>
             </ul>

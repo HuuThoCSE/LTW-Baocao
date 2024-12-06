@@ -30,6 +30,7 @@ return [
     'logout' => 'Đăng xuất',
 
     'barn' => 'Chuồng',
+    'barn_list' => 'Danh sách Chuồng',
     'add_barn' => 'Thêm Chuồng',
     'edit_barn' => 'Chỉnh sửa Chuồng',
     'delete_barn' => 'Xóa Chuồng',
