@@ -21,15 +21,15 @@ class AreaController extends Controller
         // Lấy zones thuộc farm_id
         $zones = DB::table('zones')->where('farm_id', $farm_id)->get();
 
-        $areas = DB::table('areas')
+        $areas = DB::table('farm_areas')
    
-            ->join('zones', 'areas.zone_id', '=', 'zones.zone_id')
+            ->join('zones', 'farm_areas.zone_id', '=', 'zones.zone_id')
             ->join('farms', 'zones.farm_id', '=', 'farms.farm_id')
             ->where('farms.farm_id', $farm_id) // Chỉ định rõ bảng chứa farm_id
-            ->select('areas.*') // Chọn các cột cần thiết
+            ->select('farm_areas.*') // Chọn các cột cần thiết
             ->get(); 
         
-        return view('area/listarea', ['areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
+        return view('area/listarea', ['farm_areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
     }
 
     public function addArea(Request $request)
