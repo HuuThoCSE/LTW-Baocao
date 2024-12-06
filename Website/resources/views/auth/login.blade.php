@@ -67,7 +67,7 @@
     }
     span.d-none.d-lg-block {
         position: relative;
-        z-index: 2; /* Đảm bảo chữ FarmModel GoatModel có z-index cao hơn */
+        z-index: 2; /* Đảm bảo chữ Farm Goat có z-index cao hơn */
     }
 </style>
 </head>
