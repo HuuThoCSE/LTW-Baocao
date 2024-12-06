@@ -14,8 +14,9 @@ class FarmController extends Controller
 {
     public function getView()
     {
-        // Lấy danh sách từ bảng 'goats'
+        // Lấy danh sách từ bảng 'farms'
         $farms = DB::table('farms')->get(); // Thực hiện truy vấn để lấy dữ liệu
+
         // Truyền dữ liệu vào view
         return view('farm.dashboard', ['farms' => $farms]);
     }
