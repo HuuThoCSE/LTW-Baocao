@@ -50,21 +50,22 @@
 }
 </style>
 
-<!-- List of farms -->
-<div class="container mt-5">
-    <h2 class="text-center mb-4">List of Farms</h2>
-</div>
+<section class="section">
+<div class="row">
+    <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+                <i class="bi bi-clipboard-plus"></i>
+                <span class="ms-2">Add Farm</span>
+            </button>
+        </div>
 
-<button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addFarmModal" id="btn-add">
-    <i class="bi bi-plus-circle"></i>
-    <span class="ms-2">Add Farm</span>
-</button>
 
-<hr class="my-4">
 
-<div class="table-responsive shadow-sm rounded">
-    <table class="table table-striped table-hover align-middle">
-        <thead class="table-dark text-center">
+        <div class='card-body'>
+            <table class="table datatable table-striped table-bordered table-hover mt-3">
+                <thead class="text-center"> 
             <tr>
                 <th>ID</th>
                 <th>Name</th>
