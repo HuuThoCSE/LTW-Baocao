@@ -35,7 +35,7 @@ Danh sách dê
             <li class="breadcrumb-item">List of Goat</li>
             </ol>
         </nav>
-</div><!-- End Page Title --> 
+</div><!-- End Page Title -->
     <section class="section">
         <div class="row">
             <div class="col-lg-12">

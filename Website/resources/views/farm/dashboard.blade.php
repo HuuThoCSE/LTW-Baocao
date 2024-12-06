@@ -65,7 +65,7 @@
 
         <div class='card-body'>
             <table class="table datatable table-striped table-bordered table-hover mt-3">
-                <thead class="text-center"> 
+                <thead class="text-center">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
