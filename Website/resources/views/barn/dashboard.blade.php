@@ -26,7 +26,7 @@
 </style>
 
 <div class="pagetitle">
-    <h1>List of Breed</h1>
+    <h1>List of Barn</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
