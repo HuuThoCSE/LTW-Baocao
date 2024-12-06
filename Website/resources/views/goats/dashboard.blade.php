@@ -69,7 +69,7 @@ Danh sách dê
                                         <td>{{ $goat->goat_name }}</td>
                                         <td>{{ $goat->goat_age }}</td>
                                         <td>{{ $goat->origin }}</td>
-                                        <td>{{ $goat->farm_name }}</td>
+                                        <td>{{ $goat->goat_name }}</td>
                                         <td>{{ $goat->breed_name_vie }}</td>
                                         <td>
                                             <form action="{{ route('goats.del', $goat->goat_id) }}" method="POST" style="display:inline;" onclick="event.stopPropagation();">
