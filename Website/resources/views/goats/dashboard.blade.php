@@ -30,65 +30,68 @@ Danh sách dê
     <h1>List of Goats</h1>
         <nav>
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item">Goats</li>
             <li class="breadcrumb-item">List of Goat</li>
             </ol>
         </nav>
-</div><!-- End Page Title -->
+        
+</div><!-- End Page Title --> 
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
 
-    <div class="pagetitle d-flex align-items-center justify-content-between">
-        <!-- Nút thêm thuốc -->
-        <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addGoatModal">
-            <i class="bi bi-plus-circle me-2"></i> Add New Goat
-        </button>
-    </div>
-    <hr class="my-4">
+                <div class="card-header">
+                    <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+                        <i class="bi bi-clipboard-plus"></i>
+                        <span class="ms-2">{{ __('messages.add_goat') }}</span>
+                    </button>
+                </div>
 
-    <!-- Goat Table -->
-    <div class="table-responsive mb-4">
-        <table class="table table-striped table-hover table-bordered">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Origin</th>
-                    <th>Farm</th>
-                    <th>Breed</th>
-                    <th colspan="2">Operations</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($goats as $goat)
-                <tr class="text-center" onclick="window.location='{{ route('goats.show', ['id' => $goat->goat_id]) }}'" style="cursor:pointer;">
-                    <td>{{ $goat->goat_id }}</td>
-                    <td>{{ $goat->goat_name }}</td>
-                    <td>{{ $goat->goat_age }}</td>
-                    <td>{{ $goat->origin }}</td>
-                    <td>{{ $goat->farm_name }}</td>
-                    <td>{{ $goat->breed_name_vie }}</td>
-                    <td>
-                        <form action="{{ route('goats.del', $goat->goat_id) }}" method="POST" style="display:inline;" onclick="event.stopPropagation();">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">
-                                <i class="ri-delete-bin-5-line"></i> Delete
-                            </button>
-                        </form>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#udpModal{{ $goat->goat_id }}" onclick="event.stopPropagation();">
-                            <i class="bi bi-pencil-fill"></i> Update
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Add Goat Modal -->
+                    <div class='card-body'>
+                            <table class="table datatable table-striped table-bordered table-hover mt-3">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Origin</th>
+                                        <th>Farm</th>
+                                        <th>Breed</th>
+                                        <th colspan="2">Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($goats as $goat)
+                                    <tr class="text-center" onclick="window.location='{{ route('goats.show', ['id' => $goat->goat_id]) }}'" style="cursor:pointer;">
+                                        <td>{{ $goat->goat_id }}</td>
+                                        <td>{{ $goat->goat_name }}</td>
+                                        <td>{{ $goat->goat_age }}</td>
+                                        <td>{{ $goat->origin }}</td>
+                                        <td>{{ $goat->farm_name }}</td>
+                                        <td>{{ $goat->breed_name_vie }}</td>
+                                        <td>
+                                            <form action="{{ route('goats.del', $goat->goat_id) }}" method="POST" style="display:inline;" onclick="event.stopPropagation();">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');">
+                                                    <i class="ri-delete-bin-5-line"></i> Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#udpModal{{ $goat->goat_id }}" onclick="event.stopPropagation();">
+                                                <i class="bi bi-pencil-fill"></i> Update
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+    <!-- Add GoatModel Modal -->
+    
     <div class="modal fade" id="addGoatModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
