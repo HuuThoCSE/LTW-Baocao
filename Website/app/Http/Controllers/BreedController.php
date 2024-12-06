@@ -16,8 +16,8 @@ class BreedController extends Controller
         //     return redirect()->route('login');
         // }
 
-        $breeds = DB::table('breeds')->get();
-        return view('breed.breed-list', ['breeds' => $breeds]);
+        $breeds = DB::table('farm_breeds')->get();
+        return view('breed.dashboard', ['breeds' => $breeds]);
     }
 
     public function add(Request $request)
