@@ -17,12 +17,11 @@
 @endif
 
 <div class="pagetitle">
-<h1>List of Breed</h1>
+<h1>{{ __('messages.breed_list') }}</h1>
 <nav>
     <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-    <li class="breadcrumb-item">Breed</li>
-    <li class="breadcrumb-item active">List of Breed</li>
+    <li class="breadcrumb-item">{{ __('messages.breed') }}</li>
     </ol>
 </nav>
 </div><!-- End Page Title -->
@@ -31,14 +30,16 @@
 <div class="row">
     <div class="col-lg-12">
     <div class="card">
-        <div class="card-body">
-        <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addModal">
-            <i class="bi bi-clipboard-plus"></i>Add Breed
-        </button>
 
         <hr class="my-4">
 
         <!-- Table with stripped rows -->
+        <div class="card-body">
+            <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addModal">
+                <i class="bi bi-clipboard-plus"></i>Add Breed
+            </button>
+        </div>
+
         <table class="table datatable table-striped table-bordered table-hover">
             <thead>
                 <tr align="center">
@@ -83,7 +84,6 @@
                 @endforeach
             </tbody>
         </table>
-        </div>
     </div>
     </div>
 </div>

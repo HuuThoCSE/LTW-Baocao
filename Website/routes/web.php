@@ -215,7 +215,7 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::get('/farms/{id}', [FarmController::class, 'show'])->name('farms.show'); // Chi tiết farm theo id
 
         Route::get('/breeds', [BreedController::class, 'getView'])->name('breed.list');
-        Route::post('/breeds/list', [BreedController::class, 'add'])->name('breed.add');
+        Route::post('/breeds', [BreedController::class, 'add'])->name('breed.add');
         Route::put('/breeds/{id}', [BreedController::class, 'udp'])->name('breed.udp');
         Route::delete('/breeds/{id}', [BreedController::class, 'del'])->name('breed.del');
 
