@@ -135,7 +135,7 @@ Route::get('lang/{locale}', function ($locale) {
 
     #Food Management
     Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
-
+    
     # List_Area Management
 
     // routes/web.php

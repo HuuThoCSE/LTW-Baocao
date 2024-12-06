@@ -30,6 +30,7 @@ class FoodController extends Controller
             'food_name_el' => $food_name_el,
             'expiry_date' => $expiry_date
         ]);
+        
 
         $foods = DB::table('foods')->get();
         return view('food',['foods' => $foods]);
@@ -51,7 +52,7 @@ class FoodController extends Controller
     public function udpFood(Request $request, $id)
     {
         // Update medicaion
-        $food_code = $request->input('farm_code');
+        $food_code = $request->input('food_code');
         $food_name_vn = $request->input('food_name_vn');
         $food_name_el = $request->input('food_name_el');
         $expiry_date = $request->input('expiry_date');
@@ -64,7 +65,7 @@ class FoodController extends Controller
 
         $farms = DB::table('foods')->get();
         // return view('farm/dashboard',['farms' => $farms]);
-        return redirect()->route('food')->with('success', 'Food updated successfully.');
+        return redirect()->route('food.list')->with('success', 'Food updated successfully.');
     }
     
 }
