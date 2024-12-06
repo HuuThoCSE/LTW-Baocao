@@ -5,6 +5,8 @@ return [
     'title' => 'Quản lý Trang trại Dê',
     'dashboard' => 'Bảng điều khiển',
     'goats' => 'Dê',
+
+    'account_manager' => 'Quản lý tài khoản',
     'add_goat' => 'Thêm Dê',
     'edit_goat' => 'Chỉnh sửa Dê',
     'delete_goat' => 'Xóa Dê',

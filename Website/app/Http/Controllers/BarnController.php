@@ -63,17 +63,17 @@ class BarnController extends Controller
               'farm_id' => $validated['farm_id'], // Cung cấp giá trị cho 'farm_id'
           ]);
   
-          return redirect()->route('listbarn')->with('success', 'Barn added successfully!');
+          return redirect()->route('listbarn.dashboard')->with('success', 'Barn added successfully!');
      
     }
     
 
   
       // Xóa một barn
-      public function delBarn($id)
+      public function delBarn($barn_id)
       {
-          DB::table('barns')->where('barn_id', $id)->delete(); // Xóa bản ghi theo 'barn_id'
-          return redirect()->route('listbarn')->with('success', 'Barn deleted successfully!');
+          DB::table('barns')->where('barn_id', $barn_id)->delete(); // Xóa bản ghi theo 'barn_id'
+          return redirect()->route('listbarn.dashboard')->with('success', 'Barn deleted successfully!');
       }
   
       // Cập nhật một barn
@@ -89,7 +89,7 @@ class BarnController extends Controller
               'description' => $validated['description'],
           ]);
   
-          return redirect()->route('listbarn')->with('success', 'Barn updated successfully!');
+          return redirect()->route('listbarn.dashboard')->with('success', 'Barn updated successfully!');
       }
 
       

@@ -212,7 +212,7 @@
                     $('#sel_owner_id').append('<option value="">Select Owner</option>');
 
                     // Kiểm tra và thêm dữ liệu
-                    // console.log(data); // Kiểm tra dữ liệu trả về
+                    console.log(data); // Kiểm tra dữ liệu trả về
                     if (Array.isArray(data)) {
                         data.forEach(function (owner) {
                             $('#sel_owner_id').append(
