@@ -133,7 +133,7 @@
     <div class="modal fade" id="addBarnModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ route('listbarn.add') }}" method="POST">
+                <form action="{{ route('barn.add') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Add New Barn</h5>
@@ -151,7 +151,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Zone:</label>
-                            <select id="zone_id" name="zone_id" class="form-select" required>
+                            <select id="zone_id" name="zone_id" class="form-select">
                                 <option value="" >Select Zone</option>
                                 @foreach($zones as $zone)
                                     <option value="{{ $zone->zone_id }}">{{ $zone->zone_name }}</option>
@@ -204,13 +204,13 @@
                         $('#area_id').empty();
 
                         $('#area_id').append('<option value="">Select Area</option>');
-                        
+
 
                         // Kiểm tra nếu có dữ liệu Area
                         if (data.length > 0) {
                             data.forEach(function(areas) {
                                 // Thêm các Option vào dropdown Area
-                                
+
                                 $('#area_id').append(
                                 `<option value="${areas.areas_id}">${areas.areas_id} - ${areas.areas_name}</option>`
                             );

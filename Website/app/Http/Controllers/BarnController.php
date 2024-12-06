@@ -14,7 +14,7 @@ class BarnController extends Controller
     {
         $barns = Barn::all(); // Lấy danh sách chuồng
         $zones = Zone::all(); // Lấy danh sách khu vực (zones)
-        
+
         return view('barns.index', compact('barns', 'zones'));
     }
 
@@ -30,7 +30,7 @@ class BarnController extends Controller
 
     public function getView()
     {
-       
+
         $farm_id = Session::get('user_farm_id');
 
         // Lấy zones thuộc farm_id
@@ -42,40 +42,39 @@ class BarnController extends Controller
             ->join('farms', 'zones.farm_id', '=', 'farms.farm_id')
             ->where('farms.farm_id', $farm_id) // Chỉ định rõ bảng chứa farm_id
             ->select('barns.*') // Chọn các cột cần thiết
-            ->get(); 
-        
+            ->get();
+
         return view('barn/listbarn', ['barns' => $barns, 'zones' => $zones]); // Pass the zones to the view
     }
-    
+
       // Thêm mới một barn
       public function addBarn(Request $request)
       {
           $validated = $request->validate([
-       
               'barn_name' => 'required|string|max:255', // Đảm bảo trường 'barn_name' được cung cấp
               'description' => 'nullable|string', // 'description' không bắt buộc
-              'farm_id' => 'required|integer', // Kiểm tra 'farm_id' là số nguyên
           ]);
-  
+
+          $farm_id = Session::get('user_farm_id');
+
           DB::table('barns')->insert([
               'barn_name' => $validated['barn_name'],
               'description' => $validated['description'],
               'farm_id' => $validated['farm_id'], // Cung cấp giá trị cho 'farm_id'
           ]);
-  
-          return redirect()->route('listbarn.dashboard')->with('success', 'Barn added successfully!');
-     
-    }
-    
 
-  
+          return redirect()->route('listbarn.dashboard')->with('success', 'Barn added successfully!');
+    }
+
+
+
       // Xóa một barn
       public function delBarn($barn_id)
       {
           DB::table('barns')->where('barn_id', $barn_id)->delete(); // Xóa bản ghi theo 'barn_id'
           return redirect()->route('listbarn.dashboard')->with('success', 'Barn deleted successfully!');
       }
-  
+
       // Cập nhật một barn
       public function udpBarn(Request $request, $barn_id)
       {
@@ -83,15 +82,15 @@ class BarnController extends Controller
               'barn_name' => 'required|string|max:255', // Đảm bảo 'barn_name' được cung cấp
               'description' => 'nullable|string', // 'description' không bắt buộc
           ]);
-  
+
           DB::table('barns')->where('barn_id', $barn_id)->update([
               'barn_name' => $validated['barn_name'],
               'description' => $validated['description'],
           ]);
-  
+
           return redirect()->route('listbarn.dashboard')->with('success', 'Barn updated successfully!');
       }
 
-      
+
 }
 

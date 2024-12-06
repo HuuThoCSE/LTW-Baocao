@@ -15,6 +15,7 @@ class BarnSeeder extends Seeder
             'barn_name' => 'Barn A',
             'location' => 'North Corner of Livestock Zone',
             'description' => 'Main barn for adult goats.',
+            'farm_id' => 1,
             'capacity' => 5,
         ]);
 
@@ -23,6 +24,7 @@ class BarnSeeder extends Seeder
             'barn_name' => 'Barn B',
             'location' => 'South Corner of Livestock Zone',
             'description' => 'Barn for young goats.',
+            'farm_id' => 1,
             'capacity' => 5,
         ]);
 
@@ -31,6 +33,7 @@ class BarnSeeder extends Seeder
             'barn_name' => 'Equipment Storage',
             'location' => 'East Corner',
             'description' => 'Storage for larger equipment and machinery.',
+            'farm_id' => 1,
             'capacity' => 5,
         ]);
 
@@ -39,6 +42,7 @@ class BarnSeeder extends Seeder
             'barn_name' => 'Equipment Storage',
             'location' => 'East Corner',
             'description' => 'Storage for larger equipment and machinery.',
+            'farm_id' => 1,
             'capacity' => 5,
         ]);
 
