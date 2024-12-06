@@ -28,7 +28,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->foreign('breed_id')
                 ->references('breed_id')
-                ->on('breeds')
+                ->on('farm_breeds')
                 ->onDelete('cascade');
         });
     }
