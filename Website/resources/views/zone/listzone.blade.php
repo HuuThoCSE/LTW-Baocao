@@ -30,7 +30,6 @@
     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
     <li class="breadcrumb-item">Location</li>
     <li class="breadcrumb-item">List Zone</li>
-    
     </ol>
 </nav>
 </div><!-- End Page Title --> 
@@ -69,7 +68,8 @@
                                         <form action="{{ route('listzone.del', $zone->zone_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" onclick="return confirm('Are you sure you want to delete this zone?');">
+                                            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" 
+                                                onclick="return confirm('Are you sure you want to delete this zone?');">
                                                 <i class="ri-delete-bin-5-line"></i>
                                                 <span class="ms-2">Delete</span>
                                             </button>
@@ -77,7 +77,9 @@
                                     </td>
                                     <td>
                                         <!-- Nút cập nhật -->
-                                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$zone->zone_id}}">
+                                        <button class="btn btn-success btn-sm d-flex align-items-center" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#udpModal{{$zone->zone_id}}">
                                             <i class="bi bi-pencil-square"></i>
                                             <span class="ms-2">Update</span>
                                         </button>
