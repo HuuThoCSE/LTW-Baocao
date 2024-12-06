@@ -102,7 +102,7 @@
     </table>
 </div>
 
-<!-- Modal Thêm FarmModel -->
+<!-- Modal Thêm Farm -->
 <div class="modal fade" id="addFarmModal" tabindex="-1" aria-labelledby="addFarmModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

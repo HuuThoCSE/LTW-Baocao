@@ -3,56 +3,88 @@
 @section('title', 'List of Device')
 
 @section('content')
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>List of Device</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Devices</a></li>
-            <li class="breadcrumb-item active"><a href="components-alerts.html">List of Device</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Devices</li>
+            <li class="breadcrumb-item active">List of Device</li>
         </ol>
     </nav>
-</div> <!-- End Page Title -->
-
-<h1>List of Device</h1>
-
-<!-- Table displaying list of farms -->
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <thead>
-            <tr align='center'>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Zone</th>
-                <th>Barn</th>
-                <th>Status</th>
-                <th colspan="2">Operation</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($devices as $device)
-                <tr align='center' onclick="window.location='{{ route('device.detail', ['id' => $device->device_id]) }}'">
-                    <td>{{ $device->device_type_id }}</td>
-                    <td>{{ $device->device_name }}</td>
-                    <td>{{ $device->type_device_name }}</td>
-                    <td>{{ $device->zone_id }}</td>
-                    <td>{{ $device->barn_id }}</td>
-                    <td>{{ $device->status }}</td>
-                    <td align='center'>
-                        <form action="{{ route('listfarm.del', $device->device_id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                    <td align='center'>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal{{$device->device_id}}" >Update</button>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
 </div>
+
+<section class="section">
+<div class="row">
+    <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addDeviceModal">
+                <i class="bi bi-clipboard-plus"></i>
+                <span class="ms-2">Add Device</span>
+            </button>
+        </div>
+
+        <!-- Table displaying list of farms -->
+        <div class='card-body'>
+            <table class="table datatable table-striped table-bordered table-hover mt-3">
+                <thead class="text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Zone</th>
+                        <th>Barn</th>
+                        <th>Status</th>
+                        <th colspan="2">Operation</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach($devices as $device)
+                        <tr onclick="window.location='{{ route('device.detail', ['id' => $device->device_id]) }}'">
+                            <td>{{ $device->device_type_id }}</td>
+                            <td>{{ $device->device_name }}</td>
+                            <td>{{ $device->type_device_name }}</td>
+                            <td>{{ $device->zone_id }}</td>
+                            <td>{{ $device->barn_id }}</td>
+                            <td>{{ $device->status }}</td>
+                            <td >
+                                <form action="{{ route('listfarm.del', $device->device_id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
+                                            class="btn btn-danger btn-sm d-flex align-items-center">
+                                        <i class="ri-delete-bin-5-line"></i>
+                                        <span class="ms-2">Delete</span>
+                                    </button>
+                                </form>
+                            </td>
+                            <td >
+                                <button class="btn btn-success btn-sm"  
+                                data-bs-toggle="modal" 
+                                data-bs-target="#udpModal{{$device->device_id}}" >
+                                <i class="bi bi-pencil-square"></i>
+                                Update
+                            </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
 <!-- Hàm cập nhật dữ liệu khi nhấn vào nut update -->
 
