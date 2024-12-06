@@ -9,6 +9,8 @@ return [
     'goat_list' => 'Danh sách Dê',
 
     'account_manager' => 'Tài khoản',
+    'account_list' => 'Danh sách Tài khoản',
+
     'add_goat' => 'Thêm Dê',
     'edit_goat' => 'Chỉnh sửa Dê',
     'delete_goat' => 'Xóa Dê',
@@ -31,7 +33,8 @@ return [
     'add_barn' => 'Thêm Chuồng',
     'edit_barn' => 'Chỉnh sửa Chuồng',
     'delete_barn' => 'Xóa Chuồng',
-    'medicine' => 'Quản lý Thuốc',
+
+    'medicine' => 'Thuốc',
     'add_medicine' => 'Thêm Thuốc',
     'edit_medicine' => 'Chỉnh sửa Thuốc',
     'delete_medicine' => 'Xóa Thuốc',
@@ -54,12 +57,13 @@ return [
     'edit_permission' => 'Chỉnh sửa Quyền hạn',
     'delete_permission' => 'Xóa Quyền hạn',
 
-    'food_management' => 'Quản lý Thức ăn',
+    'food_management' => 'Thức ăn',
     'food_list' => 'Danh sách Thức ăn',
     'add_food' => 'Thêm Thức ăn',
     'edit_food' => 'Chỉnh sửa Thức ăn',
     'delete_food' => 'Xóa Thức ăn',
     'food_stock' => 'Kho Thức ăn',
+
     'update_stock' => 'Cập nhật Tồn kho',
     'view_stock' => 'Xem Tồn kho',
     'feeding_schedule' => 'Lịch cho ăn',
@@ -80,4 +84,6 @@ return [
     'area' => 'Khu Vực',
     'status' => 'Trạng Thái',
     'maintenance' => 'Bảo Dưỡng',
+
+    'location' => 'Vị trí',
 ];

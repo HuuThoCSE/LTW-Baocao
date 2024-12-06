@@ -8,6 +8,7 @@ return [
     'goat_list' => 'List of Goat',
 
     'account_manager' => 'Account',
+    'account_list' => 'List of Account',
 
     'add_goat' => 'Add Goat',
     'edit_goat' => 'Edit Goat',
@@ -34,7 +35,9 @@ return [
     'add_barn' => 'Add BarnModel',
     'edit_barn' => 'Edit BarnModel',
     'delete_barn' => 'Delete BarnModel',
-    'medicine' => 'Medicine Management',
+
+    'medicine' => 'Medicine',
+
     'add_medicine' => 'Add Medicine',
     'edit_medicine' => 'Edit Medicine',
     'delete_medicine' => 'Delete Medicine',
@@ -57,11 +60,12 @@ return [
     'edit_permission' => 'Edit Permission',
     'delete_permission' => 'Delete Permission',
 
-    'food_management' => 'Food Management',
+    'food_management' => 'Food',
     'food_list' => 'Food List',
     'add_food' => 'Add Food',
     'edit_food' => 'Edit Food',
     'delete_food' => 'Delete Food',
+
     'food_stock' => 'Food Stock',
     'update_stock' => 'Update Stock',
     'view_stock' => 'View Stock',
@@ -80,4 +84,6 @@ return [
     'area' => 'Area',
     'status' => 'Status',
     'maintenance' => 'Maintenance',
+
+    'location' => 'Location',
 ];

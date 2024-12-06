@@ -113,17 +113,6 @@ Danh sách dê
                                 @enderror
                             </div>
 
-                            <!-- Farm ID Input -->
-                            <div class="col-md-6 mb-3">
-                                <select name="farm_id" class="form-control" required>
-                                    <option value="">Select Farm</option>
-                                    <!-- Populate with farms dynamically -->
-                                </select>
-                                @error('farm_id')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <div class="col-md-6 mb-3">
                                 <select name="breed_id" class="form-control" required>
                                     <option value="">Select Breed</option>
@@ -177,10 +166,10 @@ Danh sách dê
                                 <option value="born_on_farm" {{ $goat->origin == 'born_on_farm' ? 'selected' : '' }}>Born on Farm</option>
                             </select>
                         </div>
+                    </div>
 
-                        </div>
-                        <div class="mb-3">
-                            <label for="breed_id{{ $goat->goat_id }}" class="form-label">Breed</label>
+                    <div class="mb-3">
+                        <label for="breed_id{{ $goat->goat_id }}" class="form-label">Breed</label>
                             <select id="breed_id{{ $goat->goat_id }}" name="breed_id" class="form-control">
                                 <option value="1" {{ $goat->breed_id == 1 ? 'selected' : '' }}>Saanen</option>
                                 <option value="2" {{ $goat->breed_id == 2 ? 'selected' : '' }}>Boer</option>
@@ -189,11 +178,13 @@ Danh sách dê
                                 <option value="5" {{ $goat->breed_id == 5 ? 'selected' : '' }}>Anglo-Nubian</option>
                                 <option value="6" {{ $goat->breed_id == 6 ? 'selected' : '' }}>LaMancha</option>
                                 <option value="7" {{ $goat->breed_id == 7 ? 'selected' : '' }}>Bách Thảo</option>
-                                <option value="8" {{ $goat->breed_id == 8 ? 'selected' : '' }}>Cỏ</option>
-                            </select>
-                        </div>
+                            <option value="8" {{ $goat->breed_id == 8 ? 'selected' : '' }}>Cỏ</option>
+                        </select>
+                    </div>
+
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Save Changes</button>
