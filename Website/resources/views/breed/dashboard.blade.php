@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'List of Breed')
+@section('title', 'List of BreedModel')
 
 @section('content')
 
@@ -88,7 +88,7 @@
 </div>
 </section>
 
-<!-- Modal Add Breed -->
+<!-- Modal Add BreedModel -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -121,7 +121,7 @@
     </div>
 </div>
 
-<!-- Modal Update Breed -->
+<!-- Modal Update BreedModel -->
 <div class="modal fade" id="updateBreedModal" tabindex="-1" aria-labelledby="updateBreedModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

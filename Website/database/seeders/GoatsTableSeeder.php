@@ -13,7 +13,7 @@ class GoatsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('goats')->insert([
+        DB::table('farm_goats')->insert([
             [
                 'goat_id' => 1,
                 'goat_name' => 'Ailly',
