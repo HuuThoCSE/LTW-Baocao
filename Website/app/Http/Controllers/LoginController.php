@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\FarmModel;
 use App\Models\LogModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,15 @@ class LoginController extends Controller
         Session::put('user_id', $user->user_id);
         Session::put('user_role', $user->role_id);
         Session::put('user_farm_id', $user->farm_id);
+
+        $farm = FarmModel::where('farm_id', $user->farm_id)->first();
+
+        if ($farm) {
+            Session::put('farm_name', $farm->farm_name);
+        } else {
+            // Xử lý trường hợp không tìm thấy farm, ví dụ lưu giá trị mặc định
+            Session::put('farm_name', 'Unknown Farm');
+        }
     }
 
     public function login(Request $request)

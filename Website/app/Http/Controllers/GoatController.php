@@ -66,6 +66,7 @@ class GoatController extends Controller
 
     public function addGoat(Request $request)
     {
+//        dd($request->all());
 
         // Validate incoming request data
         $request->validate([
@@ -77,7 +78,7 @@ class GoatController extends Controller
 
 
         // Debugging: Check all request data
-        // dd($request->all()); // This will show all request data and stop the script
+//         dd($request->all()); // This will show all request data and stop the script
 
         $goat_name = $request->input('goat_name');
         $goat_age = $request->input('goat_age');
@@ -88,7 +89,7 @@ class GoatController extends Controller
 
         try {
             // Insert the new goat into the database
-            DB::table('goats')->insert([
+            DB::table('farm_goats')->insert([
                 'goat_name' => $goat_name,
                 'goat_age' => $goat_age,
                 'origin' => $origin,
