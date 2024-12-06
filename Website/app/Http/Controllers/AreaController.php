@@ -48,13 +48,13 @@ class AreaController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel added successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area added successfully!');
     }
 
     public function delArea($area_id)
     {
         DB::table('areas')->where('area_id', $area_id)->delete();
-        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel deleted successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area deleted successfully!');
     }
     public function udpArea(Request $request, $area_id)
     {
@@ -69,7 +69,7 @@ class AreaController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel updated successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area updated successfully!');
     }
     public function getAreasByZone(Request $request)
     {
