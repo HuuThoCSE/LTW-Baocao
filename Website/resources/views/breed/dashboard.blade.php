@@ -30,60 +30,59 @@
 <div class="row">
     <div class="col-lg-12">
     <div class="card">
-
-        <hr class="my-4">
-
         <!-- Table with stripped rows -->
-        <div class="card-body">
-            <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addModal">
+        <div class="card-header">
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addModal">
                 <i class="bi bi-clipboard-plus"></i>Add Breed
             </button>
         </div>
 
-        <table class="table datatable table-striped table-bordered table-hover">
-            <thead>
-                <tr align="center">
-                    <th>ID</th>
-                    <th>English Name</th>
-                    <th>Vietnamese Name</th>
-                    <th>Description</th>
-                    <th colspan="2">Operation</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($breeds as $breed)
-                <tr align="center">
-                    <td>{{ $breed->breed_id }}</td>
-                    <td>{{ $breed->breed_name_eng }}</td>
-                    <td>{{ $breed->breed_name_vie }}</td>
-                    <td>{{ $breed->description }}</td>
-                    <td>
-                        <form action="{{ route('breed.del', $breed->breed_id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
-                                    class="btn btn-danger btn-sm d-flex align-items-center">
-                                <i class="ri-delete-bin-5-line"></i>
-                                <span class="ms-2">Delete</span>
+        <div class='card-body'>
+            <table class="table datatable table-striped table-bordered table-hover mt-3">
+                <thead>
+                    <tr align="center">
+                        <th>ID</th>
+                        <th>English Name</th>
+                        <th>Vietnamese Name</th>
+                        <th>Description</th>
+                        <th colspan="2">Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($breeds as $breed)
+                    <tr align="center">
+                        <td>{{ $breed->breed_id }}</td>
+                        <td>{{ $breed->breed_name_eng }}</td>
+                        <td>{{ $breed->breed_name_vie }}</td>
+                        <td>{{ $breed->description }}</td>
+                        <td>
+                            <form action="{{ route('breed.del', $breed->breed_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
+                                        class="btn btn-danger btn-sm d-flex align-items-center">
+                                    <i class="ri-delete-bin-5-line"></i>
+                                    <span class="ms-2">Delete</span>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <button class="btn btn-success btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#updateBreedModal"
+                                data-id="{{$breed->breed_id}}"
+                                data-breed_name_eng="{{$breed->breed_name_eng}}"
+                                data-breed_name_vie="{{$breed->breed_name_vie}}"
+                                data-description="{{$breed->description}}">
+                            <i class="bi bi-pencil-square"></i>
+                            Update
                             </button>
-                        </form>
-                    </td>
-                    <td>
-                        <button class="btn btn-success btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#updateBreedModal"
-                            data-id="{{$breed->breed_id}}"
-                            data-breed_name_eng="{{$breed->breed_name_eng}}"
-                            data-breed_name_vie="{{$breed->breed_name_vie}}"
-                            data-description="{{$breed->description}}">
-                        <i class="bi bi-pencil-square"></i>
-                        Update
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
     </div>
 </div>
