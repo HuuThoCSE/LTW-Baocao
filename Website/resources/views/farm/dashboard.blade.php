@@ -1,8 +1,8 @@
 @extends('main-admin')
 
-@section('title', 'Dashboard')
+@section('title', 'Bảng điều khiển')
 
-<!-- Success and Error messages -->
+<!-- Thông báo -->
 @if (session('success'))
     <div class="alert alert-success mt-3 rounded shadow-sm">
         {{ session('success') }}
@@ -50,22 +50,21 @@
 }
 </style>
 
-<section class="section">
-<div class="row">
-    <div class="col-lg-12">
-    <div class="card">
-        <div class="card-header">
-            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
-                <i class="bi bi-clipboard-plus"></i>
-                <span class="ms-2">Add Farm</span>
-            </button>
-        </div>
 
+<!-- Danh sách các trang trại -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">List of Farms</h2>
+</div>
+    <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addFarmModal" id="btn-add">
+        <i class="bi bi-plus-circle"></i>
+        <span class="ms-2">Add Farm</span>
+    </button>
 
+    <hr class="my-4">
 
-        <div class='card-body'>
-            <table class="table datatable table-striped table-bordered table-hover mt-3">
-                <thead class="text-center">
+<div class="table-responsive shadow-sm rounded">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark text-center">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -80,7 +79,7 @@
                 <td>{{ $farm->farm_name }}</td>
                 <td>{{ $farm->location }}</td>
                 <td>
-                    <!-- Delete Button -->
+                    <!-- Nút xóa -->
                     <form action="{{ route('listfarm.del', $farm->farm_id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
@@ -91,7 +90,7 @@
                     </form>
                 </td>
                 <td>
-                    <!-- Update Button -->
+                    <!-- Nút cập nhật -->
                     <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$farm->farm_id}}">
                         <i class="bi bi-pencil-square"></i>
                         <span class="ms-1">Update</span>
@@ -103,7 +102,7 @@
     </table>
 </div>
 
-<!-- Modal for Adding Farm -->
+<!-- Modal Thêm Farm -->
 <div class="modal fade" id="addFarmModal" tabindex="-1" aria-labelledby="addFarmModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -114,10 +113,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- General error message -->
+                    <!-- Hiển thị lỗi chung -->
                     <div id="error-alert" class="alert alert-danger d-none"></div>
 
-                    <!-- Form fields -->
+                    <!-- Form inputs -->
                     <div class="form-group mb-3">
                         <label for="farm_name" class="form-label">Farm Name:</label>
                         <input type="text" name="farm_name" class="form-control" placeholder="Enter farm name" id="farm_name">
@@ -132,13 +131,13 @@
 
                     <div class="form-group mb-3">
                         <label class="form-check-label" for="inp_email">Email:</label>
-                        <input type="email" name="inp_email" id="inp_email" class="form-control" placeholder="Enter email of farm owner">
+                        <input type="email" name="inp_email" id="inp_email" class="form-control" placeholder="Nhập email người nhận tài khoản.">
                     </div>
 
                     <div class="form-check mb-3">
                         <input type="hidden" name="chb_old_owner" value="off">
                         <input type="checkbox" name="chb_old_owner" id="chb_old_owner" class="form-check-input" value="on">
-                        <label class="form-check-label" for="chb_old_owner">Existing Owner</label>
+                        <label class="form-check-label" for="chb_old_owner">Owner đã có farm</label>
                     </div>
 
                     <div class="form-mb-3" id="select_old_owner">
@@ -158,7 +157,7 @@
     </div>
 </div>
 
-<!-- Modal for Updating Farm -->
+<!-- Modal cập nhật -->
 @foreach($farms as $farm)
 <div class="modal fade" id="udpModal{{$farm->farm_id}}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">

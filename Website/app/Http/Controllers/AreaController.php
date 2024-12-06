@@ -21,15 +21,15 @@ class AreaController extends Controller
         // Lấy zones thuộc farm_id
         $zones = DB::table('zones')->where('farm_id', $farm_id)->get();
 
-        $areas = DB::table('farm_areas')
+        $areas = DB::table('areas')
 
-            ->join('zones', 'farm_areas.zone_id', '=', 'zones.zone_id')
+            ->join('zones', 'areas.zone_id', '=', 'zones.zone_id')
             ->join('farms', 'zones.farm_id', '=', 'farms.farm_id')
             ->where('farms.farm_id', $farm_id) // Chỉ định rõ bảng chứa farm_id
-            ->select('farm_areas.*') // Chọn các cột cần thiết
+            ->select('areas.*') // Chọn các cột cần thiết
             ->get();
 
-        return view('area/listarea', ['farm_areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
+        return view('area/listarea', ['areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
     }
 
     public function addArea(Request $request)
@@ -48,13 +48,13 @@ class AreaController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel added successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area added successfully!');
     }
 
     public function delArea($area_id)
     {
         DB::table('areas')->where('area_id', $area_id)->delete();
-        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel deleted successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area deleted successfully!');
     }
     public function udpArea(Request $request, $area_id)
     {
@@ -69,7 +69,7 @@ class AreaController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('listarea.dashboard')->with('success', 'AreaModel updated successfully!');
+        return redirect()->route('listarea.dashboard')->with('success', 'Area updated successfully!');
     }
     public function getAreasByZone(Request $request)
     {
