@@ -23,6 +23,7 @@ class GoatController extends Controller
         $breeds = DB::table('farm_breeds')->get(); // Lấy danh sách các giống dê
 
         $goats = DB::table('farm_goats')
+            ->where('farm_goats.farm_id', Session::get('user_farm_id')) // Lọc theo farm_id
             ->join('farms', 'farm_goats.farm_id', '=', 'farms.farm_id')
             ->join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')
             ->select('farm_goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie')
