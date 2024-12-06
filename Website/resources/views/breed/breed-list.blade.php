@@ -36,6 +36,8 @@
             <i class="bi bi-clipboard-plus"></i>Add Breed
         </button>
 
+        <hr class="my-4">
+
         <!-- Table with stripped rows -->
         <table class="table datatable table-striped table-bordered table-hover">
             <thead>

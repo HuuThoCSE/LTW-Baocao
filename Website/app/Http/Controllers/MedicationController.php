@@ -32,10 +32,10 @@ class MedicationController extends Controller
         return view('medication',['medications' => $medications]);
     }
 
-    public function delData($id)
+    public function delData($medication_id)
     {
         // Find the medication by ID and delete it
-        $medication = DB::table('medications')->where('id', $id);
+        $medication = DB::table('medications')->where('medication_id', $medication_id);
         
         if ($medication->exists()) {
             $medication->delete();
@@ -45,22 +45,29 @@ class MedicationController extends Controller
         }
     }
 
-    public function udpData(Request $request, $medication_id)
+    public function putData(Request $request, $medication_id)
     {
-        // Update medicaion
+        // Validate input
+        $request->validate([
+            'medication_code' => 'required|string|max:255',
+            'medication_name' => 'required|string|max:1000',
+        ]);
+
+        // Lấy dữ liệu từ request
         $medication_code = $request->input('medication_code');
         $medication_name = $request->input('medication_name');
 
-        DB::table('medications')->where('medication_id', $medication_id)->update(['$medication_code', '$medication_name']);
+        // Cập nhật dữ liệu trong bảng
+        DB::table('medications')
+            ->where('medication_id', $medication_id)
+            ->update([
+                'medication_code' => $medication_code,
+                'medication_name' => $medication_name
+            ]);
 
-        // DB::statement("UPDATE medications 
-        // SET medication_code = '$medication_code', medication_name = '$medication_name' WHERE id = $id");
-
-        // DB::statement("UPDATE medications 
-        //            SET medication_code = ?, medication_name = ? WHERE id = ?", [$medication_code, $medication_name, $id]);
-
-        $medications = DB::table('medications')->get();
-        return view('medication',['medications' => $medications]);
+        // Redirect lại view với thông báo thành công
+        return redirect()->back()->with('success', 'Medication updated successfully!');
     }
+
 
 }

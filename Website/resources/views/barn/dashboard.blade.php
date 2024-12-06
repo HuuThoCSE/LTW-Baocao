@@ -44,6 +44,8 @@
         <span class="ms-2">Add Barn </span>
     </button>
 
+    <hr class="my-4">
+
     <!-- Barns Table -->
     <div class="table-responsive shadow-sm rounded">
         <table class="table table-striped table-hover align-middle">
