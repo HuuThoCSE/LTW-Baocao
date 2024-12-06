@@ -26,7 +26,7 @@
 </style>
 
 <div class="pagetitle">
-    <h1>List of Breed</h1>
+    <h1>List of Barn</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -39,56 +39,57 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+
                 <div class="card-header">
-                    <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+                    <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
                         <i class="bi bi-clipboard-plus"></i>
                         <span class="ms-2">{{ __('messages.add_barn') }}</span>
                     </button>
                 </div>
 
-
-
-                <table class="table datatable table-striped table-bordered table-hover">
-                    <thead>
-                        <tr align="center">
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th colspan="2">Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($barns as $barn)
-                            <tr align="center">
-                                <td>{{ $barn->barn_id }}</td>
-                                <td>{{ $barn->barn_name }}</td>
-                                <td>{{ $barn->description }}</td>
-                                <td>
-                                    <form action="{{ route('breed.del', $barn->barn_id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
-                                                class="btn btn-danger btn-sm d-flex align-items-center">
-                                            <i class="ri-delete-bin-5-line"></i>
-                                            <span class="ms-2">Delete</span>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <button class="btn btn-success btn-sm"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#updateBreedModal"
-                                            data-id="{{ $barn->barn_id }}"
-                                            data-barn_name="{{ $barn->barn_name }}"
-                                            data-description="{{ $barn->description }}">
-                                        <i class="bi bi-pencil-square"></i>
-                                        Update
-                                    </button>
-                                </td>
+                <div class='card-body'>
+                    <table class="table datatable table-striped table-bordered table-hover mt-3">
+                        <thead class="text-center">
+                            <tr >
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th colspan="2">Operation</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach($barns as $barn)
+                                <tr>
+                                    <td>{{ $barn->barn_id }}</td>
+                                    <td>{{ $barn->barn_name }}</td>
+                                    <td>{{ $barn->description }}</td>
+                                    <td>
+                                        <form action="{{ route('breed.del', $barn->barn_id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
+                                                    class="btn btn-danger btn-sm d-flex align-items-center">
+                                                <i class="ri-delete-bin-5-line"></i>
+                                                <span class="ms-2">Delete</span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#updateBreedModal"
+                                                data-id="{{ $barn->barn_id }}"
+                                                data-barn_name="{{ $barn->barn_name }}"
+                                                data-description="{{ $barn->description }}">
+                                            <i class="bi bi-pencil-square"></i>
+                                            Update
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

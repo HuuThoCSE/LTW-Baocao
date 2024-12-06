@@ -28,57 +28,58 @@ Quản lý thuốc
             </ol>
         </nav>
 </div><!-- End Page Title --> 
+<section class="section">
+<div class="row">
+    <div class="col-lg-12">
+    <div class="card">
 
-<div class="pagetitle d-flex align-items-center justify-content-between">
-    <!-- Nút thêm thuốc -->
-    <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
-        <i class="bi bi-plus-circle me-2"></i> Add Medication
-    </button>
-</div>
+        <div class="card-header">
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+                <i class="bi bi-clipboard-plus"></i>
+                <span class="ms-2">{{ __('messages.add_medicine') }}</span>
+            </button>
+        </div>
 
-
-<hr class="my-4">
-
-<!-- Bảng danh sách thuốc -->
-<div class="table-responsive">
-    <table class="table table-striped table-hover align-middle">
-        <thead class="table-dark">
-            <tr class="text-center">
-                <th>ID</th>
-                <th>Medication Code</th>
-                <th>Medication Name</th>
-                <th colspan="2">Operations</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($medications as $medication)
-            <tr>
-                <td class="text-center">{{ $medication->medication_id }}</td>
-                <td class="text-center">{{ $medication->medication_code }}</td>
-                <td class="text-center">{{ $medication->medication_name }}</td>
-                <td class="text-center">
-                    <form action="{{ route('medication.del', $medication->medication_id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa thuốc này?');" class="btn btn-danger btn-sm">
-                            <i class="bi bi-trash"></i> Delete
-                        </button>
-                    </form>
-                </td>
-                <td class="text-center">
-                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#udpModal{{$medication->medication_id}}">
-                        <i class="bi bi-pencil-square"></i> Update
-                    </button>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="5" class="text-center text-muted">There are no drugs on the list.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
+        <div class='card-body'>     
+            <!-- Bảng danh sách thuốc -->
+            <table class="table datatable table-striped table-bordered table-hover mt-3">
+                <thead class="text-center">
+                    <tr >
+                        <th>ID</th>
+                        <th>Medication Code</th>
+                        <th>Medication Name</th>
+                        <th colspan="2">Operations</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @forelse ($medications as $medication)
+                    <tr>
+                        <td>{{ $medication->medication_id }}</td>
+                        <td >{{ $medication->medication_code }}</td>
+                        <td >{{ $medication->medication_name }}</td>
+                        <td >
+                            <form action="{{ route('medication.del', $medication->medication_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa thuốc này?');" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                        <td >
+                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#udpModal{{$medication->medication_id}}">
+                                <i class="bi bi-pencil-square"></i> Update
+                            </button>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">There are no drugs on the list.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
 <!-- Modal thêm thuốc -->
 <div class="modal fade" id="addMedicationModal" tabindex="-1" aria-hidden="true">

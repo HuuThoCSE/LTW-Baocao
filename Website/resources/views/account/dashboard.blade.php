@@ -1,8 +1,7 @@
 @extends('main')
 
-@section('title')
-Quản lý tài khoản
-@endsection
+@section('title', 'Manage Accounts')
+
 @section('account_style')
 <style>
     table {
@@ -30,8 +29,8 @@ Quản lý tài khoản
         background-color: #f9f9f9;
     }
     tr {
-    cursor: pointer; /* Thay đổi con trỏ để chỉ ra rằng hàng có thể click */
-}
+        cursor: pointer;
+    }
 
     tr:hover {
         background-color: #f1f1f1;
@@ -51,70 +50,74 @@ Quản lý tài khoản
     }
 </style>
 @endsection
+
 @section('content')
 <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>Account Management</h1>
     <nav>
         <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item active">Account</li>
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Account Management</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
 
-<div class="card">
-    <div class="card-header">
-        <h1>Danh sách tài khoản</h1>
+                <div class="card-header">
+                        <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addAccountModal">
+                            <i class="bi bi-clipboard-plus"></i>
+                            <span class="ms-2">Add Account</span>
+                        </button>
+                </div>
+
+                <div class="card-body">
+                    <table class="table datatable table-striped table-bordered table-hover mt-3">
+                        <thead class="text-center">
+                            <tr >
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Created At</th>
+                                <th colspan="2">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td>{{ $user->user_id }}</td>
+                                    <td>{{ $user->user_name }}</td>
+                                    <td>{{ $user->user_email }}</td>
+                                    <td>{{ $user->created_at }}</td>
+                                    <td>
+                                        <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" 
+                                                    class="btn btn-danger btn-sm d-flex align-items-center">
+                                                    <i class="ri-delete-bin-5-line"></i>
+                                                    <span class="ms-2">Delete</span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$user->user_id}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                            <span class="ms-2">Update</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addAccountModal">
-        <i class="bi bi-plus-circle"></i>
-        <span class="ms-2">Add Account</span>
-    </button>
-    <div class="card-body">
-    <table>
-        <thead>
-            <tr style="text-align: center">
-                <th>ID</th>
-                <th>Tên</th>
-                <th>Email</th>
-                <th>Ngày Tạo</th>
-                <th colspan="2">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
-                <tr>
-                    <td>{{ $user->user_id }}</td>
-                    <td>{{ $user->user_name }}</td>
-                    <td>{{ $user->user_email }}</td>
-                    <td>{{ $user->created_at }}</td>
-                    <td class="d-flex justify-content-center">
-                        <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger me-2">Delete</button>
-                        </form>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal">Update</button>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    </div>
-</div>
-
-
-<!-- Form đăng ký -->
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
+</section>
+<!-- Add Account Modal -->
 <div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded">
@@ -126,15 +129,15 @@ Quản lý tài khoản
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-3">
-                        <label for="user_name" class="form-label">Tên tài khoản:</label>
+                        <label for="user_name" class="form-label">Account Name:</label>
                         <input type="text" name="user_name" class="form-control" placeholder="Enter account name" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="email" class="form-label">Email:</label>
-                        <input type="email" name="user_email" class="form-control" placeholder="email" required>
+                        <input type="email" name="user_email" class="form-control" placeholder="Email" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="owner_id" class="form-label">Password:</label>
+                        <label for="user_password" class="form-label">Password:</label>
                         <input type="password" name="user_password" class="form-control" placeholder="Enter password" required>
                     </div>
                     <div class="form-group">
@@ -155,8 +158,5 @@ Quản lý tài khoản
         </div>
     </div>
 </div>
-
-
-
 
 @endsection
