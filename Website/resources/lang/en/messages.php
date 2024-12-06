@@ -4,16 +4,23 @@ return [
     'welcome' => 'Welcome to our application!',
     'title' => 'Goat Farm Management',
     'dashboard' => 'Dashboard',
-    'goats' => 'Goats',
+    'goat' => 'Goats',
+    'goat_list' => 'List of Goat',
+
+    'account_manager' => 'Account',
+
     'add_goat' => 'Add Goat',
     'edit_goat' => 'Edit Goat',
     'delete_goat' => 'Delete Goat',
+
     'breed' => 'Breed',
+    'breed_list' => 'List of Breed',
     'add_breed' => 'Add Breed',
     'edit_breed' => 'Edit Breed',
     'farm_areas' => 'Farm Areas',
     'add_area' => 'Add Area',
     'edit_area' => 'Edit Area',
+
     'equipment' => 'Equipment',
     'add_equipment' => 'Add Equipment',
     'edit_equipment' => 'Edit Equipment',
@@ -23,10 +30,10 @@ return [
     'profile' => 'Profile',
     'logout' => 'Logout',
 
-    'barn' => 'Barn',
-    'add_barn' => 'Add Barn',
-    'edit_barn' => 'Edit Barn',
-    'delete_barn' => 'Delete Barn',
+    'barn' => 'BarnModel',
+    'add_barn' => 'Add BarnModel',
+    'edit_barn' => 'Edit BarnModel',
+    'delete_barn' => 'Delete BarnModel',
     'medicine' => 'Medicine Management',
     'add_medicine' => 'Add Medicine',
     'edit_medicine' => 'Edit Medicine',
@@ -65,4 +72,12 @@ return [
     'feed_tracking' => 'Feed Tracking',
     'record_feed' => 'Record Feeding',
     'view_feed' => 'View Feeding Records',
+
+    'update_equipment' => 'Update Equipment',
+    'delete_equipment' => 'Delete Equipment',
+    'equipment_list' => 'Equipment List',
+    'equipment_details' => 'Equipment Details',
+    'area' => 'Area',
+    'status' => 'Status',
+    'maintenance' => 'Maintenance',
 ];

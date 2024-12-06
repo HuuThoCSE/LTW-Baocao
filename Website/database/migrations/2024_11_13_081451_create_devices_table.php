@@ -30,7 +30,7 @@ return new class extends Migration
                     ->onDelete('cascade'); // Quản lý thiết bị theo khu vực
             $table->foreignId('barn_id')
                     ->nullable()
-                    ->constrained('barns', 'barn_id')
+                    ->constrained('farm_barns', 'barn_id')
                     ->onDelete('cascade'); // Quản lý thiết bị theo chuồng trại
             $table->date('last_maintenance')->nullable();
             $table->date('next_maintenance')->nullable();

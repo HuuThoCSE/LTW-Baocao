@@ -4,24 +4,7 @@
 
 @section('content')
 <style>
-    /*Tạo hiệu ứng lửa xanh cho tiêu đề */
-    @keyframes greenFire {
-            0% {
-                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00cc00, 0 0 40px #00cc00, 0 0 50px #009900;
-            }
-            100% {
-                text-shadow: 0 0 10px #00cc00, 0 0 20px #00cc00, 0 0 30px #009900, 0 0 40px #009900, 0 0 50px #006600;
-            }
-        }
-
-        /* Style thẻ h1 với hiệu ứng */
-        h1 {
-            font-family: 'Arial', sans-serif;
-            font-size: 4rem;
-            color: #00ff00; /* Màu chữ mặc định */
-            text-transform: uppercase;
-            animation: greenFire 1.5s infinite alternate; /* Áp dụng hiệu ứng lửa */
-        }
+    
     /* Add hover effect for buttons */
     .btn:hover {
         transform: scale(1.1);
@@ -41,20 +24,22 @@
     }
 </style>
 <div class="pagetitle">
-    <h1>Zone Management</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-            <li class="breadcrumb-item active">Zones</li>
-        </ol>
-    </nav>
-</div>
+<h1>List of Zorns</h1>
+<nav>
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+    <li class="breadcrumb-item">Location</li>
+    <li class="breadcrumb-item">List Zone</li>
+    
+    </ol>
+</nav>
+</div><!-- End Page Title --> 
 
 <!-- Button to trigger the Add Zone modal -->
     
 
 <!-- Danh sách các Zone -->
-<h1 class="text-center mb-4">List of Zones</h1>
+
     <button class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addZoneModal">
         <i class="bi bi-plus-circle"></i> Add Zone
     </button>

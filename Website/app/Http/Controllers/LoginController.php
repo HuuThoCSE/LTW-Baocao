@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\LogModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -36,6 +37,11 @@ class LoginController extends Controller
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->user_password)) {
+
+            LogModel::create([
+                'user_id' => $user->user_id,  // Giá trị từ đối tượng $user
+                'description' => $user->user_name.' (ID: '.$user->user_id.') - Login'
+            ]);
 
             Auth::loginUsingId($user->user_id);
 

@@ -137,7 +137,7 @@ Route::get('lang/{locale}', function ($locale) {
     Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
     # List_Area Management
-  
+
     // routes/web.php
     Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
 
@@ -148,7 +148,7 @@ Route::get('lang/{locale}', function ($locale) {
     //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
       # List_Barn Management
-     
+
     //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data')
 
 
@@ -198,19 +198,15 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
         Route::post('/areas.get-by-zone', [AreaController::class, 'getAreasByZone']);
 
-
-
         #Food Management
         Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
         # List_Barn Management
-        Route::get('/barns/{id}', [BarnController::class, 'show'])->name('listbarn.show');
-        Route::get('/barns', [BarnController::class, 'getView'])->name('listbarn.dashboard');
-        Route::post('/barns', [BarnController::class, 'addBarn'])->name('listbarn.add');
-        Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('listbarn.del');
-        Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('listbarn.udp');
-        
-      
+        Route::get('/barns/{id}', [BarnController::class, 'show'])->name('barn.show');
+        Route::get('/barns', [BarnController::class, 'getView'])->name('barn.dashboard');
+        Route::post('/barns', [BarnController::class, 'addBarn'])->name('barn.add');
+        Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('barn.del');
+        Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('barn.udp');
 
     // Chung chung
         Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');

@@ -298,7 +298,7 @@
           <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
-                <span>Device</span>
+                <span>{{ __('messages.equipment')  }}</span>
                 <i class="bi bi-chevron-down ms-auto">
               </i>
             </a>
@@ -306,7 +306,7 @@
             <ul id="components-device" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
                 <a href="/devices">
-                  <i class="bi bi-circle"></i><span>List Device</span>
+                  <i class="bi bi-circle"></i><span>{{ __('messages.equipment_list') }}</span>
                 </a>
               </li>
               <!-- <li>
@@ -322,7 +322,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-breed" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
-                    <span>Breed Management</span> <!-- Quản lý giống -->
+                    <span>{{ __('messages.breed') }}</span> <!-- Quản lý giống -->
                     <i class="bi bi-chevron-down ms-auto">
                   </i>
                 </a>
@@ -330,7 +330,7 @@
                 <ul id="components-breed" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
                     <a href="{{ route('breed.list') }}">
-                      <i class="bi bi-circle"></i><span>Breed List</span>
+                      <i class="bi bi-circle"></i><span>{{ __('messages.breed_list') }}</span>
                     </a>
                   </li>
                   <!-- <li>
@@ -346,13 +346,13 @@
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-goat" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
-                <span>Goat</span>
+                <span>{{ __('messages.goat') }}</span>
                 <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-goat" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
                 <a href="/goats">
-                  <i class="bi bi-circle"></i><span>List Goat</span>
+                  <i class="bi bi-circle"></i><span>{{ __('messages.goat_list') }}</span>
                 </a>
               </li>
             </ul>
@@ -378,7 +378,7 @@
                 </a>
               </li>
               <li>
-                <a href="{{ route('listbarn.dashboard')}}">
+                <a href="{{ route('barn.dashboard')}}">
                   <i class="bi bi-circle"></i><span>List Barn</span>
                 </a>
               </li>
@@ -404,6 +404,7 @@
                 </li>
                 <li>
                   <a href="components-accordion.html">
+
                     <i class="bi bi-circle"></i><span>Medication Report</span>
                   </a>
                 </li>

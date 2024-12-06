@@ -34,7 +34,7 @@ class Device extends Model
 
     public function barn()
     {
-        return $this->belongsTo(Barn::class, 'barn_id');
+        return $this->belongsTo(BarnModel::class, 'barn_id');
     }
 
     public function typeDevice()
