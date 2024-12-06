@@ -5,7 +5,7 @@ Danh sách dê
 @endsection
 
 @section('content')
-<h1 class="text-center mb-4">List of Goats</h1>
+
 <style>
 /* Add hover effect for buttons */
 .btn:hover {
@@ -24,11 +24,25 @@ Danh sách dê
 .btn-success:hover {
     background-color: #218838;
 }
-</style>
-    <button id="newGoatBtn" class="btn btn-primary mb-3 mt-4 d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addGoatModal">
-        Add New Goat <i class="ri-add-circle-fill ms-2"></i>
-    </button>
 
+</style>
+<div class="pagetitle">
+    <h1>List of Goats</h1>
+        <nav>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Goats</li>
+            <li class="breadcrumb-item">List of Goat</li>
+            </ol>
+        </nav>
+</div><!-- End Page Title --> 
+   
+    <div class="pagetitle d-flex align-items-center justify-content-between">
+        <!-- Nút thêm thuốc -->
+        <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addGoatModal">
+            <i class="bi bi-plus-circle me-2"></i> Add New Goat
+        </button>
+    </div>
     <hr class="my-4">
 
     <!-- Goat Table -->
@@ -124,17 +138,27 @@ Danh sách dê
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <select name="breed_id" class="form-control" required>
-                                        <option value="">Select Breed</option>
-                                        @foreach($breeds as $breed)
-                                            <option value="{{ $breed->breed_id }}">{{ $breed->breed_name_vie }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('breed_id')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <select name="origin" class="form-control" required>
+                                    <option value="Select">Select Origin</option>
+                                    <option value="imported">Imported</option>
+                                    <option value="born_on_farm">Born on Farm</option>
+                                </select>
+                                @error('origin')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <select name="breed_id" class="form-control" required>
+                                    <option value="">Select Breed</option>
+                                    @foreach($breeds as $breed)
+                                        <option value="{{ $breed->breed_id }}">{{ $breed->breed_name_vie }}</option>
+                                    @endforeach
+                                </select>
+                                @error('breed_id')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -148,58 +172,59 @@ Danh sách dê
         </div>
     </div>
 
-    <!-- Update Goat Modal -->
-    @foreach($goats as $goat)
-    <div class="modal fade" id="udpModal{{ $goat->goat_id }}" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form method="POST" action="{{ route('goats.udp', ['goat_id' => $goat->goat_id]) }}">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-header">
-                        <h5 class="modal-title">Update Goat Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card p-4 shadow-sm">
-                            <div class="mb-3">
-                                <label for="goat_name{{ $goat->goat_id }}" class="form-label">Goat Name</label>
-                                <input type="text" id="goat_name{{ $goat->goat_id }}" name="goat_name" value="{{ $goat->goat_name }}" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="goat_age{{ $goat->goat_id }}" class="form-label">Goat Age</label>
-                                <input type="number" id="goat_age{{ $goat->goat_id }}" name="goat_age" value="{{ $goat->goat_age }}" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="origin{{ $goat->goat_id }}" class="form-label">Origin</label>
-                                <select id="origin{{ $goat->goat_id }}" name="origin" class="form-control">
-                                    <option value="imported" {{ $goat->origin == 'imported' ? 'selected' : '' }}>Imported</option>
-                                    <option value="born_on_farm" {{ $goat->origin == 'born_on_farm' ? 'selected' : '' }}>Born on Farm</option>
-                                </select>
-                            </div>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="breed_id{{ $goat->goat_id }}" class="form-label">Breed</label>
-                                <select id="breed_id{{ $goat->goat_id }}" name="breed_id" class="form-control">
-                                    <option value="1" {{ $goat->breed_id == 1 ? 'selected' : '' }}>Saanen</option>
-                                    <option value="2" {{ $goat->breed_id == 2 ? 'selected' : '' }}>Boer</option>
-                                    <option value="3" {{ $goat->breed_id == 3 ? 'selected' : '' }}>Nubian</option>
-                                    <option value="4" {{ $goat->breed_id == 4 ? 'selected' : '' }}>Alpine</option>
-                                    <option value="5" {{ $goat->breed_id == 5 ? 'selected' : '' }}>Anglo-Nubian</option>
-                                    <option value="6" {{ $goat->breed_id == 6 ? 'selected' : '' }}>LaMancha</option>
-                                    <option value="7" {{ $goat->breed_id == 7 ? 'selected' : '' }}>Bách Thảo</option>
-                                    <option value="8" {{ $goat->breed_id == 8 ? 'selected' : '' }}>Cỏ</option>
-                                </select>
-                            </div>
+<!-- Update Goat Modal -->
+@foreach($goats as $goat)
+<div class="modal fade" id="udpModal{{ $goat->goat_id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('goats.udp', ['goat_id' => $goat->goat_id]) }}">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Goat Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card p-4 shadow-sm">
+                        <div class="mb-3">
+                            <label for="goat_name{{ $goat->goat_id }}" class="form-label">Goat Name</label>
+                            <input type="text" id="goat_name{{ $goat->goat_id }}" name="goat_name" value="{{ $goat->goat_name }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="goat_age{{ $goat->goat_id }}" class="form-label">Goat Age</label>
+                            <input type="number" id="goat_age{{ $goat->goat_id }}" name="goat_age" value="{{ $goat->goat_age }}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="origin{{ $goat->goat_id }}" class="form-label">Origin</label>
+                            <select id="origin{{ $goat->goat_id }}" name="origin" class="form-control">
+                                <option value="imported" {{ $goat->origin == 'imported' ? 'selected' : '' }}>Imported</option>
+                                <option value="born_on_farm" {{ $goat->origin == 'born_on_farm' ? 'selected' : '' }}>Born on Farm</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Save Changes</button>
+
+                    <div class="mb-3">
+                        <label for="breed_id{{ $goat->goat_id }}" class="form-label">Breed</label>
+                            <select id="breed_id{{ $goat->goat_id }}" name="breed_id" class="form-control">
+                                <option value="1" {{ $goat->breed_id == 1 ? 'selected' : '' }}>Saanen</option>
+                                <option value="2" {{ $goat->breed_id == 2 ? 'selected' : '' }}>Boer</option>
+                                <option value="3" {{ $goat->breed_id == 3 ? 'selected' : '' }}>Nubian</option>
+                                <option value="4" {{ $goat->breed_id == 4 ? 'selected' : '' }}>Alpine</option>
+                                <option value="5" {{ $goat->breed_id == 5 ? 'selected' : '' }}>Anglo-Nubian</option>
+                                <option value="6" {{ $goat->breed_id == 6 ? 'selected' : '' }}>LaMancha</option>
+                                <option value="7" {{ $goat->breed_id == 7 ? 'selected' : '' }}>Bách Thảo</option>
+                            <option value="8" {{ $goat->breed_id == 8 ? 'selected' : '' }}>Cỏ</option>
+                        </select>
                     </div>
-                </form>
-            </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
     @endforeach

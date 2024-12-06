@@ -37,7 +37,7 @@ class GoatController extends Controller
             'goat_age' => 'required|integer', // Goat age is required and should be an integer
             'origin' => 'required|string', // Origin is required and should be a string
             'farm_id' => 'required|integer|exists:farms,farm_id',  // Farm ID is required, should be an integer, and must exist in the 'farms' table
-            'breed_id' => 'required|integer|exists:breeds,breed_id', // Breed ID is required, should be an integer, and must exist in the 'breeds' table
+            'breed_id' => 'required|integer|exists:farm_breeds,breed_id', // Breed ID is required, should be an integer, and must exist in the 'breeds' table
         ]);
 
 

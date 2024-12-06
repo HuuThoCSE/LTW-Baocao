@@ -287,7 +287,7 @@
             <ul id="components-account" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="/account">
-                        <i class="bi bi-circle"></i><span>List Account</span>
+                        <i class="bi bi-circle"></i><span>{{ __('messages.account_list')  }}</span>
                     </a>
                 </li>
             </ul>
@@ -363,7 +363,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-location" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
-                <span>Location</span>
+                <span>{{ __('messages.location')  }}</span>
               <i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-location" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -391,7 +391,7 @@
           <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
-                  <span>Medication</span>
+                  <span>{{ __('messages.medicine') }}</span>
                   <i class="bi bi-chevron-down ms-auto">
                 </i>
               </a>
