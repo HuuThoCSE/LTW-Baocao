@@ -10,9 +10,9 @@ class ZoneSeeder extends Seeder
     public function run()
     {
         Zone::create([
-            'farm_id' => 1, // Tien Giang GoatModel FarmModel
+            'farm_id' => 1, // Tien Giang Goat Farm
             'zone_name' => 'Livestock Zone',
-            'description' => 'AreaModel dedicated to animal housing.',
+            'description' => 'Area dedicated to animal housing.',
         ]);
 
         Zone::create([
@@ -28,9 +28,9 @@ class ZoneSeeder extends Seeder
         ]);
 
         Zone::create([
-            'farm_id' => 2, // Ben Tre GoatModel FarmModel
+            'farm_id' => 2, // Ben Tre Goat Farm
             'zone_name' => 'Equipment Zone',
-            'description' => 'AreaModel for storing and maintaining equipment.',
+            'description' => 'Area for storing and maintaining equipment.',
         ]);
     }
 }

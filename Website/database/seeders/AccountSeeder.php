@@ -15,7 +15,7 @@ class AreasTableSeeder extends Seeder
             [
 
 
-                'name' => 'Vinh Long GoatModel FarmModel',
+                'name' => 'Vinh Long Goat Farm',
                 'description' => 'A farm located in Vinh Long province, specializing in goat breeding.',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -23,14 +23,14 @@ class AreasTableSeeder extends Seeder
             [
 
 
-                'name' => 'Tien Giang GoatModel FarmModel',
+                'name' => 'Tien Giang Goat Farm',
                 'description' => 'A goat farm located in Tien Giang province.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
 
-                'name' => 'Ben Tre GoatModel FarmModel',
+                'name' => 'Ben Tre Goat Farm',
                 'description' => 'A well-known goat farm located in Ben Tre.',
                 'created_at' => now(),
                 'updated_at' => now(),

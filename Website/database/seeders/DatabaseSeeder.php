@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Giới hạn quyền của IT FarmModel
+        // Giới hạn quyền của IT Farm
         $itFarmRole = DB::table('farm_roles')->where('role_name', 'it_farm')->first();
         $itFarmPermissions = [
             'view_device', 'edit_device', 'view_dashboard', 'view_farm_list'
@@ -120,14 +120,14 @@ class DatabaseSeeder extends Seeder
                 'role_id' => 1,
             ],
             [
-                'user_name' => 'Admin FarmModel 1',
+                'user_name' => 'Admin Farm 1',
                 'user_email' => 'admin@farm1.vn',
                 'user_password' => bcrypt('123456'),
                 'farm_id' => 1,
                 'role_id' => 2,
             ],
             [
-                'user_name' => 'IT FarmModel 1',
+                'user_name' => 'IT Farm 1',
                 'user_email' => 'it@farm1.vn',
                 'user_password' => bcrypt('123456'),
                 'farm_id' => 1,

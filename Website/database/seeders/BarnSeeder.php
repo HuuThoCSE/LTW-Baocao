@@ -11,7 +11,7 @@ class BarnSeeder extends Seeder
     public function run()
     {
         BarnModel::create([
-            'area_id' => 1, // Livestock Zone của Vinh Long GoatModel FarmModel
+            'area_id' => 1, // Livestock Zone của Vinh Long Goat Farm
             'barn_name' => 'BarnModel A',
             'location' => 'North Corner of Livestock Zone',
             'description' => 'Main barn for adult goats.',
@@ -29,7 +29,7 @@ class BarnSeeder extends Seeder
         ]);
 
         BarnModel::create([
-            'area_id' => 3, // Equipment Zone của Tien Giang GoatModel FarmModel
+            'area_id' => 3, // Equipment Zone của Tien Giang Goat Farm
             'barn_name' => 'Equipment Storage',
             'location' => 'East Corner',
             'description' => 'Storage for larger equipment and machinery.',
@@ -38,7 +38,7 @@ class BarnSeeder extends Seeder
         ]);
 
         BarnModel::create([
-            'area_id' => 4, // Equipment Zone của Tien Giang GoatModel FarmModel
+            'area_id' => 4, // Equipment Zone của Tien Giang Goat Farm
             'barn_name' => 'Equipment Storage',
             'location' => 'East Corner',
             'description' => 'Storage for larger equipment and machinery.',
@@ -47,7 +47,7 @@ class BarnSeeder extends Seeder
         ]);
 
         // BarnModel::create([
-        //     'zone_id' => 3, // Equipment Zone của Tien Giang GoatModel FarmModel
+        //     'zone_id' => 3, // Equipment Zone của Tien Giang Goat Farm
         //     'barn_name' => 'Equipment Storage4',
         //     'location' => 'East Corner4',
         //     'description' => 'Storage4 for larger equipment and machinery.',
