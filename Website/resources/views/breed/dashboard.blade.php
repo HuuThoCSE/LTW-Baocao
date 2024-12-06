@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'List of Breed')
+@section('title', 'List of BreedModel')
 
 @section('content')
 
@@ -32,15 +32,16 @@
     <div class="card">
         <!-- Table with stripped rows -->
         <div class="card-header">
-            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addModal">
-                <i class="bi bi-clipboard-plus"></i>Add Breed
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+                <i class="bi bi-clipboard-plus"></i>
+                <span class="ms-2">{{ __('messages.add_breed') }}</span>
             </button>
         </div>
 
         <div class='card-body'>
             <table class="table datatable table-striped table-bordered table-hover mt-3">
-                <thead>
-                    <tr align="center">
+                <thead class="text-center"> 
+                    <tr>
                         <th>ID</th>
                         <th>English Name</th>
                         <th>Vietnamese Name</th>
@@ -48,9 +49,9 @@
                         <th colspan="2">Operation</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     @foreach($breeds as $breed)
-                    <tr align="center">
+                    <tr>
                         <td>{{ $breed->breed_id }}</td>
                         <td>{{ $breed->breed_name_eng }}</td>
                         <td>{{ $breed->breed_name_vie }}</td>
@@ -74,8 +75,8 @@
                                 data-breed_name_eng="{{$breed->breed_name_eng}}"
                                 data-breed_name_vie="{{$breed->breed_name_vie}}"
                                 data-description="{{$breed->description}}">
-                            <i class="bi bi-pencil-square"></i>
-                            Update
+                                <i class="bi bi-pencil-square"></i>
+                                Update
                             </button>
                         </td>
                     </tr>
@@ -88,7 +89,7 @@
 </div>
 </section>
 
-<!-- Modal Add Breed -->
+<!-- Modal Add BreedModel -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -121,7 +122,7 @@
     </div>
 </div>
 
-<!-- Modal Update Breed -->
+<!-- Modal Update BreedModel -->
 <div class="modal fade" id="updateBreedModal" tabindex="-1" aria-labelledby="updateBreedModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

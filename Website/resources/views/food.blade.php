@@ -49,57 +49,53 @@ Quản lý thức ăn
                 </form>
             </td>
             <td align='center'>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal{{$food->id}}" >Update</button>
-                    </td>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#udpModal{{$food->id}}" >Update</button>
+            </td>
 </tr>
     @endforeach
 </table>
-<!-- Modal Thêm Food-->
 <div class="modal fade" id="addFoodModal" tabindex="-1" aria-labelledby="addFoodModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <form action="{{ route('foods.udp', ['id' => $food->id]) }}" method="POST">
+        <form method="POST" action="{{ route('food.add') }}">
                 @csrf
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addFarmModalLabel">Add New Food</h5>
+                    <h5 class="modal-title" id="addFoodModalLabel">Add New Food</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Hiển thị lỗi chung -->
+                    <!-- General error message -->
                     <div id="error-alert" class="alert alert-danger d-none"></div>
 
-                    <!-- Form inputs -->
+                    <!-- Form fields -->
                     <div class="form-group mb-3">
-                        <label for="food_code" class="form-label">Food code:</label>
-                        <input type="text" name="food_code" class="form-control" placeholder="Enter farm code" id="food_code">
+                        <label for="food_code" class="form-label">food_code:</label>
+                        <input type="text" name="food_code" class="form-control" placeholder="Enter farm name" id="food_code">
                         <span class="text-danger error-farm_name"></span>
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="food_name_vn" class="form-label">Food_name_vn:</label>
-                        <textarea name="food_name_vn" class="form-control" placeholder="Nhập tên thức ăn (Vietnamese)" id="food_name_vn"></textarea>
-                        <span class="text-danger error-location"></span>
+                        <label class="food_name_vn" for="inp_email">Food_name_vn:</label>
+                        <input type="text" name="food_name_vn" id="food_name_vn" class="form-control" placeholder="Tên thức ăn (Vietnamese)">
                     </div>
 
                     <div class="form-group mb-3">
-                        <label class="form-check-label" for="food_name_el">Food_name_el:</label>
-                        <input type="text" name="food_name_el" id="food_name_el" class="form-control" placeholder="Nhập tên thức ăn (english)">
+                        <label class="food_name_el" for="inp_email">food_name_el:</label>
+                        <input type="text" name="food_name_el" id="food_name_el" class="form-control" placeholder="Tên thức ăn (English)">
                     </div>
                     <div class="form-group mb-3">
-                        <label class="form-check-label" for="expiry_date">Expiry_date:</label>
-                        <input type="text" name="expiry_date" id="expiry_date" class="form-control" placeholder="Thời hạn sử dụng">
+                        <label class="expiry_date" for="inp_email">expiry_date:</label>
+                        <input type="text" name="expiry_date" id="expiry_date" class="form-control" placeholder="Thời hạn dùng">
                     </div>
 
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Food</button>
+                    <button type="submit" class="btn btn-primary">Add Farm</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 @foreach($foods as $food)
 <div class="modal fade" id="udpModal{{ $food->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">

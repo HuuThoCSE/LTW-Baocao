@@ -21,15 +21,15 @@ class AreaController extends Controller
         // Lấy zones thuộc farm_id
         $zones = DB::table('zones')->where('farm_id', $farm_id)->get();
 
-        $areas = DB::table('areas')
-   
-            ->join('zones', 'areas.zone_id', '=', 'zones.zone_id')
+        $areas = DB::table('farm_areas')
+
+            ->join('zones', 'farm_areas.zone_id', '=', 'zones.zone_id')
             ->join('farms', 'zones.farm_id', '=', 'farms.farm_id')
             ->where('farms.farm_id', $farm_id) // Chỉ định rõ bảng chứa farm_id
-            ->select('areas.*') // Chọn các cột cần thiết
-            ->get(); 
-        
-        return view('area/listarea', ['areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
+            ->select('farm_areas.*') // Chọn các cột cần thiết
+            ->get();
+
+        return view('area.listarea', ['farm_areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
     }
 
     public function addArea(Request $request)
@@ -43,7 +43,7 @@ class AreaController extends Controller
         DB::table('areas')->insert([
             'name' => $validated['name'],
             'description' => $validated['description'],
-            'zone_id' => $validated['zone_id'], 
+            'zone_id' => $validated['zone_id'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -75,7 +75,7 @@ class AreaController extends Controller
     {
         // Lấy zone_id từ request
         $zoneId = $request->zone_id;
-        
+
         // Kiểm tra nếu zone_id có giá trị
         if ($zoneId) {
             $areas = Area::where('zone_id', $zoneId)->get(); // Lấy các area dựa trên zone_id

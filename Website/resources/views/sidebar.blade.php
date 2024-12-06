@@ -65,7 +65,7 @@
       </li>
       <!-- <li>
         <a href="components-accordion.html">
-          <i class="bi bi-circle"></i><span>Link Breed to Goats</span>  Liên kết giống với dê 
+          <i class="bi bi-circle"></i><span>Link BreedModel to Goats</span>  Liên kết giống với dê
         </a>
       </li> -->
     </ul>

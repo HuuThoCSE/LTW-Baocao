@@ -39463,7 +39463,7 @@
       };
       /**
        * Get rect area of cartesian.
-       * Area will have a contain function to determine if a point is in the coordinate system.
+       * AreaModel will have a contain function to determine if a point is in the coordinate system.
        */
       Cartesian2D.prototype.getArea = function (tolerance) {
         tolerance = tolerance || 0;

@@ -43394,7 +43394,7 @@ var Cartesian2D = /** @class */function (_super) {
   };
   /**
    * Get rect area of cartesian.
-   * Area will have a contain function to determine if a point is in the coordinate system.
+   * AreaModel will have a contain function to determine if a point is in the coordinate system.
    */
   Cartesian2D.prototype.getArea = function (tolerance) {
     tolerance = tolerance || 0;
@@ -61370,7 +61370,7 @@ var candlestickLayout = {
           x: pmin[0],
           y: pmin[1],
           width:  candleWidth ,
-          height:  pmax[1] - pmin[1] 
+          height:  pmax[1] - pmin[1]
         };
       }
       function subPixelOptimizePoint(point) {
@@ -68496,7 +68496,7 @@ var Polar = /** @class */function () {
   };
   /**
    * Get ring area of cartesian.
-   * Area will have a contain function to determine if a point is in the coordinate system.
+   * AreaModel will have a contain function to determine if a point is in the coordinate system.
    */
   Polar.prototype.getArea = function () {
     var angleAxis = this.getAngleAxis();

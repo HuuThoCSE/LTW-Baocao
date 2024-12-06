@@ -11,19 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('goat_movements', function (Blueprint $table) {
+        Schema::create('goat_status', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('moved_at')->nullable(); // Ngày giờ dê di chuyển
-            $table->timestamps();
-
-            // Khóa ngoại
             $table->foreignId('goat_id')
                 ->constrained('farm_goats', 'goat_id')
                 ->onDelete('cascade');
-
-            $table->foreignId('farm_id')
-                ->constrained('farms', 'farm_id')
-                ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('goat_movements');
+        Schema::dropIfExists('goat_status');
     }
 };

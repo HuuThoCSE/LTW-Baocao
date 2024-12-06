@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Breed extends Model
+class BreedModel extends Model
 {
 
     use HasFactory;
+
+    protected $table = 'farm_breeds';
 
     protected $primaryKey = 'breed_id';
 

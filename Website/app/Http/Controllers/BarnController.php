@@ -27,7 +27,7 @@ class BarnController extends Controller
         if (!$barn) {
             return redirect()->route('barn.list')->with('error', 'BarnModel not found.');
         }
-        return view('barn/show', ['barn' => $barn]); // Show details view
+        return view('barn.show', ['barn' => $barn]); // Show details view
     }
 
     public function getView()

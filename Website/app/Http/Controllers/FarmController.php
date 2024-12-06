@@ -43,7 +43,7 @@ class FarmController extends Controller
             'location' => $location,
         ]);
 
-        $user_name = 'Owner of Farm ' . $farm_name;
+        $user_name = 'Owner of FarmModel ' . $farm_name;
         $user_email_new = 'owner@farm'.$farm_id.'.vn';
         $user_password = '123456'; // Mật khẩu mặc định
 
@@ -88,7 +88,7 @@ class FarmController extends Controller
         Mail::to($user_email)->send(new FarmNotificationMail($userDetails));
 
         return response()->json([
-            'message' => 'Farm added successfully!',
+            'message' => 'FarmModel added successfully!',
             'farm_id' => $farm_id,
             'owner_id' => $owner_id,
         ]);
@@ -102,9 +102,9 @@ class FarmController extends Controller
 
         if ($farm->exists()) {
             $farm->delete();
-            return redirect()->back()->with('success', 'Farm deleted successfully.');
+            return redirect()->back()->with('success', 'FarmModel deleted successfully.');
         } else {
-            return redirect()->back()->with('error', 'Farm not found.');
+            return redirect()->back()->with('error', 'FarmModel not found.');
         }
     }
 
@@ -122,14 +122,14 @@ class FarmController extends Controller
 
         $farms = DB::table('farms')->get();
         // return view('farm/dashboard',['farms' => $farms]);
-        return redirect()->route('listfarm')->with('success', 'Farm updated successfully.');
+        return redirect()->route('listfarm')->with('success', 'FarmModel updated successfully.');
     }
 
     public function show($id)
     {
         $farm = DB::table('farms')->where('id', $id)->first(); // Lấy farm theo id
         if (!$farm) {
-            abort(404, 'Farm not found'); // Nếu không tìm thấy farm
+            abort(404, 'FarmModel not found'); // Nếu không tìm thấy farm
         }
         return view('farms.show', compact('farm'));
     }

@@ -36,54 +36,57 @@
 </div><!-- End Page Title --> 
 
 <!-- Button to trigger the Add Zone modal -->
-<div class="pagetitle d-flex align-items-center justify-content-between">
-    <!-- Nút thêm Zones-->
-    <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addZoneModal">
-        <i class="bi bi-plus-circle me-2"></i> Add Zone
-    </button>
-</div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
 
-    <hr class="my-4">
-
-    <div class="table-responsive shadow-sm rounded">
-        <table class="table table-striped table-hover align-middle">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th colspan="2">Operations</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($zones as $zone)
-                <tr class="text-center">
-                    <td>{{ $zone->zone_id }}</td>
-                    <td>{{ $zone->zone_name }}</td>
-                    <td>{{ $zone->description }}</td>
-                    <td>
-                        <!-- Nút xóa -->
-                        <form action="{{ route('listzone.del', $zone->zone_id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" onclick="return confirm('Are you sure you want to delete this zone?');">
-                                <i class="ri-delete-bin-5-line"></i>
-                                <span class="ms-1">Delete</span>
-                            </button>
-                        </form>
-                    </td>
-                    <td>
-                        <!-- Nút cập nhật -->
-                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$zone->zone_id}}">
-                            <i class="bi bi-pencil-square"></i>
-                            <span class="ms-1">Update</span>
+                    <div class="card-header">
+                        <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addZoneModal">
+                            <i class="bi bi-clipboard-plus"></i> 
+                            <span class="ms-2">Add Zone</span>
                         </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+                    </div>
+
+                    <div class='card-body'>
+                        <table class="table datatable table-striped table-bordered table-hover mt-3">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th colspan="2">Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($zones as $zone)
+                                <tr class="text-center">
+                                    <td>{{ $zone->zone_id }}</td>
+                                    <td>{{ $zone->zone_name }}</td>
+                                    <td>{{ $zone->description }}</td>
+                                    <td>
+                                        <!-- Nút xóa -->
+                                        <form action="{{ route('listzone.del', $zone->zone_id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" onclick="return confirm('Are you sure you want to delete this zone?');">
+                                                <i class="ri-delete-bin-5-line"></i>
+                                                <span class="ms-2">Delete</span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <!-- Nút cập nhật -->
+                                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$zone->zone_id}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                            <span class="ms-2">Update</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
     <!-- Modal cập nhật Zone -->
     @foreach($zones as $zone)
