@@ -34,7 +34,7 @@ Quản lý thuốc
     <div class="card">
 
         <div class="card-header">
-            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addMedicationModal">
                 <i class="bi bi-clipboard-plus"></i>
                 <span class="ms-2">{{ __('messages.add_medicine') }}</span>
             </button>

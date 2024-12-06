@@ -40,7 +40,7 @@
 
         <div class='card-body'>
             <table class="table datatable table-striped table-bordered table-hover mt-3">
-                <thead class="text-center"> 
+                <thead class="text-center">
                     <tr>
                         <th>ID</th>
                         <th>English Name</th>
@@ -89,7 +89,7 @@
 </div>
 </section>
 
-<!-- Modal Add BreedModel -->
+<!-- Modal Add Breed -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -122,7 +122,7 @@
     </div>
 </div>
 
-<!-- Modal Update BreedModel -->
+<!-- Modal Update Breed -->
 <div class="modal fade" id="updateBreedModal" tabindex="-1" aria-labelledby="updateBreedModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
