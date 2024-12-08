@@ -5,6 +5,8 @@ return [
     'title' => 'Quản lý Trang trại Dê',
     'dashboard' => 'Bảng điều khiển',
 
+    'action' => 'Thao tác',
+
     'goat' => 'Dê',
     'goat_list' => 'Danh sách Dê',
 

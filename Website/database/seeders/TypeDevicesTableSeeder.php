@@ -13,7 +13,7 @@ class TypeDevicesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('device_types')->insert([
+        DB::table('type_devices')->insert([
             [
                 'type_device_code' => 'ESP32',
                 'type_device_name' => 'ESP32',

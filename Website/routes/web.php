@@ -5,7 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BreedController;
 
-use App\Http\Controllers\GoatDetailController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\FarmController;
 use App\Http\Controllers\MedicationController;
@@ -79,24 +78,12 @@ Route::middleware([CheckPermission::class . ':farm_owner'])->group(function () {
     // Các route cho chủ nông trại
 });
 
-// IT nông trại
-Route::middleware([CheckPermission::class . ':farm_it'])->group(function () {
-    // Device Management
-    Route::get('/devices/{id}', [DeviceController::class, 'detailDevice'])->name('device.detail');
-    Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
-    Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('device.edit');
-    Route::put('/devices/{id}/maintenance', [DeviceController::class, 'delDevice'])->name('device.maintenance'); // Lịch sử và lịch trình bảo trì
-    Route::put('/devices/{id}/status', [DeviceController::class, 'delDevice'])->name('device.putStatus');
-    Route::delete('/devices/{id}/delete', [DeviceController::class, 'delDevice'])->name('device.del');
-    // Các route dành cho IT nông trại
-});
-
 // Nông dân
 Route::middleware([CheckPermission::class . ':farmer'])->group(function () {
     // List_Goat Management
     Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
     Route::post('/goats', [GoatController::class, 'addGgoatsoat'])->name('goats.add');
-    Route::get('goatdetail/{goat_id}', [GoatDetailController::class, 'getview'])->name('goatdetail');
+    Route::get('goats/{goat_id}', [GoatController::class, 'getview'])->name('goats.show');
     Route::delete('/goats/{goat_id}', [GoatController::class, 'delGoat'])->name('goats.del');
     Route::put('/goats/{goat_id}', [GoatController::class, 'udpGoat'])->name('goats.udp');
     Route::get('/goats/create', [GoatController::class, 'createGoatForm'])->name('goats.create');
@@ -135,7 +122,7 @@ Route::get('lang/{locale}', function ($locale) {
 
     #Food Management
     Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
-    
+
     # List_Area Management
 
     // routes/web.php
@@ -169,7 +156,7 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
     // IT nông trại
         #Device Management
         Route::get('/devices', [DeviceController::class, 'getView'])->name('device.list');
-        Route::get('/devices/{id}', [DeviceController::class, 'detailDevice'])->name('device.detail');
+        Route::get('/devices/{id}', [DeviceController::class, 'show'])->name('device.show');
         Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
         Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('device.edit');
         Route::put('/devices/{id}', [DeviceController::class, 'udpDevice'])->name('device.upd');
@@ -202,8 +189,8 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
         # List_Barn Management
-        Route::get('/barns/{id}', [BarnController::class, 'show'])->name('barn.show');
         Route::get('/barns', [BarnController::class, 'getView'])->name('barn.dashboard');
+        Route::get('/barns/{id}', [BarnController::class, 'show'])->name('barn.show');
         Route::post('/barns', [BarnController::class, 'addBarn'])->name('barn.add');
         Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('barn.del');
         Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('barn.udp');
