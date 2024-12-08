@@ -154,6 +154,8 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
 
     // IT nông trại
+//        Route::get('/dashboard/it', [ItController::class, 'index'])->name('dashboard.it');
+
         #Device Management
         Route::get('/devices', [DeviceController::class, 'getView'])->name('device.list');
         Route::get('/devices/{id}', [DeviceController::class, 'show'])->name('device.show');
@@ -196,8 +198,8 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('barn.udp');
 
     // Chung chung
-        Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
-        Route::get('', [HomeController::class, 'getView'])->name('home');
+//        Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
+        Route::get('', [HomeController::class, 'redirectToDashboard'])->name('home');
 
         Route::get('/farms/{id}', [FarmController::class, 'show'])->name('farms.show'); // Chi tiết farm theo id
 

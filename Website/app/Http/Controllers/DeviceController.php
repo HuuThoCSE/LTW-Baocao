@@ -28,17 +28,17 @@ class DeviceController extends Controller
 
         $type_devices = DB::table('type_devices')->get();
 
-        return view('device.dashboard', ['devices' => $devices, 'type_devices' => $type_devices]);
+        return view('device.index', ['devices' => $devices, 'type_devices' => $type_devices]);
     }
 
-    public function detailDevice($id)
+    public function show($id)
     {
         // Lấy chi tiết thiết bị với $id
-        $deviceDetail = Device::find($id)
+        $device = Device::find($id)
             ->join('type_devices', 'farm_devices.type_device_id', '=', 'type_devices.type_device_id')
             ->select('farm_devices.*', 'type_devices.type_device_name')
             ->first();
-        return view('device.detail', ['deviceDetail' => $deviceDetail]);
+        return view('device.show', ['device' => $device]);
     }
 
     // Thêm thiết bị

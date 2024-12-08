@@ -1,3 +1,6 @@
+<?php
+use \Illuminate\Support\Facades\Session;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -223,8 +226,8 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
-                    <h6>Meta</h6>
-                    <span>{{ auth()->user()->name }}</span> <!-- Hiển thị tên người dùng -->
+                    <h6>{{ auth()->user()->user_name }}</h6> <!-- Hiển thị tên người dùng -->
+                    <span>{{ Auth::user()->role->role_name ." ( ". Auth::user()->role_id }} )</span>
                 </li>
                 <li>
                     <hr class="dropdown-divider">

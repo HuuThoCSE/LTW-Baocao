@@ -60,7 +60,7 @@
                 </thead>
                 <tbody class="text-center">
                     @foreach($devices as $device)
-                        <tr onclick="window.location='{{ route('device.detail', ['id' => $device->device_id]) }}'" class="text-center">
+                        <tr onclick="window.location='{{ route('device.show', ['id' => $device->device_id]) }}'" class="text-center">
                             <td>{{ $device->device_id }}</td>
                             <td>{{ $device->device_name }}</td>
                             <td>{{ $device->type_device_name }}</td>
