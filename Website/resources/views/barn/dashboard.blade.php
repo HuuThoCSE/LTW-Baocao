@@ -59,7 +59,7 @@
                         </thead>
                         <tbody class="text-center">
                             @foreach($barns as $barn)
-                                <tr>
+                                <tr onclick="window.location='{{ route('barn.detail', ['id' => $barn->barn_id]) }}'">
                                     <td>{{ $barn->barn_id }}</td>
                                     <td>{{ $barn->barn_name }}</td>
                                     <td>{{ $barn->description }}</td>
@@ -151,6 +151,7 @@
                             <label for="description" class="form-label">Description:</label>
                             <textarea name="description" class="form-control" rows="3" placeholder="Enter description"></textarea>
                         </div>
+
                         <div class="form-group mb-3">
                             <label for="zone_id" class="form-label">Zone:</label>
                             <select id="zone_id" name="zone_id" class="form-select">

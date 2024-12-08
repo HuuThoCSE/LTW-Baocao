@@ -9,6 +9,8 @@ class FarmModel extends Model
 {
     use HasFactory;
 
+    protected $table = 'farms';
+
     protected $primaryKey = 'farm_id';
 
     protected $fillable = [

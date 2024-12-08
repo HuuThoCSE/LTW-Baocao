@@ -35,12 +35,19 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
+      <!--
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+    -->
+
+  {{ Session::get('farm_name') }}
+
+
+    <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -251,7 +258,7 @@
           @else
               <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{ route('login') }}">
                   <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                  <span class="d-none d-md-block dropdown-toggle ps-2">Đăng Nhập</span>
+                  <span class="d-none d-md-block dropdown-toggle ps-2">{{ __('messages.login') }}</span>
               </a>
           @endif
         </li>

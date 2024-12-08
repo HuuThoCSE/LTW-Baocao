@@ -4,6 +4,9 @@ return [
     'welcome' => 'Welcome to our application!',
     'title' => 'GoatModel FarmModel Management',
     'dashboard' => 'Dashboard',
+
+    'action' => 'Action',
+
     'goat' => 'Goats',
     'goat_list' => 'List Goat',
 

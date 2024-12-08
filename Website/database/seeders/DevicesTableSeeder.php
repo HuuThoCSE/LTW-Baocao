@@ -14,14 +14,16 @@ class DevicesTableSeeder extends Seeder
     public function run(): void
     {
         //
-        DB::table('devices')->insert([
+        DB::table('farm_devices')->insert([
             [
-                'device_type_id' => 1,
+                'type_device_id' => 1,
                 'device_name' => 'ESP32-01',
+                'farm_id' => 1,
             ],
             [
-                'device_type_id' => 2,
+                'type_device_id' => 2,
                 'device_name' => 'ESP8266-01',
+                'farm_id' => 1,
             ],
         ]);
     }
