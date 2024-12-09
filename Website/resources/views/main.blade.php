@@ -455,7 +455,7 @@ use Illuminate\Support\Facades\Auth;
 
   <main id="main" class="main">
 
-  @yield('content')
+  @yield('contents')
 
   </main><!-- End #main -->
 
