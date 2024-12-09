@@ -60,7 +60,7 @@
                 </thead>
                 <tbody class="text-center">
                     @foreach($devices as $device)
-                        <tr onclick="window.location='{{ route('device.detail', ['id' => $device->device_id]) }}'" class="text-center">
+                        <tr onclick="window.location='{{ route('devices.show', ['id' => $device->device_id]) }}'" class="text-center">
                             <td>{{ $device->device_id }}</td>
                             <td>{{ $device->device_name }}</td>
                             <td>{{ $device->type_device_name }}</td>
@@ -76,7 +76,7 @@
                                 @endif
                             </td>
                             <td class="d-flex justify-content-center align-items-center">
-                                <form action="{{ route('device.del', $device->type_device_id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('devices.del', $device->type_device_id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
@@ -109,7 +109,7 @@
             </div>
             <div class="modal-body">
                 <!-- Add Device Form -->
-                <form action="{{ route('device.add') }}" method="POST">
+                <form action="{{ route('devices.add') }}" method="POST">
 
                     @csrf
                     <div class="mb-3">
