@@ -10,14 +10,14 @@ use App\Models\BreedModel;
 
 class BreedController extends Controller
 {
-    public function getView()
+    public function index()
     {
         // if(empty(Session::get('user_farm_id'))){
         //     return redirect()->route('login');
         // }
 
         $breeds = DB::table('farm_breeds')->get();
-        return view('breed.dashboard', ['breeds' => $breeds]);
+        return view('breed.index', ['breeds' => $breeds]);
     }
 
     public function add(Request $request)
@@ -45,13 +45,13 @@ class BreedController extends Controller
             ]);
 
             // Return success message and redirect
-            return redirect()->route('breed.list')->with('success', 'BreedModel added successfully');
+            return redirect()->route('breed.index')->with('success', 'BreedModel added successfully');
         } catch (\Exception $e) {
             // LogModel the error for debugging
             \Log::error('Error inserting breed: ' . $e->getMessage());
 
             // Return error message and redirect
-            return redirect()->route('breed.list')->with('error', 'Failed to add breed. Please try again.');
+            return redirect()->route('breed.index')->with('error', 'Failed to add breed. Please try again.');
         }
     }
 
@@ -69,7 +69,7 @@ class BreedController extends Controller
 
         // Kiểm tra xem giống có tồn tại hay không
         if (!$breed) {
-            return redirect()->route('breed.list')->with('error', 'BreedModel not found.');
+            return redirect()->route('breed.index')->with('error', 'BreedModel not found.');
         }
 
         // Cập nhật thông tin giống
@@ -81,7 +81,7 @@ class BreedController extends Controller
         $breed->save();
 
         // Quay lại với thông báo thành công
-        return redirect()->route('breed.list')->with('success', 'BreedModel updated successfully.');
+        return redirect()->route('breed.index')->with('success', 'BreedModel updated successfully.');
     }
 
     // Delete a breed
@@ -100,11 +100,11 @@ class BreedController extends Controller
             $breed->delete();
 
             // Nếu thành công, quay lại trang danh sách với thông báo thành công
-            return redirect()->route('breed.list')->with('success', 'BreedModel deleted successfully.');
+            return redirect()->route('breed.index')->with('success', 'BreedModel deleted successfully.');
 
         } catch (\Exception $e) {
             // Nếu có lỗi, quay lại trang danh sách với thông báo lỗi
-            return redirect()->route('breed.list')->with('error', 'Error occurred while deleting breed: ' . $e->getMessage());
+            return redirect()->route('breed.index')->with('error', 'Error occurred while deleting breed: ' . $e->getMessage());
         }
     }
 }

@@ -43,9 +43,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware([])->group(function () {
 //    Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard');
 //    Route::get('/farmer/tasks', [FarmerController::class, 'tasks'])->name('farmer.tasks');
-    Route::get('/farmer/goats', [GoatController::class, 'farmerGfarmeroats'])->name('farmer.goats');
-    Route::post('/farmer/goats', [GoatController::class, 'addGoat'])->name('farmer.goats.add');
-    Route::put('/farmer/goats/{id}', [GoatController::class, 'updateGoat'])->name('farmer.goats.update');
+//    Route::get('/farmer/goats', [GoatController::class, 'farmerGfarmeroats'])->name('farmer.goats');
+//    Route::post('/farmer/goats', [GoatController::class, 'addGoat'])->name('farmer.goats.add');
+//    Route::put('/farmer/goats/{id}', [GoatController::class, 'updateGoat'])->name('farmer.goats.update');
 });
 
 Route::middleware([CheckPermission::class])->group(function () {
@@ -56,7 +56,7 @@ Route::middleware([CheckPermission::class])->group(function () {
     // Route dành cho nông dân
 //    Route::get('/farmer/dashboard', [FarmerController::class, 'dashboard'])->name('farmer.dashboard')->middleware(CheckFarmerAccess::class);
 //    Route::get('/farmer/tasks', [FarmerController::class, 'tasks'])->name('farmer.tasks')->middleware(CheckFarmerAccess::class);
-    Route::get('/farmer/goats', [GoatController::class, 'farmerGoats'])->name('farmer.goats')->middleware(CheckFarmerAccess::class);
+//    Route::get('/farmer/goats', [GoatController::class, 'farmerGoats'])->name('farmer.goats')->middleware(CheckFarmerAccess::class);
 });
 
 /// ------------------------
@@ -81,17 +81,17 @@ Route::middleware([CheckPermission::class . ':farm_owner'])->group(function () {
 // Nông dân
 Route::middleware([CheckPermission::class . ':farmer'])->group(function () {
     // List_Goat Management
-    Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
-    Route::post('/goats', [GoatController::class, 'addGgoatsoat'])->name('goats.add');
-    Route::get('goats/{goat_id}', [GoatController::class, 'getview'])->name('goats.show');
-    Route::delete('/goats/{goat_id}', [GoatController::class, 'delGoat'])->name('goats.del');
-    Route::put('/goats/{goat_id}', [GoatController::class, 'udpGoat'])->name('goats.udp');
-    Route::get('/goats/create', [GoatController::class, 'createGoatForm'])->name('goats.create');
+//    Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
+//    Route::post('/goats', [GoatController::class, 'addGgoatsoat'])->name('goats.add');
+//    Route::get('goats/{goat_id}', [GoatController::class, 'getview'])->name('goats.show');
+//    Route::delete('/goats/{goat_id}', [GoatController::class, 'delGoat'])->name('goats.del');
+//    Route::put('/goats/{goat_id}', [GoatController::class, 'udpGoat'])->name('goats.udp');
+//    Route::get('/goats/create', [GoatController::class, 'createGoatForm'])->name('goats.create');
 });
 
 // Người dùng bình thường
 Route::middleware([CheckPermission::class . ':regular_user'])->group(function () {
-    Route::get('/goats/{id}', [GoatController::class, 'show'])->name('goats.show');
+//    Route::get('/goats/{id}', [GoatController::class, 'show'])->name('goats.show');
     // Các route cho người dùng bình thường
 });
 
@@ -123,18 +123,18 @@ Route::get('lang/{locale}', function ($locale) {
     #Food Management
     Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
-    # List_Area Management
+    # Area Management
 
     // routes/web.php
     Route::post('/get-areas-by-zone', [AreaController::class, 'getAreasByZone']);
 
 
 
-     # List_Zone Management
+     # Zone Management
      Route::post('/get-area-by-zone', [ZoneController::class, 'getAreaByZone']);
     //  Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data');
 
-      # List_Barn Management
+      # Barn Management
 
     //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data')
 
@@ -157,15 +157,14 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
 //        Route::get('/dashboard/it', [ItController::class, 'index'])->name('dashboard.it');
 
         #Device Management
-        Route::get('/devices', [DeviceController::class, 'getView'])->name('device.list');
-        Route::get('/devices/{id}', [DeviceController::class, 'show'])->name('device.show');
-        Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
-        Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('device.edit');
-        Route::put('/devices/{id}', [DeviceController::class, 'udpDevice'])->name('device.upd');
-        Route::put('/devices/{id}/maintenance', [DeviceController::class, 'delDevice'])->name('device.maintenance'); // Lịch sử và lịch trình bảo trì
-        Route::put('/devices/{id}/status', [DeviceController::class, 'delDevice'])->name('device.putStatus');
+        Route::get('/devices', [DeviceController::class, 'getView'])->name('devices.index');
+        Route::get('/devices/{id}', [DeviceController::class, 'show'])->name('devices.show');
+        Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('devices.add');
+        Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('devices.edit');
+        Route::put('/devices/{id}', [DeviceController::class, 'udpDevice'])->name('devices.upd');
         Route::delete('/devices/{id}/delete', [DeviceController::class, 'delDevice'])->name('device.del');
-
+        Route::put('/devices/{id}/maintenance', [DeviceController::class, 'delDevice'])->name('devices.maintenance'); // Lịch sử và lịch trình bảo trì
+        Route::put('/devices/{id}/status', [DeviceController::class, 'delDevice'])->name('devices.putStatus');
     // Nông dân
 
         # Medication Management
@@ -174,28 +173,28 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::put('/medication/{medication_id}', [MedicationController::class, 'putData'])->name('medication.put');
         Route::delete('/medication/{medication_id}', [MedicationController::class, 'delData'])->name('medication.del');
 
-        # List_Zone Management
-        Route::get('/zones', [ZoneController::class, 'getView'])->name('listzone.dashboard');
-        Route::post('/zones', [ZoneController::class, 'addZone'])->name('listzone.add');
-        Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('listzone.del');
-        Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('listzone.udp');
+        # Zone Management
+        Route::get('/zones', [ZoneController::class, 'getView'])->name('zones.index');
+        Route::post('/zones', [ZoneController::class, 'addZone'])->name('zones.add');
+        Route::delete('/zones/{id}', [ZoneController::class, 'delZone'])->name('zones.del');
+        Route::put('/zones/{id}', [ZoneController::class, 'udpZone'])->name('zones.udp');
 
-        # List_Area Management
-        Route::get('/areas', [AreaController::class, 'getView'])->name('listarea.dashboard');
-        Route::post('/areas', [AreaController::class, 'addArea'])->name('listarea.add');
-        Route::delete('/areas/{area_id}', [AreaController::class, 'delArea'])->name('listarea.del');
-        Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('listarea.udp');
+        # Area Management
+        Route::get('/areas', [AreaController::class, 'getView'])->name('areas.index');
+        Route::post('/areas', [AreaController::class, 'addArea'])->name('areas.add');
+        Route::delete('/areas/{area_id}', [AreaController::class, 'delArea'])->name('areas.del');
+        Route::put('/areas/{area_id}', [AreaController::class, 'udpArea'])->name('areas.udp');
         Route::post('/areas.get-by-zone', [AreaController::class, 'getAreasByZone']);
 
         #Food Management
         Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
 
-        # List_Barn Management
-        Route::get('/barns', [BarnController::class, 'getView'])->name('barn.dashboard');
-        Route::get('/barns/{id}', [BarnController::class, 'show'])->name('barn.show');
-        Route::post('/barns', [BarnController::class, 'addBarn'])->name('barn.add');
-        Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('barn.del');
-        Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('barn.udp');
+        # Barn Management
+        Route::get('/barns', [BarnController::class, 'getView'])->name('barns.index');
+        Route::get('/barns/{id}', [BarnController::class, 'show'])->name('barns.show');
+        Route::post('/barns', [BarnController::class, 'addBarn'])->name('barns.add');
+        Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('barns.del');
+        Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('barns.udp');
 
     // Chung chung
 //        Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
@@ -203,27 +202,26 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
 
         Route::get('/farms/{id}', [FarmController::class, 'show'])->name('farms.show'); // Chi tiết farm theo id
 
-        Route::get('/breeds', [BreedController::class, 'getView'])->name('breed.list');
-        Route::post('/breeds', [BreedController::class, 'add'])->name('breed.add');
-        Route::put('/breeds/{id}', [BreedController::class, 'udp'])->name('breed.udp');
-        Route::delete('/breeds/{id}', [BreedController::class, 'del'])->name('breed.del');
+        Route::get('/breeds', [BreedController::class, 'index'])->name('breeds.index');
+        Route::post('/breeds', [BreedController::class, 'add'])->name('breeds.add');
+        Route::put('/breeds/{id}', [BreedController::class, 'udp'])->name('breeds.udp');
+        Route::delete('/breeds/{id}', [BreedController::class, 'del'])->name('breeds.del');
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
-        # List_Goat Management
-        Route::get('/goats/create', [GoatController::class, 'showGoatForm'])->name('goats.create');
-        Route::get('/goats', [GoatController::class, 'getView'])->name('goats.list');
+        # Goat Management
+        Route::get('/goats', [GoatController::class, 'getView'])->name('goats.index');
         Route::post('/goats', [GoatController::class, 'addGoat'])->name('goats.add');
+        Route::get('/goats/create', [GoatController::class, 'showGoatForm'])->name('goats.create');
         Route::get('goat/{goat_id}', [GoatController::class, 'show'])->name('goat.show');
         Route::delete('/goats/{goat_id}/del', [GoatController::class, 'delGoat'])->name('goats.del');
         Route::put('/goats/{goat_id}/udp', [GoatController::class, 'udpGoat'])->name('goats.udp');
 
         #Food Management
-        Route::get('/food', [FoodController::class, 'getView'])->name('food.list');
-        Route::delete('/food/{id}', [FoodController::class, 'delFood'])->name('food.del');
-        Route::put('/food/{id}', [FoodController::class, 'udpFood'])->name('food.udp');
+        Route::get('/foods', [FoodController::class, 'getView'])->name('foods.index');
+        Route::delete('/foods/{id}', [FoodController::class, 'delFood'])->name('foods.del');
+        Route::put('/foods/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
 });
 
 # API
