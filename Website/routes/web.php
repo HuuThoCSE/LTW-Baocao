@@ -187,7 +187,7 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::post('/areas.get-by-zone', [AreaController::class, 'getAreasByZone']);
 
         #Food Management
-        Route::post('/food', [FoodController::class, 'addFood'])->name('food.add');
+        Route::post('/food', [FoodController::class, 'addFood'])->name('foods.add');
 
         # Barn Management
         Route::get('/barns', [BarnController::class, 'getView'])->name('barns.index');
@@ -207,7 +207,7 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::put('/breeds/{id}', [BreedController::class, 'udp'])->name('breeds.udp');
         Route::delete('/breeds/{id}', [BreedController::class, 'del'])->name('breeds.del');
 
-        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
         # Goat Management
@@ -219,7 +219,8 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::put('/goats/{goat_id}/udp', [GoatController::class, 'udpGoat'])->name('goats.udp');
 
         #Food Management
-        Route::get('/foods', [FoodController::class, 'getView'])->name('foods.index');
+        Route::get('/foods', [FoodController::class, 'index'])->name('foods.index');
+        Route::post('/foods', [FoodController::class, 'add'])->name('foods.add');
         Route::delete('/foods/{id}', [FoodController::class, 'delFood'])->name('foods.del');
         Route::put('/foods/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
 });

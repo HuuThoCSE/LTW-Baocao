@@ -233,7 +233,7 @@ use Illuminate\Support\Facades\Auth;
                     <hr class="dropdown-divider">
                 </li>
                 <li>
-                    <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.show') }}">
                         <i class="bi bi-person"></i>
                         <span>My Profile</span>
                     </a>
@@ -471,6 +471,7 @@ use Illuminate\Support\Facades\Auth;
 
   <main id="main" class="main">
 
+    {{-- Dùng contenxt--}}
   @yield('contents')
 
   </main><!-- End #main -->

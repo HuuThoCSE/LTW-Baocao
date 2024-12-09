@@ -2,7 +2,7 @@
 
 @section('title', 'List of Zones')
 
-@section('content')
+@section('contents')
 <style>
 
     /* Add hover effect for buttons */
@@ -65,7 +65,7 @@
                                     <td>{{ $zone->description }}</td>
                                     <td>
                                         <!-- Nút xóa -->
-                                        <form action="{{ route('listzone.del', $zone->zone_id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('zones.del', $zone->zone_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center"
@@ -95,7 +95,7 @@
     <div class="modal fade" id="udpModal{{$zone->zone_id}}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form method="POST" action="{{ route('listzone.udp', ['id' => $zone->zone_id]) }}">
+                <form method="POST" action="{{ route('zones.udp', ['id' => $zone->zone_id]) }}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-primary text-white">
@@ -122,13 +122,11 @@
     </div>
     @endforeach
 
-
-
     <!-- Modal for adding a new zone -->
     <div class="modal fade" id="addZoneModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form method="POST" action="{{ route('listzone.add') }}">
+                <form method="POST" action="{{ route('zones.add') }}">
                     @csrf
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Add New Zone</h5>

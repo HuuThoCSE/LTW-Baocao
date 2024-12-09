@@ -133,7 +133,7 @@ h4 {
         </div>
         <hr>
         <div class="description">
-        <a href="{{ route('listfarm') }}">Hệ thống trang trại tiên tiến nhất!</a>
+        <a href="{{ route('farms.index') }}">Hệ thống trang trại tiên tiến nhất!</a>
         </div>
 
     </div>
