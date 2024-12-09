@@ -68,7 +68,8 @@ class LoginController extends Controller
                 case 1:
                     Session::put('account_perm', 'admin');
                     // Quản trị viên
-                    return view('main-admin')->with('layout', 'main-admin');
+//                    return view('main-admin')->with('layout', 'main-admin');
+                    return redirect()->route('home');
                 case 2:
                     Session::put('account_perm', 'owner');
                     // return view('main')->with('layout', 'main');

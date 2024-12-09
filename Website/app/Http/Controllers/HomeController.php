@@ -11,7 +11,8 @@ class HomeController extends Controller
     {
         switch (Auth::user()->role_id) {
             case 1:
-                return view('main-dashboard');
+//                return view('main-dashboard');
+                return redirect()->route('farms.index');
             case 2:
                 return view('dashboard');
             case 3:
