@@ -157,14 +157,14 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
 //        Route::get('/dashboard/it', [ItController::class, 'index'])->name('dashboard.it');
 
         #Device Management
-        Route::get('/devices', [DeviceController::class, 'getView'])->name('devices.index');
+        Route::get('/devices', [DeviceController::class, 'index'])->name('devices.index');
         Route::get('/devices/{id}', [DeviceController::class, 'show'])->name('devices.show');
-        Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('devices.add');
-        Route::post('/devices/{id}/edit', [DeviceController::class, 'ediDevice'])->name('devices.edit');
-        Route::put('/devices/{id}', [DeviceController::class, 'udpDevice'])->name('devices.upd');
-        Route::delete('/devices/{id}/delete', [DeviceController::class, 'delDevice'])->name('device.del');
-        Route::put('/devices/{id}/maintenance', [DeviceController::class, 'delDevice'])->name('devices.maintenance'); // Lịch sử và lịch trình bảo trì
-        Route::put('/devices/{id}/status', [DeviceController::class, 'delDevice'])->name('devices.putStatus');
+        Route::post('/devices/add', [DeviceController::class, 'add'])->name('devices.add');
+        Route::post('/devices/{id}/edit', [DeviceController::class, 'edi'])->name('devices.edit');
+        Route::put('/devices/{id}', [DeviceController::class, 'udp'])->name('devices.upd');
+        Route::delete('/devices/{id}/delete', [DeviceController::class, 'del'])->name('devices.del');
+        Route::put('/devices/{id}/maintenance', [DeviceController::class, 'maintenance'])->name('devices.maintenance'); // Lịch sử và lịch trình bảo trì
+        Route::put('/devices/{id}/status', [DeviceController::class, 'status'])->name('devices.putStatus');
     // Nông dân
 
         # Medication Management

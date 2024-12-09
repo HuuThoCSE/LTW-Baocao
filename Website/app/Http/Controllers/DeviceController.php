@@ -13,7 +13,7 @@ use App\Models\Device;
 class DeviceController extends Controller
 {
     // Hiển thị danh sách thiết bị
-    public function getView()
+    public function index()
     {
         // Lấy farm_id từ seccion
         $farm_id = Session::get('user_farm_id');
@@ -28,21 +28,21 @@ class DeviceController extends Controller
 
         $type_devices = DB::table('type_devices')->get();
 
-        return view('device.dashboard', ['devices' => $devices, 'type_devices' => $type_devices]);
+        return view('devices.dashboard', ['devices' => $devices, 'type_devices' => $type_devices]);
     }
 
-    public function detailDevice($id)
+    public function show($id)
     {
         // Lấy chi tiết thiết bị với $id
-        $deviceDetail = Device::find($id)
+        $device = Device::find($id)
             ->join('type_devices', 'farm_devices.type_device_id', '=', 'type_devices.type_device_id')
             ->select('farm_devices.*', 'type_devices.type_device_name')
             ->first();
-        return view('device.detail', ['deviceDetail' => $deviceDetail]);
+        return view('devices.show', ['device' => $device]);
     }
 
     // Thêm thiết bị
-    public function addDevice(Request $request){
+    public function add(Request $request){
 
 //        dd($request->all());
 
@@ -72,7 +72,7 @@ class DeviceController extends Controller
     }
 
     // Xóa thiết bị
-    public function delDevice($id)
+    public function del($id)
     {
         $device = DB::table('farm_devices')->where('device_id', $id)->first();
 
@@ -85,7 +85,7 @@ class DeviceController extends Controller
     }
 
     // Cập nhật thiết bị
-    public function udpDevice(Request $request, $device_id)
+    public function udp(Request $request, $device_id)
     {
         // Validate dữ liệu đầu vào
         $request->validate([

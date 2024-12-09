@@ -20,7 +20,7 @@
 <h1>{{ __('messages.breed_list') }}</h1>
 <nav>
     <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
     <li class="breadcrumb-item">{{ __('messages.breed') }}</li>
     </ol>
 </nav>
@@ -32,7 +32,7 @@
     <div class="card">
         <!-- Table with stripped rows -->
         <div class="card-header">
-            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#btnAdd">
                 <i class="bi bi-clipboard-plus"></i>
                 <span class="ms-2">{{ __('messages.add_breed') }}</span>
             </button>
@@ -90,7 +90,7 @@
 </section>
 
 <!-- Modal Add Breed -->
-<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="btnAdd" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="POST" action="{{ route('breeds.add') }}">

@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    
+
     /* Add hover effect for buttons */
     .btn:hover {
         transform: scale(1.1);
@@ -27,12 +27,12 @@
 <h1>List of Zorns</h1>
 <nav>
     <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
     <li class="breadcrumb-item">Location</li>
     <li class="breadcrumb-item">List Zone</li>
     </ol>
 </nav>
-</div><!-- End Page Title --> 
+</div><!-- End Page Title -->
 
 <!-- Button to trigger the Add Zone modal -->
     <section class="section">
@@ -42,7 +42,7 @@
 
                     <div class="card-header">
                         <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addZoneModal">
-                            <i class="bi bi-clipboard-plus"></i> 
+                            <i class="bi bi-clipboard-plus"></i>
                             <span class="ms-2">Add Zone</span>
                         </button>
                     </div>
@@ -68,7 +68,7 @@
                                         <form action="{{ route('listzone.del', $zone->zone_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" 
+                                            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center"
                                                 onclick="return confirm('Are you sure you want to delete this zone?');">
                                                 <i class="ri-delete-bin-5-line"></i>
                                                 <span class="ms-2">Delete</span>
@@ -77,8 +77,8 @@
                                     </td>
                                     <td>
                                         <!-- Nút cập nhật -->
-                                        <button class="btn btn-success btn-sm d-flex align-items-center" 
-                                            data-bs-toggle="modal" 
+                                        <button class="btn btn-success btn-sm d-flex align-items-center"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#udpModal{{$zone->zone_id}}">
                                             <i class="bi bi-pencil-square"></i>
                                             <span class="ms-2">Update</span>
