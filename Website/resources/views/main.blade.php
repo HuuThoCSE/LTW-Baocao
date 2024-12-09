@@ -1,3 +1,6 @@
+<?php
+use Illuminate\Support\Facades\Auth;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -223,8 +226,8 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
-                    <h6>Meta</h6>
-                    <span>{{ auth()->user()->name }}</span> <!-- Hiển thị tên người dùng -->
+                    <h6>{{ auth()->user()->user_name }}</h6> <!-- Hiển thị tên người dùng -->
+                    <span>{{ Auth::user()->role->role_name ." ( ". Auth::user()->role_id }} )</span>
                 </li>
                 <li>
                     <hr class="dropdown-divider">
@@ -285,7 +288,7 @@
       </li><!-- End Dashboard Nav -->
 
         <!-- Chỉ có Administator với Owner mới hiểm thị Account -->
-        <?php if (session('user_role') == 1 || session('user_role') == 2): ?>
+        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -303,7 +306,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 3): ?>
+        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
           <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -327,7 +330,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-breed" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
@@ -338,7 +341,7 @@
 
                 <ul id="components-breed" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
-                    <a href="{{ route('breed.list') }}">
+                    <a href="{{ route('breeds.index') }}">
                       <i class="bi bi-circle"></i><span>{{ __('messages.breed_list') }}</span>
                     </a>
                   </li>
@@ -351,7 +354,7 @@
             </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-goat" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -368,7 +371,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 3): ?>
+        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-location" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -377,17 +380,17 @@
             </a>
             <ul id="components-location" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
-                <a href="{{ route('listzone.dashboard')}}">
+                <a href="{{ route('zones.index')}}">
                   <i class="bi bi-circle"></i><span>List Zone</span>
                 </a>
               </li>
               <li>
-                <a href="{{ route('listarea.dashboard')}}">
+                <a href="{{ route('areas.index')}}">
                   <i class="bi bi-circle"></i><span>List Area</span>
                 </a>
               </li>
               <li>
-                <a href="{{ route('barn.dashboard')}}">
+                <a href="{{ route('barns.index')}}">
                   <i class="bi bi-circle"></i><span>{{ __('messages.barn_list') }}</span>
                 </a>
               </li>
@@ -396,7 +399,7 @@
         <?php endif; ?>
 
         <!-- Chỉ có Administator, Owner và Fammer mới hiểm thị Medication -->
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
           <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -421,7 +424,7 @@
             </li>
           <?php endif; ?>
 
-          <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+          <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
@@ -432,7 +435,7 @@
 
                 <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
-                    <a href="{{ route('food.list') }}">
+                    <a href="{{ route('foods.index') }}">
                       <i class="bi bi-circle"></i><span>{{ __('messages.food_list') }}</span>
                     </a>
                   </li>

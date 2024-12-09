@@ -20,7 +20,7 @@ class LoginController extends Controller
 
     protected function storeSessionData($user) {
         Session::put('user_id', $user->user_id);
-        Session::put('user_role', $user->role_id);
+        Session::put('user_role_id', $user->role_id);
         Session::put('user_farm_id', $user->farm_id);
 
         $farm = FarmModel::where('farm_id', $user->farm_id)->first();
@@ -38,12 +38,10 @@ class LoginController extends Controller
         $user_email = $request->input('email');
         $password = $request->input('password');
 
-//        dd($request->all());
 
         // Truy vấn cơ sở dữ liệu để lấy user theo emails
         $user = DB::table('users')->where('user_email', $user_email)->first();
 
-//        dd($user);
 
         // Kiểm tra xem user có tồn tại và mật khẩu có khớp không
         if ($user && Hash::check($password, $user->user_password)) {
@@ -66,58 +64,31 @@ class LoginController extends Controller
             // Lưu quyền vào session
             Session::put('permissions', $userPermissions);
 
-            // Truy vấn bảng farm_role để lấy role_name dựa trên role_id
-            $role = DB::table('farm_roles')->where('role_id', $user->role_id)->first();
-
-            // Kiểm tra xem có role_name hay không
-            if ($role) {
-                // Lưu role_name vào session
-                Session::put('role_name', $role->role_name);
-                // Kiểm tra quyền của người dùng
-                switch ($role->role_id) { // Dùng 'name' trong bảng roles để phân biệt quyền
-                    case 1:
-                        Session::put('account_perm', 'admin');
-                        // Quản trị viên
-                        return view('main-admin')->with('layout', 'main-admin');
-                    case 2:
-                        Session::put('account_perm', 'owner');
-                        // return view('main')->with('layout', 'main');
-                        return redirect()->route('dashboard.view');
-                    case 3:
-                        Session::put('account_perm', 'it');
-                        // IT
-                        return redirect()->route('home');
-                    case 4:
-                        Session::put('account_perm', 'farmer');
-                        // Nông dân
-                        return redirect()->route('home');
-                    case 5:
-                        Session::put('account_perm', 'customer');
-                        // Khách hàng
-                        return redirect()->route('home');
-                    default:
-                        return back()->withErrors([
-                            'username' => 'Không có quyền truy cập.',
-                        ]);
-                }
-            } else {
-                // Xử lý trường hợp không tìm thấy role_name
-                Session::put('role_name', 'Role not found');
-            }
-
-            // Lưu thông tin user vào session
-            Session::put('user_id', $user->user_id);
-
-            // Chuyển hướng dựa vào role_id
-            switch ($user->role_id) {
-                case 1: // Administrator
-                    return redirect()->route('administrator.dashboard');
-                case 2: // Admin
-                    return redirect()->route('admin.dashboard');
-                case 3: // IT
+            switch (Auth::user()->role_id) { // Dùng 'name' trong bảng roles để phân biệt quyền
+                case 1:
+                    Session::put('account_perm', 'admin');
+                    // Quản trị viên
+                    return view('main-admin')->with('layout', 'main-admin');
+                case 2:
+                    Session::put('account_perm', 'owner');
+                    // return view('main')->with('layout', 'main');
+                    return redirect()->route('home');
+                case 3:
+                    Session::put('account_perm', 'it');
+                    // IT
+                    return redirect()->route('home');
+                case 4:
+                    Session::put('account_perm', 'farmer');
+                    // Nông dân
+                    return redirect()->route('home');
+                case 5:
+                    Session::put('account_perm', 'customer');
+                    // Khách hàng
                     return redirect()->route('home');
                 default:
-                    return redirect()->route('home');
+                    return back()->withErrors([
+                        'username' => 'Không có quyền truy cập.',
+                    ]);
             }
         } else {
             // Nếu đăng nhập thất bại, trả lại thông báo lỗi

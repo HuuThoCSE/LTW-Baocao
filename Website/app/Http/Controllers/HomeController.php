@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function getView()
+    public function redirectToDashboard ()
     {
-        return redirect()->route('dashboard.view');
+        switch (Auth::user()->role_id) {
+            case 1:
+                return view('main-dashboard');
+            case 2:
+                return view('dashboard');
+            case 3:
+                return view('dashboard.it');
+            case 4:
+                return view('dashboard');
+            default:
+                abort(403, 'Unauthorized access');
+        }
     }
 }

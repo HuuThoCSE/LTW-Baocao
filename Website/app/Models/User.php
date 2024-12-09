@@ -56,4 +56,10 @@ class User extends Authenticatable
     {
         return $this->role_id === $role;
     }
+
+    // Thiết lập mối quan hệ với bảng farm_roles
+    public function role()
+    {
+        return $this->belongsTo(RoleModel::class, 'role_id', 'role_id');
+    }
 }
