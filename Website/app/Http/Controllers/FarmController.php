@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Mail;
 
 class FarmController extends Controller
 {
-    public function getView()
+    public function index()
     {
         // Lấy danh sách từ bảng 'farms'
         $farms = DB::table('farms')->get(); // Thực hiện truy vấn để lấy dữ liệu
 
         // Truyền dữ liệu vào view
-        return view('farm.dashboard', ['farms' => $farms]);
+        return view('farms.index', ['farms' => $farms]);
     }
 
-    public function addFarm(Request $request)
+    public function add(Request $request)
     {
         // Validate input
         $validatedData = $request->validate([
@@ -96,7 +96,7 @@ class FarmController extends Controller
     }
 
 
-    public function delFarm($farm_id)
+    public function del($farm_id)
     {
         // Find the medication by ID and delete it
         $farm = DB::table('farms')->where('farm_id', $farm_id);
@@ -109,7 +109,7 @@ class FarmController extends Controller
         }
     }
 
-    public function udpFarm(Request $request, $farm_id)
+    public function udp(Request $request, $farm_id)
     {
         // Update medicaion
         $farm_name = $request->input('farm_name');

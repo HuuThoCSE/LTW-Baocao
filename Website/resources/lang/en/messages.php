@@ -13,6 +13,9 @@ return [
     'account_manager' => 'Account',
     'account_list' => 'List of Account',
 
+    'farm' => 'Farm',
+    'farms_list' => 'List of Farm',
+
     'add_goat' => 'Add Goat',
     'edit_goat' => 'Edit Goat',
     'delete_goat' => 'Delete Goat',

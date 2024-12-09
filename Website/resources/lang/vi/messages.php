@@ -13,6 +13,9 @@ return [
     'account_manager' => 'Tài khoản',
     'account_list' => 'Danh sách Tài khoản',
 
+    'farm' => 'Trang trại',
+    'farms_list' => 'Danh sách Trang trại',
+
     'add_goat' => 'Thêm Dê',
     'edit_goat' => 'Chỉnh sửa Dê',
     'delete_goat' => 'Xóa Dê',

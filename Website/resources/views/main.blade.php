@@ -287,8 +287,24 @@ use Illuminate\Support\Facades\Auth;
         </a>
       </li><!-- End Dashboard Nav -->
 
+        <?php if (Auth::user()->role_id == 1): ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>{{ __('messages.farm') }}</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+
+            <ul id="components-account" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <a href="{{ route('farms.index') }}">
+                    <i class="bi bi-circle"></i><span>{{ __('messages.farms_list')  }}</span>
+                </a>
+            </ul>
+        </li>
+        <?php endif; ?>
+
         <!-- Chỉ có Administator với Owner mới hiểm thị Account -->
-        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2): ?>
+        <?php if (Auth::user()->role_id == 2): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -298,7 +314,7 @@ use Illuminate\Support\Facades\Auth;
 
             <ul id="components-account" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="/account">
+                    <a href="{{ route('account.index') }}">
                         <i class="bi bi-circle"></i><span>{{ __('messages.account_list')  }}</span>
                     </a>
                 </li>
@@ -306,7 +322,7 @@ use Illuminate\Support\Facades\Auth;
         </li>
         <?php endif; ?>
 
-        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
           <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -330,7 +346,7 @@ use Illuminate\Support\Facades\Auth;
         </li>
         <?php endif; ?>
 
-        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-breed" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
@@ -354,7 +370,7 @@ use Illuminate\Support\Facades\Auth;
             </li>
         <?php endif; ?>
 
-        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-goat" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -371,7 +387,7 @@ use Illuminate\Support\Facades\Auth;
         </li>
         <?php endif; ?>
 
-        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-location" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -399,7 +415,7 @@ use Illuminate\Support\Facades\Auth;
         <?php endif; ?>
 
         <!-- Chỉ có Administator, Owner và Fammer mới hiểm thị Medication -->
-        <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
           <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -424,7 +440,7 @@ use Illuminate\Support\Facades\Auth;
             </li>
           <?php endif; ?>
 
-          <?php if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
+          <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
