@@ -212,9 +212,9 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
 
         # Goat Management
         Route::get('/goats', [GoatController::class, 'getView'])->name('goats.index');
+        Route::get('goat/{id}', [GoatController::class, 'show'])->name('goats.show');
         Route::post('/goats', [GoatController::class, 'addGoat'])->name('goats.add');
         Route::get('/goats/create', [GoatController::class, 'showGoatForm'])->name('goats.create');
-        Route::get('goat/{goat_id}', [GoatController::class, 'show'])->name('goat.show');
         Route::delete('/goats/{goat_id}/del', [GoatController::class, 'delGoat'])->name('goats.del');
         Route::put('/goats/{goat_id}/udp', [GoatController::class, 'udpGoat'])->name('goats.udp');
 

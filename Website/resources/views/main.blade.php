@@ -471,8 +471,8 @@ use Illuminate\Support\Facades\Auth;
 
   <main id="main" class="main">
 
-    {{-- Dùng contenxt--}}
-  @yield('contents')
+    {{-- Dùng content--}}
+  @yield('content')
 
   </main><!-- End #main -->
 
