@@ -73,6 +73,8 @@ return [
     'edit_food' => 'Edit Food',
     'delete_food' => 'Delete Food',
 
+    'food_type_list' => 'Food Type List',
+
     'food_stock' => 'Food Stock',
     'update_stock' => 'Update Stock',
     'view_stock' => 'View Stock',

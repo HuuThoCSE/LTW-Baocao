@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('title')
-Quản lý thức ăn
+Quản lý loại thức ăn
 @endsection
 
 @section('content')
@@ -31,15 +31,15 @@ Quản lý thức ăn
     <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
 <div class="pagetitle">
-<h1>List of Foods</h1>
+<h1>Food List Type</h1>
 <nav>
     <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
     <li class="breadcrumb-item">Food</li>
-    <li class="breadcrumb-item">List Food</li>
+    <li class="breadcrumb-item">Food List Type</li>
     </ol>
 </nav>
-</div><!-- End Page Title -->
+</div> <!-- End Page Title -->
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -47,7 +47,7 @@ Quản lý thức ăn
                     <div class="card-header">
                         <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addModal">
                             <i class="bi bi-clipboard-plus"></i>
-                            <span class="ms-2">Add Food</span>
+                            <span class="ms-2">Add Type Food</span>
                         </button>
                     </div>
 
@@ -56,25 +56,21 @@ Quản lý thức ăn
                             <thead class="text-center">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Mã thức ăn</th>
-                                    <th>Tên thức ăn (tiếng việt)</th>
-                                    <th>Tên thức ăn (tiếng anh)</th>
-                                    <th>Type</th>
-                                    <th>Thời hạn sử dụng</th>
+                                    <th>Mã loại thức ăn</th>
+                                    <th>Tên loai thức ăn (tiếng việt)</th>
+                                    <th>Tên loại thức ăn (tiếng anh)</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                @foreach ($foods as $food)
+                                @foreach ($type_foods as $type_food)
                                 <tr>
-                                    <td style='text-align: center'>{{ $food->id }}</td>
-                                    <td style='text-align: center'>{{ $food->food_code }}</td>
-                                    <td>{{ $food->food_name_vn }}</td>
-                                    <td>{{ $food->food_name_el }}</td>
-                                    <td>{{ $food->type_food_name_vn}}</td>
-                                    <td>{{ $food->expiry_date }}</td>
+                                    <td style='text-align: center'>{{ $type_food->food_type_id }}</td>
+                                    <td style='text-align: center'>{{ $type_food->food_type_code }}</td>
+                                    <td>{{ $type_food->food_type_name_vn }}</td>
+                                    <td>{{ $type_food->food_type_name_el }}</td>
                                     <td class="d-flex justify-content-center align-items-center">
-                                        <form action="{{ route('foods.del', $food->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('typefoods.del', $type_food->food_type_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -87,7 +83,7 @@ Quản lý thức ăn
 
                                         <button class="btn btn-success btn-sm d-flex align-items-center ms-2"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#udpModal{{$food->id}}" >
+                                            data-bs-target="#udpModal{{$type_food->food_type_id}}" >
                                             <i class="bi bi-pencil-square"></i>
                                             <span class="ms-2">Update</span>
                                         </button>
@@ -97,12 +93,10 @@ Quản lý thức ăn
                             </tbody>
                         </table>
                     </div>
-
-
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form method="POST" action="{{ route('foods.add') }}">
+                    <form method="POST" action="{{ route('typefoods.add') }}">
                         @csrf
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title" >Add New Food</h5>
@@ -112,27 +106,19 @@ Quản lý thức ăn
 
                             <!-- Form fields -->
                             <div class="form-group mb-3">
-                                <label for="food_code" class="form-label">food_code:</label>
-                                <input type="text" name="food_code" class="form-control" placeholder="Enter farm name" id="food_code">
+                                <label for="food_type_code" class="form-label">Food type code:</label>
+                                <input type="text" name="food_type_code" class="form-control" placeholder="Enter farm name" id="food_type_code">
                                 <span class="text-danger error-farm_name"></span>
                             </div>
 
                             <div class="form-group mb-3">
-                                <label class="food_name_vn" for="inp_email">Food_name_vn:</label>
-                                <input type="text" name="food_name_vn" id="food_name_vn" class="form-control" placeholder="Tên thức ăn (Vietnamese)">
+                                <label class="food_type_name_vn" for="inp_email">Food type name vn:</label>
+                                <input type="text" name="food_type_name_vn" id="food_type_name_vn" class="form-control" placeholder="Tên loại thức ăn (Vietnamese)">
                             </div>
 
                             <div class="form-group mb-3">
-                                <label class="food_name_el" for="inp_email">food_name_el:</label>
-                                <input type="text" name="food_name_el" id="food_name_el" class="form-control" placeholder="Tên thức ăn (English)">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="type_food_name_vn" for="inp_email">type_food_name_vn:</label>
-                                <input type="text" name="type_food_name_vn" id="type_food_name_vn" class="form-control" placeholder="Tên loại thức ăn (Vietnamese)">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="expiry_date" for="inp_email">expiry_date:</label>
-                                <input type="text" name="expiry_date" id="expiry_date" class="form-control" placeholder="Thời hạn dùng">
+                                <label class="food_type_name_el" for="inp_email">Food type name el:</label>
+                                <input type="text" name="food_type_name_el" id="food_type_name_el" class="form-control" placeholder="Tên loại thức ăn (English)">
                             </div>
 
                         <div class="modal-footer">
@@ -143,12 +129,11 @@ Quản lý thức ăn
                 </div>
             </div>
         </div>
-
-    @foreach($foods as $food)
-    <div class="modal fade" id="udpModal{{$food->id}}" tabindex="-1">
+    @foreach($type_foods as $type_food)
+    <div class="modal fade" id="udpModal{{$type_food->food_type_id}}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form method="POST" action="{{ route('foods.udp', ['id' => $food->id]) }}">
+                <form method="POST" action="{{ route('typefoods.udp', ['id' => $type_food->food_type_id]) }}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-primary text-white">
@@ -158,24 +143,16 @@ Quản lý thức ăn
                     <div class="modal-body">
 
                             <div class="form-group mb-3">
-                                <label for="goat_name{{ $food->id }}" class="form-label">food_code</label>
-                                <input type="text" id="goat_name{{ $food->id }}" name="food_code" value="{{ $food->food_code }}" class="form-control">
+                                <label for="goat_name{{ $type_food->food_type_id }}" class="form-label">Food type code</label>
+                                <input type="text" id="goat_name{{ $type_food->food_type_id }}" name="food_type_code" value="{{ $type_food->food_type_code }}" class="form-control">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="food_name_vn{{ $food->id }}" class="form-label">Food_name_vn</label>
-                                <input type="text" id="food_name_vn{{ $food->id }}" name="food_name_vn" value="{{ $food->food_name_vn }}" class="form-control">
+                                <label for="food_name_vn{{ $type_food->food_type_id }}" class="form-label">Food name vn</label>
+                                <input type="text" id="food_name_vn{{ $type_food->food_type_id }}" name="food_type_name_vn" value="{{ $type_food->food_type_name_vn }}" class="form-control">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="food_name_el{{ $food->id }}" class="form-label">Food_name_el</label>
-                                <input type="text" id="food_name_el{{ $food->id }}" name="food_name_el" value="{{ $food->food_name_el }}" class="form-control">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label class="type_food_name_vn" for="inp_email">type_food_name_vn:</label>
-                                <input type="text" name="type_food_name_vn" id="type_food_name_vn" class="form-control" placeholder="Tên loại thức ăn (Vietnamese)">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="expiry_date{{ $food->id }}" class="form-label">Expiry_date</label>
-                                <input type="text" id="expiry_date{{ $food->id }}" name="expiry_date" value="{{ $food->expiry_date }}" class="form-control">
+                                <label for="food_name_el{{ $type_food->food_type_id }}" class="form-label">Food name el</label>
+                                <input type="text" id="food_name_el{{ $type_food->food_type_id }}" name="food_type_name_el" value="{{ $type_food->food_type_name_el }}" class="form-control">
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -187,4 +164,3 @@ Quản lý thức ăn
     </div>
     @endforeach
 
-@endsection

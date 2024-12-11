@@ -455,6 +455,11 @@ use Illuminate\Support\Facades\Auth;
                       <i class="bi bi-circle"></i><span>{{ __('messages.food_list') }}</span>
                     </a>
                   </li>
+                  <li>
+                    <a href="{{ route('typefoods.index') }}">
+                      <i class="bi bi-circle"></i><span>{{ __('messages.food_type_list') }}</span>
+                    </a>
+                  </li>
                 </ul>
             </li>
           <?php endif; ?>

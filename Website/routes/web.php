@@ -19,6 +19,7 @@ use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\BarnController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TypeFoodController;
 
 // Middleware
 use App\Http\Middleware\CheckFarmerAccess;
@@ -223,6 +224,12 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::post('/foods', [FoodController::class, 'add'])->name('foods.add');
         Route::delete('/foods/{id}', [FoodController::class, 'delFood'])->name('foods.del');
         Route::put('/foods/{id}', [FoodController::class, 'udpFood'])->name('foods.udp');
+
+        #Food Management
+        Route::get('/typefoods', [TypeFoodController::class, 'index'])->name('typefoods.index');
+        Route::post('/typefoods', [TypeFoodController::class, 'add'])->name('typefoods.add');
+        Route::delete('/typefoods/{id}', [TypeFoodController::class, 'delFood'])->name('typefoods.del');
+        Route::put('/typefoods/{id}', [TypeFoodController::class, 'udpFood'])->name('typefoods.udp');
 });
 
 # API
