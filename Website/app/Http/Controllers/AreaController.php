@@ -29,7 +29,7 @@ class AreaController extends Controller
             ->select('farm_areas.*') // Chọn các cột cần thiết
             ->get();
 
-        return view('area.listarea', ['farm_areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
+        return view('areas.index', ['farm_areas' => $areas, 'zones' => $zones]); // Pass the zones to the view
     }
 
     public function addArea(Request $request)

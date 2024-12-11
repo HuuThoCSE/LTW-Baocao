@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -16,7 +17,7 @@ class DeviceController extends Controller
     public function index()
     {
         // Lấy farm_id từ seccion
-        $farm_id = Session::get('user_farm_id');
+        $farm_id = Auth::user()->farm_id;
 
         // Lấy danh sách thiết bị với farm id qua table device_types lấy type_device_name
         $devices = Device::where('farm_id', $farm_id)
@@ -28,7 +29,7 @@ class DeviceController extends Controller
 
         $type_devices = DB::table('type_devices')->get();
 
-        return view('devices.dashboard', ['devices' => $devices, 'type_devices' => $type_devices]);
+        return view('devices.index', ['devices' => $devices, 'type_devices' => $type_devices]);
     }
 
     public function show($id)

@@ -48,11 +48,11 @@ class BarnController extends Controller
             ->select('farm_barns.*') // Chọn các cột cần thiết
             ->get();
 
-        return view('barn.dashboard', ['barns' => $barns, 'zones' => $zones, 'areas' => $areas]); // Pass the zones to the view
+        return view('barns.index', ['barns' => $barns, 'zones' => $zones, 'areas' => $areas]); // Pass the zones to the view
     }
 
       // Thêm mới một barn
-      public function addBarn(Request $request)
+      public function add(Request $request)
       {
 //          dd($request->all());
 
@@ -77,7 +77,7 @@ class BarnController extends Controller
             'farm_id' =>  $farm_id, // Cung cấp giá trị cho 'farm_id'
           ]);
 
-          return redirect()->route('barn.dashboard')->with('success', 'BarnModel added successfully!');
+          return redirect()->route('barns.index')->with('success', 'BarnModel added successfully!');
     }
 
 
@@ -85,7 +85,7 @@ class BarnController extends Controller
       public function delBarn($barn_id)
       {
           DB::table('farm_barns')->where('barn_id', $barn_id)->delete(); // Xóa bản ghi theo 'barn_id'
-          return redirect()->route('barn.dashboard')->with('success', 'BarnModel deleted successfully!');
+          return redirect()->route('barns.index')->with('success', 'BarnModel deleted successfully!');
       }
 
       // Cập nhật một barn
