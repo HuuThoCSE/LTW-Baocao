@@ -6,17 +6,38 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+
+
 class AccountController extends Controller
 {
 
-    public function getView(){
-        $userFarmId = session('user_farm_id');
+    public function index(){
+        $userFarmId = Session::get('farm_id');
+
+        $latestCreatedAt = DB::table('user_owner_farm')
+            ->where('farm_id', $userFarmId)
+            ->where('role', 'owner')
+            ->max('created_at'); // Lấy thời gian created_at mới nhất trong bảng user_owner_farm
+
+//        dd($userFarmId);
+
+        $excludedUserIds = DB::table('user_owner_farm')
+            ->where('farm_id', $userFarmId)
+            ->where('created_at', $latestCreatedAt) // Chỉ lấy các user_id có created_at mới nhất
+            ->pluck('user_id'); // Lấy danh sách user_id cần loại trừ
 
         $users = DB::table('users')
             ->where('user_id', '!=', 1) // Bỏ qua tài khoản có id = 1
             ->where('farm_id', $userFarmId) // Chỉ lấy tài khoản có farm_id bằng với session user_farm_id
+            ->whereNotIn('user_id', $excludedUserIds) // Loại trừ các user_id trong danh sách
             ->get();
+
+//        $users = DB::table('users')
+//            ->where('user_id', '!=', 1) // Bỏ qua tài khoản có id = 1
+//            ->where('farm_id', $userFarmId) // Chỉ lấy tài khoản có farm_id bằng với session user_farm_id
+//            ->get();
 
         // Fetch roles for the dropdown list, only roles with ID 3, 4, 5
 //        $adminFarmId = auth()->user()->farm_id;
@@ -25,10 +46,10 @@ class AccountController extends Controller
             ->get();
 
         // Truyền cả người dùng và vai trò vào view
-        return view('account.dashboard', ['users' => $users, 'farm_roles' => $roles]);
+        return view('account.index', ['users' => $users, 'farm_roles' => $roles]);
 
     }
-    public function delAccount($user_id)
+    public function del($user_id)
     {
         // Find the medication by ID and delete it
         $account = DB::table('users')->where('user_id', $user_id);
@@ -40,7 +61,7 @@ class AccountController extends Controller
             return redirect()->back()->with('error', 'Medication not found.');
         }
     }
-    public function addUser(Request $request){
+    public function add(Request $request){
         $farm_id = session('user_farm_id');
 
         // Lấy tất cả người dùng
@@ -61,7 +82,7 @@ class AccountController extends Controller
                 'email',
                 'unique:users,user_email', // Kiểm tra tính duy nhất
                 // Thêm validation regex cho emails có dạng name@farm.farm_id.com
-                'regex:/^[a-zA-Z0-9._%+-]+@farm(\d+)\.vn$/', // Dùng (\d+) để kiểm tra farm_id không dùng .(\d+)
+//                'regex:/^[a-zA-Z0-9._%+-]+@farm(\d+)\.vn$/', // Dùng (\d+) để kiểm tra farm_id không dùng .(\d+)
             ],
             'user_password' => 'required|string|min:6',
             'role_id' => 'required|in:3,4,5',  // Kiểm tra role_id phải là 3, 4 hoặc 5
@@ -89,11 +110,11 @@ class AccountController extends Controller
         ]);
 
         // Truyền các role và users vào view
-        return redirect()->route('account')->with('success', 'User added successfully.');
+        return redirect()->route('account.index')->with('success', 'User added successfully.');
     }
 
 
-    public function udpAcc(Request $request, $user_id)
+    public function udp(Request $request, $user_id)
     {
         // Lấy các thông tin cần cập nhật
         $user_name = $request->input('user_name');
@@ -127,7 +148,7 @@ class AccountController extends Controller
         return redirect()->route('account')->with('success', 'Account updated successfully.');
     }
 
-    public function showAccount($id)
+    public function show($id)
     {
         // Lấy thông tin người dùng và vai trò của họ
         $user = DB::table('users')

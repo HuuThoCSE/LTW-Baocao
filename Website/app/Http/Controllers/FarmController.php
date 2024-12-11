@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\FarmNotificationMail;
+use App\Models\LogModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -87,6 +89,13 @@ class FarmController extends Controller
 
         // Gửi email
         Mail::to($user_email)->send(new FarmNotificationMail($userDetails));
+
+        $user_id = Auth::user()->user_id;
+
+        LogModel::create([
+            'user_id' => $user_id,  // Giá trị từ đối tượng $user
+            'description' => "User with ID {$user_id} created a FarmModel named '{$farm_name}' successfully."
+        ]);
 
         return response()->json([
             'message' => 'FarmModel added successfully!',

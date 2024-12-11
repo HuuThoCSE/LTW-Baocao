@@ -21,7 +21,7 @@ class LoginController extends Controller
     protected function storeSessionData($user) {
         Session::put('user_id', $user->user_id);
         Session::put('user_role_id', $user->role_id);
-        Session::put('user_farm_id', $user->farm_id);
+        Session::put('farm_id', $user->farm_id);
 
         $farm = FarmModel::where('farm_id', $user->farm_id)->first();
 

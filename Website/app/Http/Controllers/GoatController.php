@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\GoatModel;
 use App\Models\GoatWeightModel;
+use App\Models\LogModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\FarmModel;
 use Illuminate\Support\Facades\Log;
@@ -14,16 +16,16 @@ use Illuminate\Support\Facades\Session;
 
 class GoatController extends Controller
 {
-    public function getView()
+    public function index()
     {
+        $farm_id = Session::get('farm_id');
 
-        // Lấy danh sách từ bảng 'goats'
-        // $goats = DB::table('goats')->get(); // Thực hiện truy vấn để lấy dữ liệu
-
-        $breeds = DB::table('farm_breeds')->get(); // Lấy danh sách các giống dê
+        $breeds = DB::table('farm_breeds')
+            ->where('farm_id', $farm_id) // Lọc theo farm_id
+            ->get(); // Lấy danh sách các giống dê
 
         $goats = DB::table('farm_goats')
-            ->where('farm_goats.farm_id', Session::get('user_farm_id')) // Lọc theo farm_id
+            ->where('farm_goats.farm_id', $farm_id) // Lọc theo farm_id
             ->join('farms', 'farm_goats.farm_id', '=', 'farms.farm_id')
             ->join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')
             ->select('farm_goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie')
@@ -64,7 +66,7 @@ class GoatController extends Controller
         return view('goats.show', ['goat' => $goat, 'goatWeights' => $goatWeights, 'lastGoatWeight' => $lastGoatWeight]);
     }
 
-    public function addGoat(Request $request)
+    public function add(Request $request)
     {
 //        dd($request->all());
 
@@ -85,7 +87,7 @@ class GoatController extends Controller
         $origin = $request->input('origin');
         $breed_id = $request->input('breed_id');
 
-        $farm_id = Session::get('user_farm_id');
+        $farm_id = Session::get('farm_id');
 
         try {
             // Insert the new goat into the database
@@ -98,13 +100,13 @@ class GoatController extends Controller
             ]);
 
             // Return success message and redirect
-            return redirect()->route('goats.list')->with('success', 'Goat added successfully');
+            return redirect()->route('goats.index')->with('success', 'Goat added successfully');
         } catch (\Exception $e) {
             // LogModel the error for debugging
             Log::error('Error inserting breed: ' . $e->getMessage());
 
             // Return error message and redirect
-            return redirect()->route('goats.list')->with('error', 'Failed to add goat. Please try again.');
+            return redirect()->route('goats.index')->with('error', 'Failed to add goat. Please try again.');
         }
 
     }
@@ -155,9 +157,47 @@ class GoatController extends Controller
         $farms = DB::table('farm_goats')->get();
 
         // Chuyển hướng về trang danh sách với thông báo thành công
-        return redirect()->route('goats.list')->with('success', 'FarmModel updated successfully.');
+        return redirect()->route('goats.index')->with('success', 'FarmModel updated successfully.');
     }
 
+    public function addWeight(Request $request, $goat_id)
+    {
 
+        // Validate incoming request data
+        $request->validate([
+            'weight' => 'required|numeric', // Weight is required and should be a number
+        ]);
+
+        // Get the weight from the request
+        $weight = $request->input('weight');
+
+        // Insert the new weight into the database
+        DB::table('goat_weights')->insert([
+            'goat_id' => $goat_id,
+            'weight' => $weight,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $user_id = Auth::user()->user_id;
+
+        LogModel::create([
+            'user_id' => $user_id,  // ID của người dùng thực hiện hành động
+            'description' => "User with ID {$user_id} added weight information for goat with ID {$goat_id} value {$weight}."
+        ]);
+
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Thêm cân nặng thành công cho dê.');
+    }
+
+    public function addDisease($request, $goat_id)
+    {
+        return redirect()->back()->with('success', 'Thêm bệnh thành công cho dê.');
+    }
+
+    public function addFood($request, $goat_id)
+    {
+        return redirect()->back()->with('success', 'Thêm thức ăn thành công cho dê.');
+    }
 
 }

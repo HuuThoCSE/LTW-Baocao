@@ -63,12 +63,13 @@ class DeviceController extends Controller
                 'farm_id' => $farm_id,
                 'status' => 'Active',
         ]);
-        return redirect()->route('device.list')->with('success', 'Device added successfully.');
+
+        return redirect()->route('devices.index')->with('success', 'Device added successfully.');
         } catch (\Exception $e) {
             // LogModel the error for debugging
             Log::error('Error inserting breed: ' . $e->getMessage());
 
-            return redirect()->route('device.list')->with('error', 'Failed to add device. Please try again.');
+            return redirect()->route('devices.index')->with('error', 'Failed to add device. Please try again.');
         }
     }
 
@@ -79,10 +80,10 @@ class DeviceController extends Controller
 
         if ($device) {
             DB::table('farm_devices')->where('device_id', $id)->delete();
-            return redirect()->route('device.list')->with('success', 'Device deleted successfully.');
+            return redirect()->route('devices.index')->with('success', 'Device deleted successfully.');
         }
 
-        return redirect()->route('device.list')->with('error', 'Device not found.');
+        return redirect()->route('devices.index')->with('error', 'Device not found.');
     }
 
     // Cập nhật thiết bị
@@ -101,9 +102,9 @@ class DeviceController extends Controller
                 'type_device_id' => $request->input('type_device_id'),
             ]);
 
-            return redirect()->route('device.list')->with('success', 'Device updated successfully.');
+            return redirect()->route('devices.index')->with('success', 'Device updated successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('device.list')->with('error', 'Failed to update device. Please try again.');
+            return redirect()->route('devices.index')->with('error', 'Failed to update device. Please try again.');
         }
     }
 }

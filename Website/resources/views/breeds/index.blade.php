@@ -4,18 +4,6 @@
 
 @section('content')
 
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-
 <div class="pagetitle">
 <h1>{{ __('messages.breed_list') }}</h1>
 <nav>

@@ -5,6 +5,10 @@ return [
     'title' => 'GoatModel FarmModel Management',
     'dashboard' => 'Dashboard',
 
+    'system' => 'System',
+    'logs' => 'Logs',
+    'list_of_logs' => 'List of Logs',
+
     'action' => 'Action',
 
     'goat' => 'Goats',
