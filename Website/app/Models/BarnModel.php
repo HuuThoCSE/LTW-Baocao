@@ -31,4 +31,5 @@ class BarnModel extends Model
     {
         return $this->hasMany(Device::class, 'barn_id');
     }
+
 }

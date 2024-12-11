@@ -50,6 +50,11 @@ Bảng điều khiển
                                     <i class="fas fa-utensils"></i> Thêm đồ ăn
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#transferBarnModal">
+                                    <i class="fas fa-warehouse"></i> Chuyển chuồng
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -140,6 +145,41 @@ Bảng điều khiển
     </div>
 </div>
 
+<div class="card">
+    <div class="card-header">
+        <h3 class="text-center">Lịch sử chuyển chuồng</h3>
+    </div>
+
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Ngày chuyển</th>
+                <th>Chuồng cũ</th>
+                <th>Chuồng mới</th>
+                <th>Người thực hiện</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if(isset($transfers) && $transfers->isNotEmpty())
+                @foreach ($transfers as $transfer )
+                    <tr>
+                        <td>{{ $transfer->transferred_at->format('d-m-Y H:i') }}</td>
+                        <td>{{ $transfer->oldBarn->name }}</td>
+                        <td>{{ $transfer->newBarn->name }}</td>
+                        <td>{{ $transfer->transferredBy->name }}</td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="4" class="text-center">Không có lịch sử chuyển chuồng.</td>
+                </tr>
+            @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div class="modal fade" id="addWeightModal" tabindex="-1" aria-labelledby="addWeightModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -213,6 +253,38 @@ Bảng điều khiển
                         <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
                     </div>
                     <button type="submit" class="btn btn-success">Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="transferBarnModal" tabindex="-1" aria-labelledby="transferBarnModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transferBarnModalLabel">Chuyển chuồng cho dê</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="transferBarnForm" action="{{ route('goats.transferBarn', ['id' => $goat->goat_id]) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="currentBarn" class="form-label">Chuồng hiện tại</label>
+                        <input type="text" class="form-control" id="currentBarn" value="{{ $currentBarn }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newBarn" class="form-label">Chọn chuồng mới</label>
+                        <select class="form-select" id="newBarn" name="barn_id" required>
+                            <option value="" disabled selected>Chọn chuồng</option>
+                            @foreach ($barns as $barn)
+{{--                                @if ($barn->barn_id !== $currentBarn->barn_id)--}}
+                                    <option value="{{ $barn->barn_id }}">{{ $barn->barn_name }}</option>
+{{--                                @endif--}}
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Chuyển chuồng</button>
                 </form>
             </div>
         </div>
