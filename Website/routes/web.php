@@ -221,6 +221,7 @@ Route::middleware(['auth', LocaleMiddleware::class, CheckAuthMiddleware::class])
         Route::post('/goats/{id}/addDisease', [GoatController::class, 'addDisease'])->name('goats.addDisease');
         Route::post('/goats/{id}/addFood', [GoatController::class, 'addFood'])->name('goats.addFood');
         Route::post('/goats/{id}/transferBarn', [GoatController::class, 'transferBarn'])->name('goats.transferBarn');
+
         Route::get('/goats/create', [GoatController::class, 'showGoatForm'])->name('goats.create');
         Route::delete('/goats/{goat_id}/del', [GoatController::class, 'delGoat'])->name('goats.del');
         Route::put('/goats/{goat_id}/udp', [GoatController::class, 'udpGoat'])->name('goats.udp');

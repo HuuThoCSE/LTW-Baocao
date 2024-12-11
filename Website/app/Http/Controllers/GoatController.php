@@ -190,6 +190,7 @@ class GoatController extends Controller
 
         // Chuyển hướng về trang danh sách với thông báo thành công
         return redirect()->route('goats.index')->with('success', 'FarmModel updated successfully.');
+
     }
 
     public function addWeight(Request $request, $goat_id)

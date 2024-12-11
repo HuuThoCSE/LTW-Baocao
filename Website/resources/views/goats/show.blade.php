@@ -50,12 +50,14 @@ Bảng điều khiển
                                     <i class="fas fa-utensils"></i> Thêm đồ ăn
                                 </a>
                             </li>
+
                             <li>
                                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#transferBarnModal">
                                     <i class="fas fa-warehouse"></i> Chuyển chuồng
                                 </a>
                             </li>
                         </ul>
+                        
                     </div>
                 </div>
             @endif
@@ -290,8 +292,6 @@ Bảng điều khiển
         </div>
     </div>
 </div>
-
-
 
 <!-- Vendor JS Files -->
 <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
