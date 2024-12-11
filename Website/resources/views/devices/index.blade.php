@@ -2,7 +2,7 @@
 
 @section('title', 'List of Device')
 
-@section('contents')
+@section('content')
 
     @if (session('success'))
         <div class="alert alert-success">

@@ -2,7 +2,7 @@
 
 @section('title', 'List of Zones')
 
-@section('contents')
+@section('content')
 <style>
 
     /* Add hover effect for buttons */

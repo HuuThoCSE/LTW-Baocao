@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard')
 
-@section('contents')
+@section('content')
     <div class="pagetitle">
         <h1>Bảng điều khiển</h1>
         <nav>
