@@ -122,11 +122,11 @@ expose share http://127.0.0.1:8000 --subdomain=goatfarm
 php artisan config:clear
 ```
 
-# Quy chuẩn trên route | Chuẩn RESTful
-- `index`: Hiển thị danh sách.
-- `show`: Hiển thị chi tiết.
-- `create`: Hiển thị form tạo mới.
-- `store`: Lưu dữ liệu mới.
-- `edit`: Hiển thị form chỉnh sửa.
-- `update`: Cập nhật tài nguyên.
-- `destroy`: Xóa tài nguyên.
+# Quy chuẩn tên route và funtion controller | Chuẩn RESTful
+- `.index`: Hiển thị danh sách.
+- `.show`: Hiển thị chi tiết.
+- `.create`: Hiển thị form tạo mới.
+- `.store`: Lưu dữ liệu mới.
+- `.edit`: Hiển thị form chỉnh sửa.
+- `.update`: Cập nhật tài nguyên.
+- `.destroy`: Xóa tài nguyên.
