@@ -2,7 +2,7 @@
 
 @section('title', 'Manage Areas')
 
-@section('content')
+@section('contents')
 <style>
         /* Add hover effect for buttons */
         .btn:hover {
@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-    
+
                 <div class="card-header">
                     <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
                         <i class="bi bi-clipboard-plus"></i>
@@ -68,7 +68,7 @@
                                 <td>{{ $farm_area->updated_at }}</td>
                                 <td>
                                     <!-- Nút xóa -->
-                                    <form action="{{ route('listarea.del', $farm_area->area_id) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('areas.del', $farm_area->area_id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
@@ -102,7 +102,7 @@
     <div class="modal fade" id="addAreaModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form method="POST" action="{{ route('listarea.add') }}">
+                <form method="POST" action="{{ route('areas.add') }}">
                     @csrf
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Add New Area</h5>
@@ -141,7 +141,7 @@
     <div class="modal fade" id="udpModal{{$farm_area->area_id}}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form method="POST" action="{{ route('listarea.udp', ['area_id' => $farm_area->area_id]) }}">
+                <form method="POST" action="{{ route('areas.udp', ['area_id' => $farm_area->area_id]) }}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-primary text-white">

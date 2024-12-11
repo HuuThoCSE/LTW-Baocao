@@ -59,12 +59,12 @@
                         </thead>
                         <tbody class="text-center">
                             @foreach($barns as $barn)
-                                <tr onclick="window.location='{{ route('barn.detail', ['id' => $barn->barn_id]) }}'">
+                                <tr onclick="window.location='{{ route('barns.show', ['id' => $barn->barn_id]) }}'">
                                     <td>{{ $barn->barn_id }}</td>
                                     <td>{{ $barn->barn_name }}</td>
                                     <td>{{ $barn->description }}</td>
                                     <td>
-                                        <form action="{{ route('barn.del', $barn->barn_id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('barns.del', $barn->barn_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
@@ -101,7 +101,7 @@
 <div class="modal fade" id="udpModal{{$barn->barn_id}}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="updateForm{{$barn->barn_id}}" method="POST" action="{{ route('barn.udp', ['id' => $barn->barn_id]) }}">
+            <form id="updateForm{{$barn->barn_id}}" method="POST" action="{{ route('barns.udp', ['id' => $barn->barn_id]) }}">
                 @csrf
                 @method('PUT')
                 <div class="modal-header bg-primary text-white">
@@ -135,7 +135,7 @@
     <div class="modal fade" id="addBarnModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ route('barn.add') }}" method="POST">
+                <form action="{{ route('barns.add') }}" method="POST">
                     @csrf
                     <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Add New Barn</h5>
