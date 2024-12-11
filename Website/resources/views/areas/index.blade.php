@@ -2,7 +2,7 @@
 
 @section('title', 'Manage Areas')
 
-@section('contents')
+@section('content')
 <style>
         /* Add hover effect for buttons */
         .btn:hover {

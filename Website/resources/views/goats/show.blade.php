@@ -10,7 +10,7 @@ Bảng điều khiển
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active"><a href="{{ route('goats.list') }}">{{ __('messages.goat_list') }}</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('goats.index') }}">{{ __('messages.goat_list') }}</a></li>
         </ol>
     </nav>
 </div>

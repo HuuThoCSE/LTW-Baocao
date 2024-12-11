@@ -4,7 +4,7 @@
 Quản lý thức ăn
 @endsection
 
-@section('contents')
+@section('content')
 <style>
 
     /* Add hover effect for buttons */
