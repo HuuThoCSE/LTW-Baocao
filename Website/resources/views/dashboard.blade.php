@@ -94,7 +94,7 @@ h4 {
 </style>
 @endsection
 
-@section('contents')
+@section('content')
 <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>
