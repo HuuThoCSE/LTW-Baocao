@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\BarnModel;
+use App\Models\BarnTransferModel;
 use App\Models\GoatModel;
 use App\Models\GoatWeightModel;
 use App\Models\LogModel;
@@ -35,6 +37,13 @@ class GoatController extends Controller
         return view('goats.dashboard', ['goats' => $goats, 'breeds' => $breeds]);
     }
 
+    public function showTransferHistoryQuery($goatId)
+    {
+        return BarnTransferModel::where('goat_id', $goatId)
+            ->with(['oldBarn', 'newBarn', 'transferredBy'])
+            ->orderBy('transferred_at', 'desc');
+    }
+
     public function show($id)
     {
         $goat = GoatModel::join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')  // Join bảng farm_breeds
@@ -61,9 +70,32 @@ class GoatController extends Controller
 
         $lastGoatWeight = $goat->weights()->latest('created_at')->first();
 
+        // Lấy lịch sử chuyển chuồng
+        $transfers = $this->showTransferHistoryQuery($id)->get();
+
+        $currentBarn = BarnTransferModel::where('goat_id', $id)
+            ->with('newBarn') // Eager load tên chuồng mới
+            ->orderBy('transferred_at', 'desc')
+            ->first();
+
+        $currentBarnName = $currentBarn ? $currentBarn->newBarn->name : 'Chưa có chuồng';
+
+//        dd($currentBarnName);
+
 //        dd($lastGoatWeight);
 
-        return view('goats.show', ['goat' => $goat, 'goatWeights' => $goatWeights, 'lastGoatWeight' => $lastGoatWeight]);
+        $barns = BarnModel::where('farm_id', Session::get('farm_id'))->get();
+
+//        dd($barns);
+
+        return view('goats.show', ['goat' => $goat,
+                                        'goatWeights' => $goatWeights,
+                                        'lastGoatWeight' => $lastGoatWeight,
+                                        '$transfers' => $transfers,
+                                        'currentBarn' => $currentBarn,
+                                        'currentBarnName' => $currentBarnName,
+                                        'barns' => $barns
+                                    ]);
     }
 
     public function add(Request $request)
@@ -158,6 +190,7 @@ class GoatController extends Controller
 
         // Chuyển hướng về trang danh sách với thông báo thành công
         return redirect()->route('goats.index')->with('success', 'FarmModel updated successfully.');
+
     }
 
     public function addWeight(Request $request, $goat_id)
@@ -198,6 +231,42 @@ class GoatController extends Controller
     public function addFood($request, $goat_id)
     {
         return redirect()->back()->with('success', 'Thêm thức ăn thành công cho dê.');
+    }
+
+    public function transferBarn(Request $request, $goat_id)
+    {
+        $validated = $request->validate([
+            'barn_id' => 'required|exists:Barns,id',
+        ]);
+
+        // Lấy thông tin con dê
+        $goat = GoatModel::findOrFail($goat_id);
+        $oldBarnId = $goat->barn_id;
+
+        // Kiểm tra xem chuồng mới có khác chuồng hiện tại không
+        if ($oldBarnId == $validated['barn_id']) {
+            return redirect()->back()->with('error', 'Chuồng mới phải khác chuồng hiện tại.');
+        }
+
+        // Cập nhật chuồng mới
+        $goat->barn_id = $validated['barn_id'];
+        $goat->save();
+
+        // Ghi lịch sử chuyển chuồng
+        BarnTransferModel::create([
+            'goat_id' => $goat->goat_id,
+            'old_barn_id' => $oldBarnId,
+            'new_barn_id' => $validated['barn_id'],
+            'transferred_by' => auth()->id(),
+        ]);
+
+        // Ghi log chuyển chuồng
+        LogModel::create([
+            'user_id' => auth()->id(),
+            'description' => "User with ID " . auth()->id() . " transferred goat with ID {$goat->id} from barn ID {$oldBarnId} to barn ID {$validated['barn_id']}."
+        ]);
+
+        return redirect()->back()->with('success', 'Chuyển chuồng thành công!');
     }
 
 }

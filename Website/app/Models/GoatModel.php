@@ -41,4 +41,9 @@ class GoatModel extends Model
     {
         return $this->hasMany(GoatWeightModel::class, 'goat_id');
     }
+
+//    public function currentBarn()
+//    {
+//        return $this->belongsTo(BarnModel::class, 'barn_id');
+//    }
 }
