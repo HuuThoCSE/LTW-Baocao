@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('expiry_date', 250);
             $table->timestamps();
         });
+       
     }
-
+    
+    
     /**
      * Reverse the migrations.
      */
