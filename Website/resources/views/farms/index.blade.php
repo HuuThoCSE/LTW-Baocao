@@ -3,22 +3,22 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class="pagetitle">
-        <h1>Bảng điều khiển</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Trang trại</a></li>
-                <li class="breadcrumb-item active">Danh sách Trang trại</li>
-            </ol>
-        </nav>
-    </div>
 
-    <!-- Hiển thị thông báo thành công -->
-    @if (session('success'))
-        <div class="alert alert-success mt-3 rounded shadow-sm">
-            {{ session('success') }}
-        </div>
-    @endif
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+<div class="pagetitle">
+    <h1>Bảng điều khiển</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Trang trại</a></li>
+            <li class="breadcrumb-item active">Danh sách Trang trại</li>
+        </ol>
+    </nav>
+</div>
 
     <!-- Hiển thị thông báo lỗi -->
     @if ($errors->any())
@@ -182,15 +182,12 @@
                                     <label for="farm_name" class="form-label">Tên Trang trại:</label>
                                     <input type="text" name="farm_name" class="form-control" value="{{ $farm->farm_name }}" required>
                                 </div>
+
                                 <div class="form-group mb-3">
                                     <label for="location" class="form-label">Vị trí:</label>
-                                    <select name="location" class="form-control">
-                                        <option value="Province" {{ $farm->location == 'Province' ? 'selected' : '' }}>Chọn Tỉnh</option>
-                                        <option value="Vinh Long Province" {{ $farm->location == 'Vinh Long Province' ? 'selected' : '' }}>Tỉnh Vĩnh Long</option>
-                                        <option value="Tien Giang Province" {{ $farm->location == 'Tien Giang Province' ? 'selected' : '' }}>Tỉnh Tiền Giang</option>
-                                        <option value="Ben Tre Province" {{ $farm->location == 'Ben Tre Province' ? 'selected' : '' }}>Tỉnh Bến Tre</option>
-                                    </select>
+                                    <textarea name="" id="location" cols="30" rows="3" class="form-control">{{ $farm->location }}</textarea>
                                 </div>
+
                                 <div class="form-group mb-3">
                                     <label for="owner_id" class="form-label">Chủ sở hữu:</label>
                                     <select name="udp_sel_owner_id" id="udp_sel_owner_id" class="form-select">

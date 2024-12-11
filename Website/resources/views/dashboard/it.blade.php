@@ -4,10 +4,6 @@
 IT - Bảng điều khiển
 @endsection
 
-@section('dashboard_style')
-
-@endsection
-
 @section('content')
 <div class="pagetitle">
     <h1>Dashboard</h1>

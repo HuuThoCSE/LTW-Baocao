@@ -5,6 +5,10 @@ return [
     'title' => 'Quản lý Trang trại Dê',
     'dashboard' => 'Bảng điều khiển',
 
+    'system' => 'Hệ thống',
+    'logs' => 'Nhật ký',
+    'list_of_logs' => 'Danh sách Nhật ký',
+
     'action' => 'Thao tác',
 
     'goat' => 'Dê',

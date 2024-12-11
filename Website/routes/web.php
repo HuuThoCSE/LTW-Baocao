@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BreedController;
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\FarmController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\AdminController;
@@ -21,7 +22,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 
 // Middleware
-use App\Http\Middleware\CheckFarmerAccess;
+use App\Http\Middleware\CheckAuthMiddleware;
 use App\Http\Middleware\CheckPermission;
 
 use Illuminate\Support\Facades\App;
@@ -139,19 +140,21 @@ Route::get('lang/{locale}', function ($locale) {
     //   Route::get('/dashboard', [DashboardController::class, 'getGoatData'])->name('dashboard.data')
 
 
-Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
+Route::middleware(['auth', LocaleMiddleware::class, CheckAuthMiddleware::class])->group(function () {
 
     // Admin
         Route::get('/admin', [DashboardController::class, 'getView'])->name('admin.dashboard');
         Route::get('/admin/register', [AdminController::class, 'getRegisterView'])->middleware('admin')->name('admin.register.view');
         Route::post('/admin/register', [AdminController::class, 'register'])->middleware('admin')->name('admin.register');
 
+        Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
         // Chủ nông trại
-        Route::get('/account', [AccountController::class, 'getView'])->name('account.index');
-        Route::post('/account', [AccountController::class, 'addUser'])->name('account.add');
-        Route::put('/account/{id}', [AccountController::class, 'udpAcc'])->name('account.udp');
-        Route::delete('/account/{id}', [AccountController::class, 'delAccount'])->name('account.del');
-        Route::get('/account/{id}', [AccountController::class, 'showAccount'])->name('account.show');
+        Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+        Route::post('/account', [AccountController::class, 'add'])->name('account.add');
+        Route::put('/account/{id}', [AccountController::class, 'udp'])->name('account.udp');
+        Route::delete('/account/{id}', [AccountController::class, 'del'])->name('account.del');
+        Route::get('/account/{id}', [AccountController::class, 'show'])->name('account.show');
 
     // IT nông trại
 //        Route::get('/dashboard/it', [ItController::class, 'index'])->name('dashboard.it');
@@ -211,9 +214,12 @@ Route::middleware(['auth', LocaleMiddleware::class])->group(function () {
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
         # Goat Management
-        Route::get('/goats', [GoatController::class, 'getView'])->name('goats.index');
-        Route::get('goat/{id}', [GoatController::class, 'show'])->name('goats.show');
-        Route::post('/goats', [GoatController::class, 'addGoat'])->name('goats.add');
+        Route::get('/goats', [GoatController::class, 'index'])->name('goats.index');
+        Route::get('goats/{id}', [GoatController::class, 'show'])->name('goats.show');
+        Route::post('/goats', [GoatController::class, 'add'])->name('goats.add');
+        Route::post('/goats/{id}/addWeight', [GoatController::class, 'addWeight'])->name('goats.addWeight');
+        Route::post('/goats/{id}/addDisease', [GoatController::class, 'addDisease'])->name('goats.addDisease');
+        Route::post('/goats/{id}/addFood', [GoatController::class, 'addFood'])->name('goats.addFood');
         Route::get('/goats/create', [GoatController::class, 'showGoatForm'])->name('goats.create');
         Route::delete('/goats/{goat_id}/del', [GoatController::class, 'delGoat'])->name('goats.del');
         Route::put('/goats/{goat_id}/udp', [GoatController::class, 'udpGoat'])->name('goats.udp');
@@ -241,6 +247,5 @@ Route::get('/api/sensor', [APIController::class, 'addHumidity'])->name('api.addH
 // });
 
 // Route::middleware([CheckPermission::class, 'permission:edit_device'])->group(function () {
-//     Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
 //     // Các route khác dành cho IT nông trại
 // });
