@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use App\Models\Device;
 
@@ -12,70 +13,71 @@ use App\Models\Device;
 class DeviceController extends Controller
 {
     // Hiển thị danh sách thiết bị
-    public function getView()
+    public function index()
     {
         // Lấy farm_id từ seccion
-        $farm_id = Session::get('farm_id');
+        $farm_id = Session::get('user_farm_id');
 
         // Lấy danh sách thiết bị với farm id qua table device_types lấy type_device_name
         $devices = Device::where('farm_id', $farm_id)
-            ->join('device_types', 'devices.device_type_id', '=', 'device_types.device_type_id')
-            ->select('devices.*', 'device_types.type_device_name')
+            ->join('type_devices', 'farm_devices.type_device_id', '=', 'type_devices.type_device_id')
+            ->select('farm_devices.*', 'type_devices.type_device_name')
             ->get();
 
 //        dd($devices);
 
-//        $devices = DB::table('devices')
-//            ->join('farms', 'devices.farm_id', '=', 'farms.farm_id')
-//            ->join('device_types', 'devices.device_type_id', '=', 'device_types.device_type_id')
-//            ->select('devices.*', 'farms.farm_name', 'device_types.type_device_name')
-//            ->get();
+        $type_devices = DB::table('type_devices')->get();
 
-        return view('device.dashboard', ['devices' => $devices]);
+        return view('devices.dashboard', ['devices' => $devices, 'type_devices' => $type_devices]);
     }
 
-    public function detailDevice($id)
+    public function show($id)
     {
         // Lấy chi tiết thiết bị với $id
-        $deviceDetail = Device::find($id)
-            ->join('device_types', 'devices.device_type_id', '=', 'device_types.device_type_id')
-            ->select('devices.*', 'device_types.type_device_name')
+        $device = Device::find($id)
+            ->join('type_devices', 'farm_devices.type_device_id', '=', 'type_devices.type_device_id')
+            ->select('farm_devices.*', 'type_devices.type_device_name')
             ->first();
-        return view('device.detail', ['deviceDetail' => $deviceDetail]);
+        return view('devices.show', ['device' => $device]);
     }
 
     // Thêm thiết bị
-    public function addDevice(Request $request)
-            {
-                // Validate dữ liệu
-                $request->validate([
-                    'device_name' => 'required|string|max:255',
-                    'device_type_id' => 'required|integer|exists:device_types,id',
-                    'farm_id' => 'required|integer|exists:farms,farm_id',
-                ]);
+    public function add(Request $request){
 
-                try {
-                    // Tạo thiết bị mới
-                    DB::table('device')->insert([
-                        'device_name' => $request->nput('device_name'),
-                        'device_type_id' => $request->input('device_type_id'),
-                        'farm_id' => $request->input('farm_id'),
-                        'status' => 'Active',
-            ]);
+//        dd($request->all());
 
-            return redirect()->route('device.list')->with('success', 'Device added successfully.');
+        // Validate dữ liệu
+        $request->validate([
+            'device_name' => 'required|string|max:255',
+            'type_device_id' => 'required|integer|exists:type_devices,type_device_id',
+        ]);
+
+        $farm_id = Session::get('user_farm_id');
+
+        try {
+            // Tạo thiết bị mới
+            DB::table('farm_devices')->insert([
+                'device_name' => $request->input('device_name'),
+                'type_device_id' => $request->input('type_device_id'),
+                'farm_id' => $farm_id,
+                'status' => 'Active',
+        ]);
+        return redirect()->route('device.list')->with('success', 'Device added successfully.');
         } catch (\Exception $e) {
+            // LogModel the error for debugging
+            Log::error('Error inserting breed: ' . $e->getMessage());
+
             return redirect()->route('device.list')->with('error', 'Failed to add device. Please try again.');
         }
     }
 
     // Xóa thiết bị
-    public function delDevice($device_id)
+    public function del($id)
     {
-        $device = DB::table('device')->where('device_id', $device_id)->first();
+        $device = DB::table('farm_devices')->where('device_id', $id)->first();
 
         if ($device) {
-            DB::table('device')->where('device_id', $device_id)->delete();
+            DB::table('farm_devices')->where('device_id', $id)->delete();
             return redirect()->route('device.list')->with('success', 'Device deleted successfully.');
         }
 
@@ -83,19 +85,19 @@ class DeviceController extends Controller
     }
 
     // Cập nhật thiết bị
-    public function udpDevice(Request $request, $device_id)
+    public function udp(Request $request, $device_id)
     {
         // Validate dữ liệu đầu vào
         $request->validate([
             'device_name' => 'required|string|max:255',
-            'device_type_id' => 'required|integer|exists:device_types,id',
+            'type_device_id' => 'required|integer|exists:device_types,id',
         ]);
 
         try {
             // Cập nhật thiết bị
-            DB::table('device')->where('device_id', $device_id)->update([
+            DB::table('farm_devices')->where('device_id', $device_id)->update([
                 'device_name' => $request->input('device_name'),
-                'device_type_id' => $request->input('device_type_id'),
+                'type_device_id' => $request->input('type_device_id'),
             ]);
 
             return redirect()->route('device.list')->with('success', 'Device updated successfully.');

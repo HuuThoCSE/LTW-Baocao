@@ -23,8 +23,10 @@ class GoatController extends Controller
         $breeds = DB::table('farm_breeds')->get(); // Lấy danh sách các giống dê
 
         $goats = DB::table('farm_goats')
+            ->where('farm_goats.farm_id', Session::get('user_farm_id')) // Lọc theo farm_id
+            ->join('farms', 'farm_goats.farm_id', '=', 'farms.farm_id')
             ->join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')
-            ->select('farm_goats.*', 'farm_breeds.breed_name_vie')
+            ->select('farm_goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie')
             ->get();
 
         // Truyền dữ liệu vào view
@@ -64,6 +66,7 @@ class GoatController extends Controller
 
     public function addGoat(Request $request)
     {
+//        dd($request->all());
 
         // Validate incoming request data
         $request->validate([
@@ -75,7 +78,7 @@ class GoatController extends Controller
 
 
         // Debugging: Check all request data
-        // dd($request->all()); // This will show all request data and stop the script
+//         dd($request->all()); // This will show all request data and stop the script
 
         $goat_name = $request->input('goat_name');
         $goat_age = $request->input('goat_age');
@@ -86,7 +89,7 @@ class GoatController extends Controller
 
         try {
             // Insert the new goat into the database
-            DB::table('goats')->insert([
+            DB::table('farm_goats')->insert([
                 'goat_name' => $goat_name,
                 'goat_age' => $goat_age,
                 'origin' => $origin,

@@ -35,15 +35,15 @@ Danh sách dê
             <li class="breadcrumb-item">List of Goat</li>
             </ol>
         </nav>
-        
-</div><!-- End Page Title --> 
+
+</div><!-- End Page Title -->
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
 
                 <div class="card-header">
-                    <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+                    <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addGoatModal">
                         <i class="bi bi-clipboard-plus"></i>
                         <span class="ms-2">{{ __('messages.add_goat') }}</span>
                     </button>
@@ -69,7 +69,7 @@ Danh sách dê
                                         <td>{{ $goat->goat_name }}</td>
                                         <td>{{ $goat->goat_age }}</td>
                                         <td>{{ $goat->origin }}</td>
-                                        <td>{{ $goat->farm_name }}</td>
+                                        <td>{{ $goat->goat_name }}</td>
                                         <td>{{ $goat->breed_name_vie }}</td>
                                         <td>
                                             <form action="{{ route('goats.del', $goat->goat_id) }}" method="POST" style="display:inline;" onclick="event.stopPropagation();">
@@ -92,7 +92,7 @@ Danh sách dê
                             </table>
                         </div>
     <!-- Add GoatModel Modal -->
-    
+
     <div class="modal fade" id="addGoatModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -130,28 +130,6 @@ Danh sách dê
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                                <!-- Farm ID Input -->
-                                <div class="col-md-6 mb-3">
-                                    <select name="farm_id" class="form-control" required>
-                                        <option value="">Select Farm</option>
-                                        <!-- Populate with farms dynamically -->
-                                    </select>
-                                    @error('farm_id')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                            <div class="col-md-6 mb-3">
-                                <select name="origin" class="form-control" required>
-                                    <option value="Select">Select Origin</option>
-                                    <option value="imported">Imported</option>
-                                    <option value="born_on_farm">Born on Farm</option>
-                                </select>
-                                @error('origin')
-                                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                @enderror
-                            </div>
 
                             <div class="col-md-6 mb-3">
                                 <select name="breed_id" class="form-control" required>

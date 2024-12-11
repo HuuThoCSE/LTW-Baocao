@@ -4,11 +4,17 @@ return [
     'welcome' => 'Welcome to our application!',
     'title' => 'GoatModel FarmModel Management',
     'dashboard' => 'Dashboard',
+
+    'action' => 'Action',
+
     'goat' => 'Goats',
     'goat_list' => 'List Goat',
 
     'account_manager' => 'Account',
     'account_list' => 'List of Account',
+
+    'farm' => 'Farm',
+    'farms_list' => 'List of Farm',
 
     'add_goat' => 'Add Goat',
     'edit_goat' => 'Edit Goat',

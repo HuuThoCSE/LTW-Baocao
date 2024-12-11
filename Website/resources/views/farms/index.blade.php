@@ -1,8 +1,8 @@
-@extends('main-admin')
+@extends('main')
 
 @section('title', 'Dashboard')
 
-@section('content')
+@section('contents')
     <div class="pagetitle">
         <h1>Bảng điều khiển</h1>
         <nav>
@@ -84,7 +84,7 @@
                                     <td>{{ $farm->location }}</td>
                                     <td class="d-flex justify-content-center align-items-center">
                                         <!-- Nút Xóa -->
-                                        <form action="{{ route('listfarm.del', $farm->farm_id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('farms.del', $farm->farm_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?');">
@@ -170,7 +170,7 @@
             <div class="modal fade" id="udpModal{{$farm->farm_id}}" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow-lg rounded">
-                        <form method="POST" action="{{ route('listfarm.udp', ['farm_id' => $farm->farm_id]) }}">
+                        <form method="POST" action="{{ route('farms.udp', ['farm_id' => $farm->farm_id]) }}">
                             @csrf
                             @method('PUT')
                             <div class="modal-header bg-primary text-white">
@@ -248,9 +248,10 @@
 
             $('.datatable').DataTable({
                 "paging": true,        // Bật phân trang
-                "searching": true,     // Bật tìm kiếm
+                searching: true,    // Tắt tìm kiếm của DataTables
                 "ordering": true,      // Bật sắp xếp
                 dom: 'Bfrtip',         // Định dạng bố cục (Buttons, filter, table, pagination)
+                info: false,         // Tắt thông báo "Showing ... entries"
                 buttons: [
                     {
                         extend: 'copyHtml5',
@@ -311,7 +312,7 @@
 
                 // Gửi dữ liệu qua AJAX
                 $.ajax({
-                    url: '{{ route('listfarm.add') }}',
+                    url: '{{ route('farms.add') }}',
                     method: 'POST',
                     data: formData,
                     success: function (response) {
