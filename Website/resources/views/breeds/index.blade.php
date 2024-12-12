@@ -4,23 +4,11 @@
 
 @section('content')
 
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-
 <div class="pagetitle">
 <h1>{{ __('messages.breed_list') }}</h1>
 <nav>
     <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
     <li class="breadcrumb-item">{{ __('messages.breed') }}</li>
     </ol>
 </nav>
@@ -32,7 +20,7 @@
     <div class="card">
         <!-- Table with stripped rows -->
         <div class="card-header">
-            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#addBarnModal">
+            <button class="btn btn-primary d-flex align-items-center ms-auto" data-bs-toggle="modal" data-bs-target="#btnAdd">
                 <i class="bi bi-clipboard-plus"></i>
                 <span class="ms-2">{{ __('messages.add_breed') }}</span>
             </button>
@@ -57,7 +45,7 @@
                         <td>{{ $breed->breed_name_vie }}</td>
                         <td>{{ $breed->description }}</td>
                         <td>
-                            <form action="{{ route('breed.del', $breed->breed_id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('breeds.del', $breed->breed_id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
@@ -90,10 +78,10 @@
 </section>
 
 <!-- Modal Add Breed -->
-<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="btnAdd" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="POST" action="{{ route('breed.add') }}">
+            <form method="POST" action="{{ route('breeds.add') }}">
                 @csrf
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">Add New Breed</h5>
@@ -130,7 +118,7 @@
                 <h5 class="modal-title" id="updateBreedModalLabel">Update Breed</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="updateBreedForm" action="{{ route('breed.udp', ':id') }}" method="POST">
+            <form id="updateBreedForm" action="{{ route('breeds.udp', ':id') }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

@@ -2,55 +2,6 @@
 
 @section('title', 'Manage Accounts')
 
-@section('account_style')
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 18px;
-        text-align: left;
-    }
-
-    table, th, td {
-        border: 1px solid #dddddd;
-    }
-
-    th, td {
-        padding: 12px;
-    }
-
-    th {
-        background-color: #f2f2f2;
-        color: #333;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    tr {
-        cursor: pointer;
-    }
-
-    tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    .pagetitle {
-        margin-bottom: 20px;
-    }
-
-    .breadcrumb a {
-        text-decoration: none;
-        color: #007bff;
-    }
-
-    .breadcrumb-item.active {
-        color: #6c757d;
-    }
-</style>
-@endsection
-
 @section('content')
 <div class="pagetitle">
     <h1>Account Management</h1>
@@ -60,7 +11,28 @@
         <li class="breadcrumb-item active">Account Management</li>
         </ol>
     </nav>
-</div><!-- End Page Title -->
+</div>
+<style>
+      /* Hiệu ứng khi di chuột vào nút */
+      .btn:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+</style>
+
+
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
@@ -95,7 +67,7 @@
                                         <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');" 
+                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this item?');"
                                                     class="btn btn-danger btn-sm d-flex align-items-center">
                                                     <i class="ri-delete-bin-5-line"></i>
                                                     <span class="ms-2">Delete</span>
@@ -158,5 +130,75 @@
         </div>
     </div>
 </div>
+<!-- Bao gồm các thư viện cần thiết -->
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- CSS của DataTables -->
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- CSS của DataTables Buttons -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.0/css/buttons.dataTables.min.css">
+
+    <!-- JS của DataTables -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <!-- JS của DataTables Buttons -->
+    <script src="https://cdn.datatables.net/buttons/2.2.0/js/dataTables.buttons.min.js"></script>
+
+    <!-- JSZip cho việc xuất Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <!-- pdfmake cho việc xuất PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+    <!-- Các script bổ sung cho DataTables Buttons -->
+    <script src="https://cdn.datatables.net/buttons/2.2.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.0/js/buttons.print.min.js"></script>
+
+    <!-- Khởi tạo DataTables với các nút chức năng -->
+    <script>
+        $(document).ready(function () {
+            // Định nghĩa exportOptions một lần để sử dụng cho tất cả các nút
+            var commonExportOptions = {
+                columns: ':not(:last-child)' // Loại bỏ cột cuối cùng (thường là cột thao tác)
+            };
+
+            $('.datatable').DataTable({
+                "paging": true,        // Bật phân trang
+                "searching": true,     // Bật tìm kiếm
+                "ordering": true,      // Bật sắp xếp
+                dom: 'Bfrtip',         // Định dạng bố cục (Buttons, filter, table, pagination)
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        text: 'Sao chép',
+                        exportOptions: commonExportOptions
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        text: 'Xuất CSV',
+                        exportOptions: commonExportOptions
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Xuất Excel',
+                        exportOptions: commonExportOptions
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Xuất PDF',
+                        exportOptions: commonExportOptions
+                    },
+                    {
+                        extend: 'print',
+                        text: 'In',
+                        exportOptions: commonExportOptions
+                    }
+                ]
+            });
+        });
+    </script>
 @endsection

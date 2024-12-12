@@ -5,11 +5,20 @@ return [
     'title' => 'Quản lý Trang trại Dê',
     'dashboard' => 'Bảng điều khiển',
 
+    'system' => 'Hệ thống',
+    'logs' => 'Nhật ký',
+    'list_of_logs' => 'Danh sách Nhật ký',
+
+    'action' => 'Thao tác',
+
     'goat' => 'Dê',
     'goat_list' => 'Danh sách Dê',
 
     'account_manager' => 'Tài khoản',
     'account_list' => 'Danh sách Tài khoản',
+
+    'farm' => 'Trang trại',
+    'farms_list' => 'Danh sách Trang trại',
 
     'add_goat' => 'Thêm Dê',
     'edit_goat' => 'Chỉnh sửa Dê',

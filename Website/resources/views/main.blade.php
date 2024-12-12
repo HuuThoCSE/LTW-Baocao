@@ -1,3 +1,7 @@
+<?php
+use Illuminate\Support\Facades\Auth;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,9 +24,44 @@
   @yield('dashboard_style')
   @yield('dashboard_script')
 
+    <style>
+        /* Container cho Alerts ở góc trên bên phải */
+        #alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050; /* Đảm bảo alert nằm trên các phần tử khác */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px; /* Khoảng cách giữa các alerts */
+        }
+    </style>
+
 </head>
 
 <body>
+
+    <!-- Container cho Alerts -->
+    <div id="alert-container">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                <i class="bi bi-check-circle me-1"></i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-5" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        <!-- Thêm các loại alert khác nếu cần -->
+    </div>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -35,12 +74,19 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
+      <!--
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+    -->
+
+    <span class="ms-2">{{ Session::get('farm_name') }} - (farm: {{ Auth::user()->farm_id }})</span>
+
+
+    <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -216,14 +262,14 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                 <li class="dropdown-header">
-                    <h6>Meta</h6>
-                    <span>{{ auth()->user()->name }}</span> <!-- Hiển thị tên người dùng -->
+                    <h6>{{ auth()->user()->user_name }}</h6> <!-- Hiển thị tên người dùng -->
+                    <span>{{ Auth::user()->role->role_name ." ( ". Auth::user()->role_id }} )</span>
                 </li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
                 <li>
-                    <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.show') }}">
                         <i class="bi bi-person"></i>
                         <span>My Profile</span>
                     </a>
@@ -251,7 +297,7 @@
           @else
               <a class="nav-link nav-profile d-flex align-items-center pe-0" href="{{ route('login') }}">
                   <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                  <span class="d-none d-md-block dropdown-toggle ps-2">Đăng Nhập</span>
+                  <span class="d-none d-md-block dropdown-toggle ps-2">{{ __('messages.login') }}</span>
               </a>
           @endif
         </li>
@@ -277,8 +323,24 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
+        <?php if (Auth::user()->role_id == 1): ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>{{ __('messages.farm') }}</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+
+            <ul id="components-account" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                <a href="{{ route('farms.index') }}">
+                    <i class="bi bi-circle"></i><span>{{ __('messages.farms_list')  }}</span>
+                </a>
+            </ul>
+        </li>
+        <?php endif; ?>
+
         <!-- Chỉ có Administator với Owner mới hiểm thị Account -->
-        <?php if (session('user_role') == 1 || session('user_role') == 2): ?>
+        <?php if (Auth::user()->role_id == 2): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-account" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -288,7 +350,7 @@
 
             <ul id="components-account" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="/account">
+                    <a href="{{ route('account.index') }}">
                         <i class="bi bi-circle"></i><span>{{ __('messages.account_list')  }}</span>
                     </a>
                 </li>
@@ -296,7 +358,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 3): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
           <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -320,7 +382,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-breed" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
@@ -331,7 +393,7 @@
 
                 <ul id="components-breed" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
-                    <a href="{{ route('breed.list') }}">
+                    <a href="{{ route('breeds.index') }}">
                       <i class="bi bi-circle"></i><span>{{ __('messages.breed_list') }}</span>
                     </a>
                   </li>
@@ -344,7 +406,7 @@
             </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-goat" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -361,7 +423,7 @@
         </li>
         <?php endif; ?>
 
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 3): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-location" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -370,17 +432,17 @@
             </a>
             <ul id="components-location" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               <li>
-                <a href="{{ route('listzone.dashboard')}}">
+                <a href="{{ route('zones.index')}}">
                   <i class="bi bi-circle"></i><span>List Zone</span>
                 </a>
               </li>
               <li>
-                <a href="{{ route('listarea.dashboard')}}">
+                <a href="{{ route('areas.index')}}">
                   <i class="bi bi-circle"></i><span>List Area</span>
                 </a>
               </li>
               <li>
-                <a href="{{ route('barn.dashboard')}}">
+                <a href="{{ route('barns.index')}}">
                   <i class="bi bi-circle"></i><span>{{ __('messages.barn_list') }}</span>
                 </a>
               </li>
@@ -389,7 +451,7 @@
         <?php endif; ?>
 
         <!-- Chỉ có Administator, Owner và Fammer mới hiểm thị Medication -->
-        <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
           <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#components-medication" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i>
@@ -414,7 +476,7 @@
             </li>
           <?php endif; ?>
 
-          <?php if (session('user_role') == 1 || session('user_role') == 2 || session('user_role') == 4): ?>
+          <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 4): ?>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-menu-button-wide"></i>
@@ -425,13 +487,39 @@
 
                 <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
-                    <a href="{{ route('food.list') }}">
+                    <a href="{{ route('foods.index') }}">
                       <i class="bi bi-circle"></i><span>{{ __('messages.food_list') }}</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ route('typefoods.index') }}">
+                      <i class="bi bi-circle"></i><span>{{ __('messages.food_type_list') }}</span>
                     </a>
                   </li>
                 </ul>
             </li>
           <?php endif; ?>
+
+
+    <?php if (Auth::user()->role_id == 1): ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>{{ __('messages.system') }}</span>
+                <i class="bi bi-chevron-down ms-auto">
+                </i>
+            </a>
+
+            <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('logs.index') }}">
+                        <i class="bi bi-circle"></i><span>{{ __('messages.logs') }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    <?php endif; ?>
+
 
       <!-- <li class="nav-item">
         <a href="{{ route('login') }}">
@@ -439,13 +527,13 @@
             <span>Login</span>
         </a>
       </li> -->
-
   </aside>
+
   <!-- End Sidebar-->
 
   <main id="main" class="main">
-
-  @yield('content')
+    {{-- Dùng content--}}
+    @yield('content')
 
   </main><!-- End #main -->
 
@@ -459,18 +547,28 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="{{asset('assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/chart.js/chart.umd.js')}}"></script>
-  <script src="{{asset('assets/vendor/echarts/echarts.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/quill/quill.js')}}"></script>
-  <script src="{{asset('assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
-  <script src="{{asset('assets/vendor/tinymce/tinymce.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/php-emails-form/validate.js')}}"></script>
+  <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
+  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+  <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
   <!-- Template Main JS File -->
-  <script src="{{asset('assets/js/main.js')}}"></script>
+  <script src="{{ asset('assets/js/main.js') }}"></script>
 
 </body>
+<script>
+    // Tự động tắt alerts sau 10 giây (10000ms)
+    setTimeout(function() {
+        $('.alert').alert('close');
+    }, 10000);
 
+    // Tự động tắt alerts sau 10 giây (10000ms)
+    setTimeout(function() {
+        $('.alert').alert('success');
+    }, 10000);
+</script>
 </html>

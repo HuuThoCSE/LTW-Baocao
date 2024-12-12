@@ -11,7 +11,7 @@ class ZoneController extends Controller
     public function getView()
     {
         $zones = DB::table('zones')->get(); // Get zones from the database
-        return view('zone/listzone', ['zones' => $zones]); // Pass the zones to the view
+        return view('zones.index', ['zones' => $zones]); // Pass the zones to the view
     }
 
     // Add a new zone

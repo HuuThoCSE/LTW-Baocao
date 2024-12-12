@@ -4,11 +4,21 @@ return [
     'welcome' => 'Welcome to our application!',
     'title' => 'GoatModel FarmModel Management',
     'dashboard' => 'Dashboard',
+
+    'system' => 'System',
+    'logs' => 'Logs',
+    'list_of_logs' => 'List of Logs',
+
+    'action' => 'Action',
+
     'goat' => 'Goats',
     'goat_list' => 'List Goat',
 
     'account_manager' => 'Account',
     'account_list' => 'List of Account',
+
+    'farm' => 'Farm',
+    'farms_list' => 'List of Farm',
 
     'add_goat' => 'Add Goat',
     'edit_goat' => 'Edit Goat',
@@ -66,6 +76,8 @@ return [
     'add_food' => 'Add Food',
     'edit_food' => 'Edit Food',
     'delete_food' => 'Delete Food',
+
+    'food_type_list' => 'Food Type List',
 
     'food_stock' => 'Food Stock',
     'update_stock' => 'Update Stock',

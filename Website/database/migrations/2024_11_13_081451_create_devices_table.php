@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('farm_devices', function (Blueprint $table) {
             $table->id('device_id');
-            $table->foreignId('device_type_id')
-                  ->constrained('device_types', 'device_type_id') // Chỉ định bảng và cột khóa chính cụ thể
+            $table->foreignId('type_device_id')
+                  ->constrained('type_devices', 'type_device_id') // Chỉ định bảng và cột khóa chính cụ thể
                   ->onDelete('cascade');
             $table->string('device_name', 50);
             $table->string('device_token')->nullable();

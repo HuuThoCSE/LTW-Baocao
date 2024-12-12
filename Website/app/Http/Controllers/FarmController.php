@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\FarmNotificationMail;
+use App\Models\LogModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -12,16 +14,16 @@ use Illuminate\Support\Facades\Mail;
 
 class FarmController extends Controller
 {
-    public function getView()
+    public function index()
     {
         // Lấy danh sách từ bảng 'farms'
         $farms = DB::table('farms')->get(); // Thực hiện truy vấn để lấy dữ liệu
 
         // Truyền dữ liệu vào view
-        return view('farm.dashboard', ['farms' => $farms]);
+        return view('farms.index', ['farms' => $farms]);
     }
 
-    public function addFarm(Request $request)
+    public function add(Request $request)
     {
         // Validate input
         $validatedData = $request->validate([
@@ -88,6 +90,13 @@ class FarmController extends Controller
         // Gửi email
         Mail::to($user_email)->send(new FarmNotificationMail($userDetails));
 
+        $user_id = Auth::user()->user_id;
+
+        LogModel::create([
+            'user_id' => $user_id,  // Giá trị từ đối tượng $user
+            'description' => "User with ID {$user_id} created a FarmModel named '{$farm_name}' successfully."
+        ]);
+
         return response()->json([
             'message' => 'FarmModel added successfully!',
             'farm_id' => $farm_id,
@@ -96,7 +105,7 @@ class FarmController extends Controller
     }
 
 
-    public function delFarm($farm_id)
+    public function del($farm_id)
     {
         // Find the medication by ID and delete it
         $farm = DB::table('farms')->where('farm_id', $farm_id);
@@ -109,7 +118,7 @@ class FarmController extends Controller
         }
     }
 
-    public function udpFarm(Request $request, $farm_id)
+    public function udp(Request $request, $farm_id)
     {
         // Update medicaion
         $farm_name = $request->input('farm_name');

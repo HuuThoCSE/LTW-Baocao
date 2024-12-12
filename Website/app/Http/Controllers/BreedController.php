@@ -4,28 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use App\Models\BreedModel;
 
 class BreedController extends Controller
 {
-    public function getView()
+    public function index()
     {
         // if(empty(Session::get('user_farm_id'))){
         //     return redirect()->route('login');
         // }
 
-        $breeds = DB::table('farm_breeds')->get();
-        return view('breed.dashboard', ['breeds' => $breeds]);
+        $breeds = DB::table('farm_breeds')
+            ->where('farm_id', Session::get('farm_id'))
+            ->get();
+        return view('breeds.index', ['breeds' => $breeds]);
     }
 
     public function add(Request $request)
     {
-        // Get the farm_id from session
-        $farm_id = Session::get('user_farm_id');
 
-        // dd($request);
+//         dd($request->all());
 
         // Validate input
         $request->validate([
@@ -37,21 +39,21 @@ class BreedController extends Controller
 
         try {
             // Insert the new breed into the database
-            DB::table('breeds')->insert([
+            DB::table('farm_breeds')->insert([
                 'breed_name_eng' => $request->breed_name_eng,  // Input from form
                 'breed_name_vie' => $request->breed_name_vie,  // Input from form
                 'description' => $request->description,        // Input from form
-                'farm_id' => $farm_id,                         // FarmModel ID from session
+                'farm_id' => Session::get('farm_id'),                         // FarmModel ID from session
             ]);
 
             // Return success message and redirect
-            return redirect()->route('breed.list')->with('success', 'BreedModel added successfully');
+            return redirect()->route('breeds.index')->with('success', 'BreedModel added successfully');
         } catch (\Exception $e) {
             // LogModel the error for debugging
-            \Log::error('Error inserting breed: ' . $e->getMessage());
+            Log::error('Error inserting breed: ' . $e->getMessage());
 
             // Return error message and redirect
-            return redirect()->route('breed.list')->with('error', 'Failed to add breed. Please try again.');
+            return redirect()->route('breeds.index')->with('error', 'Failed to add breed. Please try again.');
         }
     }
 
@@ -69,7 +71,7 @@ class BreedController extends Controller
 
         // Kiểm tra xem giống có tồn tại hay không
         if (!$breed) {
-            return redirect()->route('breed.list')->with('error', 'BreedModel not found.');
+            return redirect()->route('breeds.index')->with('error', 'BreedModel not found.');
         }
 
         // Cập nhật thông tin giống
@@ -81,7 +83,7 @@ class BreedController extends Controller
         $breed->save();
 
         // Quay lại với thông báo thành công
-        return redirect()->route('breed.list')->with('success', 'BreedModel updated successfully.');
+        return redirect()->route('breeds.index')->with('success', 'BreedModel updated successfully.');
     }
 
     // Delete a breed
@@ -100,11 +102,11 @@ class BreedController extends Controller
             $breed->delete();
 
             // Nếu thành công, quay lại trang danh sách với thông báo thành công
-            return redirect()->route('breed.list')->with('success', 'BreedModel deleted successfully.');
+            return redirect()->route('breeds.index')->with('success', 'BreedModel deleted successfully.');
 
         } catch (\Exception $e) {
             // Nếu có lỗi, quay lại trang danh sách với thông báo lỗi
-            return redirect()->route('breed.list')->with('error', 'Error occurred while deleting breed: ' . $e->getMessage());
+            return redirect()->route('breeds.index')->with('error', 'Error occurred while deleting breed: ' . $e->getMessage());
         }
     }
 }

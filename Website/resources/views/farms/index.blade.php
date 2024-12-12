@@ -1,24 +1,24 @@
-@extends('main-admin')
+@extends('main')
 
 @section('title', 'Dashboard')
 
 @section('content')
-    <div class="pagetitle">
-        <h1>Bảng điều khiển</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Trang trại</a></li>
-                <li class="breadcrumb-item active">Danh sách Trang trại</li>
-            </ol>
-        </nav>
-    </div>
 
-    <!-- Hiển thị thông báo thành công -->
-    @if (session('success'))
-        <div class="alert alert-success mt-3 rounded shadow-sm">
-            {{ session('success') }}
-        </div>
-    @endif
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+<div class="pagetitle">
+    <h1>Bảng điều khiển</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Trang trại</a></li>
+            <li class="breadcrumb-item active">Danh sách Trang trại</li>
+        </ol>
+    </nav>
+</div>
 
     <!-- Hiển thị thông báo lỗi -->
     @if ($errors->any())
@@ -84,7 +84,7 @@
                                     <td>{{ $farm->location }}</td>
                                     <td class="d-flex justify-content-center align-items-center">
                                         <!-- Nút Xóa -->
-                                        <form action="{{ route('listfarm.del', $farm->farm_id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('farms.del', $farm->farm_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center" onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?');">
@@ -170,7 +170,7 @@
             <div class="modal fade" id="udpModal{{$farm->farm_id}}" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow-lg rounded">
-                        <form method="POST" action="{{ route('listfarm.udp', ['farm_id' => $farm->farm_id]) }}">
+                        <form method="POST" action="{{ route('farms.udp', ['farm_id' => $farm->farm_id]) }}">
                             @csrf
                             @method('PUT')
                             <div class="modal-header bg-primary text-white">
@@ -182,15 +182,12 @@
                                     <label for="farm_name" class="form-label">Tên Trang trại:</label>
                                     <input type="text" name="farm_name" class="form-control" value="{{ $farm->farm_name }}" required>
                                 </div>
+
                                 <div class="form-group mb-3">
                                     <label for="location" class="form-label">Vị trí:</label>
-                                    <select name="location" class="form-control">
-                                        <option value="Province" {{ $farm->location == 'Province' ? 'selected' : '' }}>Chọn Tỉnh</option>
-                                        <option value="Vinh Long Province" {{ $farm->location == 'Vinh Long Province' ? 'selected' : '' }}>Tỉnh Vĩnh Long</option>
-                                        <option value="Tien Giang Province" {{ $farm->location == 'Tien Giang Province' ? 'selected' : '' }}>Tỉnh Tiền Giang</option>
-                                        <option value="Ben Tre Province" {{ $farm->location == 'Ben Tre Province' ? 'selected' : '' }}>Tỉnh Bến Tre</option>
-                                    </select>
+                                    <textarea name="" id="location" cols="30" rows="3" class="form-control">{{ $farm->location }}</textarea>
                                 </div>
+
                                 <div class="form-group mb-3">
                                     <label for="owner_id" class="form-label">Chủ sở hữu:</label>
                                     <select name="udp_sel_owner_id" id="udp_sel_owner_id" class="form-select">
@@ -248,9 +245,10 @@
 
             $('.datatable').DataTable({
                 "paging": true,        // Bật phân trang
-                "searching": true,     // Bật tìm kiếm
+                searching: true,    // Tắt tìm kiếm của DataTables
                 "ordering": true,      // Bật sắp xếp
                 dom: 'Bfrtip',         // Định dạng bố cục (Buttons, filter, table, pagination)
+                info: false,         // Tắt thông báo "Showing ... entries"
                 buttons: [
                     {
                         extend: 'copyHtml5',
@@ -311,7 +309,7 @@
 
                 // Gửi dữ liệu qua AJAX
                 $.ajax({
-                    url: '{{ route('listfarm.add') }}',
+                    url: '{{ route('farms.add') }}',
                     method: 'POST',
                     data: formData,
                     success: function (response) {
