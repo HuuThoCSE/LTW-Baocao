@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -17,16 +18,16 @@ class BreedController extends Controller
         //     return redirect()->route('login');
         // }
 
-        $breeds = DB::table('farm_breeds')->get();
+        $breeds = DB::table('farm_breeds')
+            ->where('farm_id', Session::get('farm_id'))
+            ->get();
         return view('breeds.index', ['breeds' => $breeds]);
     }
 
     public function add(Request $request)
     {
-        // Get the farm_id from session
-        $farm_id = Session::get('user_farm_id');
 
-        // dd($request);
+//         dd($request->all());
 
         // Validate input
         $request->validate([
@@ -38,11 +39,11 @@ class BreedController extends Controller
 
         try {
             // Insert the new breed into the database
-            DB::table('breeds')->insert([
+            DB::table('farm_breeds')->insert([
                 'breed_name_eng' => $request->breed_name_eng,  // Input from form
                 'breed_name_vie' => $request->breed_name_vie,  // Input from form
                 'description' => $request->description,        // Input from form
-                'farm_id' => $farm_id,                         // FarmModel ID from session
+                'farm_id' => Session::get('farm_id'),                         // FarmModel ID from session
             ]);
 
             // Return success message and redirect

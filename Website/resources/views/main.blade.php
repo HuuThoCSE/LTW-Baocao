@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,9 +24,44 @@ use Illuminate\Support\Facades\Auth;
   @yield('dashboard_style')
   @yield('dashboard_script')
 
+    <style>
+        /* Container cho Alerts ở góc trên bên phải */
+        #alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050; /* Đảm bảo alert nằm trên các phần tử khác */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px; /* Khoảng cách giữa các alerts */
+        }
+    </style>
+
 </head>
 
 <body>
+
+    <!-- Container cho Alerts -->
+    <div id="alert-container">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                <i class="bi bi-check-circle me-1"></i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-5" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        <!-- Thêm các loại alert khác nếu cần -->
+    </div>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -47,7 +83,7 @@ use Illuminate\Support\Facades\Auth;
     </div>
     -->
 
-  {{ Session::get('farm_name') }}
+    <span class="ms-2">{{ Session::get('farm_name') }} - (farm: {{ Auth::user()->farm_id }})</span>
 
 
     <!-- End Search Bar -->
@@ -464,20 +500,40 @@ use Illuminate\Support\Facades\Auth;
             </li>
           <?php endif; ?>
 
+
+    <?php if (Auth::user()->role_id == 1): ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-food" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>{{ __('messages.system') }}</span>
+                <i class="bi bi-chevron-down ms-auto">
+                </i>
+            </a>
+
+            <ul id="components-food" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('logs.index') }}">
+                        <i class="bi bi-circle"></i><span>{{ __('messages.logs') }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    <?php endif; ?>
+
+
       <!-- <li class="nav-item">
         <a href="{{ route('login') }}">
             <i></i>
             <span>Login</span>
         </a>
       </li> -->
-
   </aside>
+
   <!-- End Sidebar-->
 
   <main id="main" class="main">
-
     {{-- Dùng content--}}
-  @yield('content')
+    @yield('content')
 
   </main><!-- End #main -->
 
@@ -491,18 +547,28 @@ use Illuminate\Support\Facades\Auth;
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="{{asset('assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/chart.js/chart.umd.js')}}"></script>
-  <script src="{{asset('assets/vendor/echarts/echarts.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/quill/quill.js')}}"></script>
-  <script src="{{asset('assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
-  <script src="{{asset('assets/vendor/tinymce/tinymce.min.js')}}"></script>
-  <script src="{{asset('assets/vendor/php-emails-form/validate.js')}}"></script>
+  <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
+  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+  <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
   <!-- Template Main JS File -->
-  <script src="{{asset('assets/js/main.js')}}"></script>
+  <script src="{{ asset('assets/js/main.js') }}"></script>
 
 </body>
+<script>
+    // Tự động tắt alerts sau 10 giây (10000ms)
+    setTimeout(function() {
+        $('.alert').alert('close');
+    }, 10000);
 
+    // Tự động tắt alerts sau 10 giây (10000ms)
+    setTimeout(function() {
+        $('.alert').alert('success');
+    }, 10000);
+</script>
 </html>
