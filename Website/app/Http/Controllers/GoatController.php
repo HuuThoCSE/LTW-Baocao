@@ -21,22 +21,38 @@ class GoatController extends Controller
     public function index()
     {
         $farm_id = Session::get('farm_id');
-
+        
+        // Lấy giống cho trang trại (farm_breeds thay vì breeds)
         $breeds = DB::table('farm_breeds')
-            ->where('farm_id', $farm_id) // Lọc theo farm_id
-            ->get(); // Lấy danh sách các giống dê
-
+            ->where('farm_id', $farm_id) 
+            ->get(); 
+    
+        // Lấy dê cho trang trại
         $goats = DB::table('farm_goats')
-            ->where('farm_goats.farm_id', $farm_id) // Lọc theo farm_id
+            ->where('farm_goats.farm_id', $farm_id)
             ->join('farms', 'farm_goats.farm_id', '=', 'farms.farm_id')
-            ->join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')
-            ->select('farm_goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie')
+            ->join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')  // Đổi từ breeds thành farm_breeds
+            ->select('farm_goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie') // Đổi từ breeds thành farm_breeds
             ->get();
-
-        // Truyền dữ liệu vào view
-        return view('goats.dashboard', ['goats' => $goats, 'breeds' => $breeds]);
+        
+        // Lấy tất cả trang trại
+        $farms = DB::table('farms')->get();
+    
+        // Thêm thông tin về giống cho các trang trại (nếu cần)
+        foreach ($farms as $farm) {
+            $farm->breeds = DB::table('farm_breeds') // Đổi từ breeds thành farm_breeds
+                ->where('farm_id', $farm->farm_id)
+                ->get(); 
+        }
+    
+        // Trả về view với dữ liệu dê, giống và trang trại
+        return view('goats.dashboard', [
+            'goats' => $goats, 
+            'breeds' => $breeds, 
+            'farms' => $farms  // Truyền biến $farms vào view
+        ]);
     }
-
+    
     public function showTransferHistoryQuery($goatId)
     {
         return BarnTransferModel::where('goat_id', $goatId)
@@ -46,7 +62,7 @@ class GoatController extends Controller
 
     public function show($id)
     {
-        $goat = GoatModel::join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')  // Join bảng farm_breeds
+        $goat = GoatModel::join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')  // Đổi từ breeds thành farm_breeds
             ->where('farm_goats.goat_id', $id)  // Nếu $id là goat_id
             ->join('farms', 'farm_goats.farm_id', '=', 'farms.farm_id') // Join bảng farms
             ->select(
@@ -56,7 +72,7 @@ class GoatController extends Controller
                 'farm_goats.goat_age',
                 'farm_goats.origin',
                 'farm_goats.breed_id',
-                'farm_breeds.breed_name_vie'
+                'farm_breeds.breed_name_vie' // Đổi từ breeds thành farm_breeds
             )
             ->first();
 
@@ -80,18 +96,12 @@ class GoatController extends Controller
 
         $currentBarnName = $currentBarn ? $currentBarn->newBarn->name : 'Chưa có chuồng';
 
-//        dd($currentBarnName);
-
-//        dd($lastGoatWeight);
-
         $barns = BarnModel::where('farm_id', Session::get('farm_id'))->get();
-
-//        dd($barns);
 
         return view('goats.show', ['goat' => $goat,
                                         'goatWeights' => $goatWeights,
                                         'lastGoatWeight' => $lastGoatWeight,
-                                        '$transfers' => $transfers,
+                                        'transfers' => $transfers,
                                         'currentBarn' => $currentBarn,
                                         'currentBarnName' => $currentBarnName,
                                         'barns' => $barns
@@ -100,19 +110,13 @@ class GoatController extends Controller
 
     public function add(Request $request)
     {
-//        dd($request->all());
-
         // Validate incoming request data
         $request->validate([
-            'goat_name' => 'required|string|max:255', // GoatModel name is required and should be a string
-            'goat_age' => 'required|integer', // GoatModel age is required and should be an integer
-            'origin' => 'required|string', // Origin is required and should be a string
-            'breed_id' => 'required|integer', // BreedModel ID is required and should be an integer
+            'goat_name' => 'required|string|max:255',
+            'goat_age' => 'required|integer',
+            'origin' => 'required|string',
+            'breed_id' => 'required|integer', // Ensure it refers to farm_breeds
         ]);
-
-
-        // Debugging: Check all request data
-//         dd($request->all()); // This will show all request data and stop the script
 
         $goat_name = $request->input('goat_name');
         $goat_age = $request->input('goat_age');
@@ -131,80 +135,73 @@ class GoatController extends Controller
                 'breed_id' => $breed_id,
             ]);
 
-            // Return success message and redirect
             return redirect()->route('goats.index')->with('success', 'Goat added successfully');
         } catch (\Exception $e) {
-            // LogModel the error for debugging
             Log::error('Error inserting breed: ' . $e->getMessage());
-
-            // Return error message and redirect
             return redirect()->route('goats.index')->with('error', 'Failed to add goat. Please try again.');
         }
-
     }
-
 
     public function delGoat($goat_id)
     {
+        $goat = DB::table('farm_goats')->where('goat_id', $goat_id)->first();
 
-    // Find the goat by its ID
-    $goat = DB::table('farm_goats')->where('goat_id', $goat_id)->first();
-
-    if ($goat) {
-        // Delete the goat if found
-        DB::table('farm_goats')->where('goat_id', $goat_id)->delete();
-        return redirect()->back()->with('success', 'GoatModel deleted successfully.');
-    } else {
-        // If the goat doesn't exist, return an error
-        return redirect()->back()->with('error', 'GoatModel not found.');
+        if ($goat) {
+            DB::table('farm_goats')->where('goat_id', $goat_id)->delete();
+            return redirect()->back()->with('success', 'GoatModel deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'GoatModel not found.');
+        }
     }
 
-
-    }
     public function udpGoat(Request $request, $goat_id)
     {
-        // Lấy dữ liệu từ request
-        $goat_name = $request->input('goat_name');
-        $goat_age = $request->input('goat_age');
-        $origin = $request->input('origin');
-        $farm_id = $request->input('farm_id'); // Lấy farm_id từ form
-        $breed_id = $request->input('breed_id');
-
-        // Kiểm tra farm_id có tồn tại không
-        if (!$farm_id) {
-            return redirect()->back()->with('error', 'FarmModel ID is missing.');
+        $goat = DB::table('farm_goats')->where('goat_id', $goat_id)->first();
+        if (!$goat) {
+            return redirect()->back()->with('error', 'Không tìm thấy con dê.');
         }
 
-        // Cập nhật bảng farms
-         // Cập nhật thông tin cho con dê
+        $validated = $request->validate([
+            'goat_name' => 'required|string|max:255',
+            'goat_age' => 'required|integer|min:0',
+            'origin' => 'nullable|string|max:255',
+            'farm_id' => 'required|exists:farms,farm_id',
+            'breed_id' => 'required|exists:farm_breeds,breed_id',  // Ensure it refers to farm_breeds
+        ]);
+
+        $goat_name = $validated['goat_name'];
+        $goat_age = $validated['goat_age'];
+        $origin = $validated['origin'];
+        $farm_id = $validated['farm_id'];
+        $breed_id = $validated['breed_id'];
+
+        if ($goat->goat_name == $goat_name && $goat->goat_age == $goat_age && $goat->origin == $origin && $goat->farm_id == $farm_id && $goat->breed_id == $breed_id) {
+            return redirect()->back()->with('info', 'Không có thay đổi nào.');
+        }
+
         $updated = DB::table('farm_goats')->where('goat_id', $goat_id)->update([
             'goat_name' => $goat_name,
             'goat_age' => $goat_age,
             'origin' => $origin,
-            'farm_id' => $farm_id, // Cập nhật farm_id cho con dê
-            'breed_id' => $breed_id, // Cập nhật breed_id nếu cần
+            'farm_id' => $farm_id,
+            'breed_id' => $breed_id,
         ]);
 
-        // Truy xuất lại danh sách
-        $farms = DB::table('farm_goats')->get();
-
-        // Chuyển hướng về trang danh sách với thông báo thành công
-        return redirect()->route('goats.index')->with('success', 'FarmModel updated successfully.');
-
+        if ($updated) {
+            return redirect()->route('goats.index')->with('success', 'Thông tin con dê đã được cập nhật thành công.');
+        } else {
+            return redirect()->back()->with('error', 'Cập nhật thất bại. Vui lòng thử lại.');
+        }
     }
 
     public function addWeight(Request $request, $goat_id)
     {
-
-        // Validate incoming request data
         $request->validate([
-            'weight' => 'required|numeric', // Weight is required and should be a number
+            'weight' => 'required|numeric',
         ]);
 
-        // Get the weight from the request
         $weight = $request->input('weight');
 
-        // Insert the new weight into the database
         DB::table('goat_weights')->insert([
             'goat_id' => $goat_id,
             'weight' => $weight,
@@ -215,58 +212,29 @@ class GoatController extends Controller
         $user_id = Auth::user()->user_id;
 
         LogModel::create([
-            'user_id' => $user_id,  // ID của người dùng thực hiện hành động
+            'user_id' => $user_id,
             'description' => "User with ID {$user_id} added weight information for goat with ID {$goat_id} value {$weight}."
         ]);
 
-        // Redirect back with success message
         return redirect()->back()->with('success', 'Thêm cân nặng thành công cho dê.');
-    }
-
-    public function addDisease($request, $goat_id)
-    {
-        return redirect()->back()->with('success', 'Thêm bệnh thành công cho dê.');
-    }
-
-    public function addFood($request, $goat_id)
-    {
-        return redirect()->back()->with('success', 'Thêm thức ăn thành công cho dê.');
     }
 
     public function transferBarn(Request $request, $goat_id)
     {
-        $validated = $request->validate([
-            'barn_id' => 'required|exists:Barns,id',
-        ]);
-
-        // Lấy thông tin con dê
+        $barn_id = $request->input('barn_id');
         $goat = GoatModel::findOrFail($goat_id);
-        $oldBarnId = $goat->barn_id;
 
-        // Kiểm tra xem chuồng mới có khác chuồng hiện tại không
-        if ($oldBarnId == $validated['barn_id']) {
-            return redirect()->back()->with('error', 'Chuồng mới phải khác chuồng hiện tại.');
-        }
+        $barn_transfer = new BarnTransferModel();
+        $barn_transfer->goat_id = $goat_id;
+        $barn_transfer->barn_id = $barn_id;
+        $barn_transfer->transferred_at = now();
+        $barn_transfer->transferred_by = Auth::id();
+        $barn_transfer->save();
 
-        // Cập nhật chuồng mới
-        $goat->barn_id = $validated['barn_id'];
+        $goat->current_barn = $barn_id;
         $goat->save();
 
-        // Ghi lịch sử chuyển chuồng
-        BarnTransferModel::create([
-            'goat_id' => $goat->goat_id,
-            'old_barn_id' => $oldBarnId,
-            'new_barn_id' => $validated['barn_id'],
-            'transferred_by' => auth()->id(),
-        ]);
-
-        // Ghi log chuyển chuồng
-        LogModel::create([
-            'user_id' => auth()->id(),
-            'description' => "User with ID " . auth()->id() . " transferred goat with ID {$goat->id} from barn ID {$oldBarnId} to barn ID {$validated['barn_id']}."
-        ]);
-
-        return redirect()->back()->with('success', 'Chuyển chuồng thành công!');
+        return redirect()->route('goats.show', ['id' => $goat_id])
+            ->with('success', 'Dê đã được chuyển chuồng thành công');
     }
-
 }

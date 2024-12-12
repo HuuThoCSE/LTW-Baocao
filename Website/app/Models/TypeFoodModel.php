@@ -16,4 +16,5 @@ class TypeFoodModel extends Model
     {
         return $this->hasMany(Device::class, 'type_food_id');
     }
+    public $timestamps = false;
 }
