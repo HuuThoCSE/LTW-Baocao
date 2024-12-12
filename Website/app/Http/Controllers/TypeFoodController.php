@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\TypeFoodModel;
 class TypeFoodController extends Controller
 {
     public function index()
@@ -40,15 +40,17 @@ class TypeFoodController extends Controller
 
     public function add(Request $request)
     {
+        
         // Validate input
         $validated = $request->validate([
             'type_food_code' => 'required|unique:type_foods,type_food_code|max:8',
             'type_food_name_vn' => 'required|max:250',
             'type_food_name_el' => 'required|max:250',
         ]);
-        dd($request->all());
+        
+
         // Create new food type record
-        TypeFood::create([
+        TypeFoodModel::create([
             'type_food_code' => $validated['type_food_code'],
             'type_food_name_vn' => $validated['type_food_name_vn'],
             'type_food_name_el' => $validated['type_food_name_el'],

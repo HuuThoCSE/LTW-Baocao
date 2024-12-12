@@ -65,12 +65,12 @@ Quản lý loại thức ăn
                             <tbody class="text-center">
                                 @foreach ($type_foods as $type_food)
                                 <tr>
-                                    <td style='text-align: center'>{{ $type_food->food_type_id }}</td>
-                                    <td style='text-align: center'>{{ $type_food->food_type_code }}</td>
-                                    <td>{{ $type_food->food_type_name_vn }}</td>
-                                    <td>{{ $type_food->food_type_name_el }}</td>
+                                    <td style='text-align: center'>{{ $type_food->type_food_id }}</td>
+                                    <td style='text-align: center'>{{ $type_food->type_food_code }}</td>
+                                    <td>{{ $type_food->type_food_name_vn }}</td>
+                                    <td>{{ $type_food->type_food_name_el }}</td>
                                     <td class="d-flex justify-content-center align-items-center">
-                                        <form action="{{ route('typefoods.del', $type_food->food_type_id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('typefoods.del', $type_food->type_food_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -83,7 +83,7 @@ Quản lý loại thức ăn
 
                                         <button class="btn btn-success btn-sm d-flex align-items-center ms-2"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#udpModal{{$type_food->food_type_id}}" >
+                                            data-bs-target="#udpModal{{$type_food->type_food_id}}" >
                                             <i class="bi bi-pencil-square"></i>
                                             <span class="ms-2">Update</span>
                                         </button>
@@ -106,19 +106,19 @@ Quản lý loại thức ăn
 
                             <!-- Form fields -->
                             <div class="form-group mb-3">
-                                <label for="food_type_code" class="form-label">Food type code:</label>
-                                <input type="text" name="food_type_code" class="form-control" placeholder="Enter farm name" id="food_type_code">
+                                <label for="type_food_code" class="form-label">Food type code:</label>
+                                <input type="text" name="type_food_code" class="form-control" placeholder="Enter farm name" id="food_type_code">
                                 <span class="text-danger error-farm_name"></span>
                             </div>
 
                             <div class="form-group mb-3">
-                                <label class="food_type_name_vn" for="inp_email">Food type name vn:</label>
-                                <input type="text" name="food_type_name_vn" id="food_type_name_vn" class="form-control" placeholder="Tên loại thức ăn (Vietnamese)">
+                                <label class="type_food_name_vn" for="inp_email">Food type name vn:</label>
+                                <input type="text" name="type_food_name_vn" id="type_food_name_vn" class="form-control" placeholder="Tên loại thức ăn (Vietnamese)">
                             </div>
 
                             <div class="form-group mb-3">
-                                <label class="food_type_name_el" for="inp_email">Food type name el:</label>
-                                <input type="text" name="food_type_name_el" id="food_type_name_el" class="form-control" placeholder="Tên loại thức ăn (English)">
+                                <label class="type_food_name_el" for="inp_email">Food type name el:</label>
+                                <input type="text" name="type_food_name_el" id="type_food_name_el" class="form-control" placeholder="Tên loại thức ăn (English)">
                             </div>
 
                         <div class="modal-footer">
@@ -130,10 +130,10 @@ Quản lý loại thức ăn
             </div>
         </div>
     @foreach($type_foods as $type_food)
-    <div class="modal fade" id="udpModal{{$type_food->food_type_id}}" tabindex="-1">
+    <div class="modal fade" id="udpModal{{$type_food->type_food_id}}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form method="POST" action="{{ route('typefoods.udp', ['id' => $type_food->food_type_id]) }}">
+                <form method="POST" action="{{ route('typefoods.udp', ['id' => $type_food->type_food_id]) }}">
                     @csrf
                     @method('PUT')
                     <div class="modal-header bg-primary text-white">
@@ -143,16 +143,16 @@ Quản lý loại thức ăn
                     <div class="modal-body">
 
                             <div class="form-group mb-3">
-                                <label for="goat_name{{ $type_food->food_type_id }}" class="form-label">Food type code</label>
-                                <input type="text" id="goat_name{{ $type_food->food_type_id }}" name="food_type_code" value="{{ $type_food->food_type_code }}" class="form-control">
+                                <label for="goat_name{{ $type_food->type_food_id }}" class="form-label">Food type code</label>
+                                <input type="text" id="goat_name{{ $type_food->type_food_id }}" name="type_food_code" value="{{ $type_food->type_food_code }}" class="form-control">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="food_name_vn{{ $type_food->food_type_id }}" class="form-label">Food name vn</label>
-                                <input type="text" id="food_name_vn{{ $type_food->food_type_id }}" name="food_type_name_vn" value="{{ $type_food->food_type_name_vn }}" class="form-control">
+                                <label for="food_name_vn{{ $type_food->type_food_id }}" class="form-label">Food name vn</label>
+                                <input type="text" id="type_food_name_vn{{ $type_food->type_food_id }}" name="type_food_name_vn" value="{{ $type_food->type_food_name_vn }}" class="form-control">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="food_name_el{{ $type_food->food_type_id }}" class="form-label">Food name el</label>
-                                <input type="text" id="food_name_el{{ $type_food->food_type_id }}" name="food_type_name_el" value="{{ $type_food->food_type_name_el }}" class="form-control">
+                                <label for="food_name_el{{ $type_food->type_food_id }}" class="form-label">Food name el</label>
+                                <input type="text" id="type_food_name_el{{ $type_food->type_food_id }}" name="type_food_name_el" value="{{ $type_food->type_food_name_el }}" class="form-control">
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
