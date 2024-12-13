@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('farm_id')
                     ->nullable()
                     ->constrained('farms', 'farm_id')
-                    ->onDelete('no action'); // Liên kết đến farm, có thể null nếu thiết bị ở cấp thấp hơn
+                    ->onDelete('cascade'); // Liên kết đến farm, có thể null nếu thiết bị ở cấp thấp hơn
             $table->foreignId('zone_id')
                     ->nullable()
                     ->constrained('zones', 'zone_id')

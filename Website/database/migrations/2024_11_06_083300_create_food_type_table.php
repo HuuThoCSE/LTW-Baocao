@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('type_food_code', 8)->unique(); // Mã loại thức ăn (unique)
             $table->string('type_food_name_vn', 250); // Tên loại thức ăn tiếng Việt
             $table->string('type_food_name_el', 250); // Tên loại thức ăn bằng ngôn ngữ khác
- 
+            $table->foreignId('farm_id')
+                ->nullable()
+                ->constrained('farms', 'farm_id')
+                ->onDelete('cascade');
         });
     }
 

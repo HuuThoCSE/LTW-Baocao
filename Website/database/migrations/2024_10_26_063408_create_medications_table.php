@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id('medication_id');
             $table->string('medication_code', 8);
             $table->string('medication_name', 250);
+            $table->foreignId('farm_id')
+                ->nullable()
+                ->constrained('farms', 'farm_id')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
