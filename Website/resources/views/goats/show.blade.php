@@ -25,6 +25,7 @@ Bảng điều khiển
         <h3>Thông tin chi tiết của dê: {{ $goat->goat_name }} (ID: {{ $goat->goat_id }})</h3>
     </div>
     <div class="card-body">
+        <div class="row">
         <div class="d-flex justify-content-between">
             <!-- Nút hiển thị ở trên bên trái (chỉ hiển thị nếu role = 3) -->
             @if((Session::get('user_role_id') == 4) || (Session::get('user_role_id') == 2))
