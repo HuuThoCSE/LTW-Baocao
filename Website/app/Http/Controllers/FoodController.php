@@ -45,7 +45,7 @@ class FoodController extends Controller
     public function delFood($id)
     {
         // Xóa thực phẩm theo ID
-        $food = DB::table('foods')->where('id', $id);
+        $food = DB::table('foods')->where('food_id', $id);
 
         if ($food->exists()) {
             $food->delete();
