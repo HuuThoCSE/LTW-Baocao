@@ -81,7 +81,7 @@ class TypeFoodController extends Controller
         $type_food_name_el = $request->input('type_food_name_el');
      
 
-        DB::table('type_foods')->where('id', $id)->update([
+        DB::table('type_foods')->where('type_food_id', $id)->update([
             'type_food_code'=>$type_food_code ,
             'type_food_name_vn'=>$type_food_name_vn,
             'type_food_name_el'=>$type_food_name_el]);
