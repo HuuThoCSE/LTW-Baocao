@@ -26,6 +26,52 @@ Bảng điều khiển
     </div>
     <div class="card-body">
         <div class="row">
+        <div class="d-flex justify-content-between">
+            <!-- Nút hiển thị ở trên bên trái (chỉ hiển thị nếu role = 3) -->
+            @if((Session::get('user_role_id') == 4) || (Session::get('user_role_id') == 2))
+                <div style="position: absolute; top: 80px; right: 10px;">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="addInfoDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-plus"></i> Thêm thông tin
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="addInfoDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addWeightModal">
+                                    <i class="fas fa-weight"></i> Thêm cân nặng
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addDiseaseModal">
+                                    <i class="fas fa-notes-medical"></i> Thêm bệnh
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addFoodModal">
+                                    <i class="fas fa-utensils"></i> Thêm đồ ăn
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#transferBarnModal">
+                                    <i class="fas fa-warehouse"></i> Chuyển chuồng
+                                </a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+            @endif
+
+            <!-- Nội dung bên trái -->
+            <div class="col-md-4">
+                <div class="text-center">
+                    <!-- Giữ nguyên khung ảnh -->
+                    <div class="img-wrapper mt-4" style="position: relative; max-width: 80%; height: auto; overflow: hidden; border-radius: 10px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
+                        <img src="{{ asset('assets/img/deboar.jpg') }}" alt="{{ $goat->goat_name }}" class="img-fluid"
+                             style="width: 100%; height: auto; transition: transform 0.3s ease-in-out; border-radius: 10px;" />
+                    </div>
+                </div>
+            <div class="row">
             <div class="col-md-6">
                 <p><strong>Tên:</strong> {{ $goat->goat_name }}</p>
                 <p><strong>Tuổi:</strong> {{ $goat->goat_age }} tuổi</p>

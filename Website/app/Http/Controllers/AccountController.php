@@ -62,7 +62,7 @@ class AccountController extends Controller
         }
     }
     public function add(Request $request){
-        $farm_id = session('user_farm_id');
+        $farm_id = session('farm_id');
 
         // Lấy tất cả người dùng
         $users = DB::table('users')->get();

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id('sensor_data_id'); // ID tự động tăng, khóa chính
             $table->string('sensor_id', 50); // ID hoặc tên của cảm biến
             $table->string('sensor_type', 50); // Loại cảm biến (temperature, humidity, gas, ...)
+            $table->foreignId('farm_id')
+                ->nullable()
+                ->constrained('farms', 'farm_id')
+                ->onDelete('cascade');
             $table->float('value'); // Giá trị đo từ cảm biến
             $table->timestamp('timestamp')->default(DB::raw('CURRENT_TIMESTAMP')); // Thời gian lấy mẫu
             $table->text('remarks')->nullable(); // Ghi chú bổ sung
