@@ -53,7 +53,7 @@ class DeviceController extends Controller
             'type_device_id' => 'required|integer|exists:type_devices,type_device_id',
         ]);
 
-        $farm_id = Session::get('user_farm_id');
+        $farm_id = Session::get('farm_id');
 
         try {
             // Tạo thiết bị mới

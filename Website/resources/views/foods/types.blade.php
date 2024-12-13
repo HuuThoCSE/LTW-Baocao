@@ -25,11 +25,7 @@ Quản lý loại thức ăn
         background-color: #218838;
     }
 </style>
-@if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@elseif (session('error'))
-    <div class="alert alert-danger">{{ session('error') }}</div>
-@endif
+
 <div class="pagetitle">
 <h1>Food List Type</h1>
 <nav>
@@ -39,6 +35,7 @@ Quản lý loại thức ăn
     <li class="breadcrumb-item">Food List Type</li>
     </ol>
 </nav>
+
 </div> <!-- End Page Title -->
     <section class="section">
         <div class="row">
@@ -163,4 +160,4 @@ Quản lý loại thức ăn
         </div>
     </div>
     @endforeach
-
+@endsection

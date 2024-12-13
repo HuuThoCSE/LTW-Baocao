@@ -57,39 +57,40 @@ Bảng điều khiển
                                 </a>
                             </li>
                         </ul>
-                        
+
                     </div>
                 </div>
             @endif
 
-            <!-- Nội dung bên trái -->
-            <div class="col-md-4">
-                <div class="text-center">
-                    <!-- Giữ nguyên khung ảnh -->
+            <div class="row">
+                <div class="col text-center">
                     <div class="img-wrapper mt-4" style="position: relative; max-width: 80%; height: auto; overflow: hidden; border-radius: 10px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
                         <img src="{{ asset('assets/img/deboar.jpg') }}" alt="{{ $goat->goat_name }}" class="img-fluid"
                              style="width: 100%; height: auto; transition: transform 0.3s ease-in-out; border-radius: 10px;" />
                     </div>
                 </div>
-            <div class="row">
-            <div class="col-md-6">
-                <p><strong>Tên:</strong> {{ $goat->goat_name }}</p>
-                <p><strong>Tuổi:</strong> {{ $goat->goat_age }} tuổi</p>
-                <p><strong>Giống:</strong> {{ $goat->breed_name_vie }}</p>
-                <p><strong>Nguồn gốc:</strong> {{ $goat->origin }}</p>
-            </div>
-            <div class="col-md-6">
-                <p><strong>Trang trại:</strong> {{ $goat->farm_name }}</p>
-                <p><strong>Khu vực:</strong> {{ $goat->location }}</p>
-                <p><strong>Cân nặng hiện tại:</strong>
-                    @if($lastGoatWeight)
-                        {{ $lastGoatWeight->weight }} kg ({{ $lastGoatWeight->created_at->format('H:i d-m-Y') }})
-                    @else
-                        N/A
-                    @endif
-                </p>
+                <div class="col">
+                    <div class="row">
+                        <p><strong>Tên:</strong> {{ $goat->goat_name }}</p>
+                        <p><strong>Tuổi:</strong> {{ $goat->goat_age }} tuổi</p>
+                        <p><strong>Giống:</strong> {{ $goat->breed_name_vie }}</p>
+                        <p><strong>Nguồn gốc:</strong> {{ $goat->origin }}</p>
+                    </div>
+                    <div class="row">
+                        <p><strong>Trang trại:</strong> {{ $goat->farm_name }}</p>
+                        <p><strong>Khu vực:</strong> {{ $goat->location }}</p>
+                        <p><strong>Cân nặng hiện tại:</strong>
+                            @if($lastGoatWeight)
+                                {{ $lastGoatWeight->weight }} kg ({{ $lastGoatWeight->created_at->format('H:i d-m-Y') }})
+                            @else
+                                N/A
+                            @endif
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
+
         <!-- GoatModel Image (if available) -->
         <div class="text-center mt-3">
             <!--

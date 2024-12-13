@@ -49,21 +49,23 @@
                     <table class="table datatable table-striped table-bordered table-hover mt-3">
                         <thead class="text-center">
                             <tr >
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Created At</th>
-                                <th colspan="2">Operations</th>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Role</th>
+                                <th class="text-center">Created At</th>
+                                <th >Operations</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
                             @foreach ($users as $user)
-                                <tr>
+                                <tr class="text-center">
                                     <td>{{ $user->user_id }}</td>
                                     <td>{{ $user->user_name }}</td>
                                     <td>{{ $user->user_email }}</td>
+                                    <td>{{ $user->role_id}}</td>
                                     <td>{{ $user->created_at }}</td>
-                                    <td>
+                                    <td class="d-flex justify-content-center align-items-center" >
                                         <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
@@ -73,11 +75,10 @@
                                                     <span class="ms-2">Delete</span>
                                             </button>
                                         </form>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#udpModal{{$user->user_id}}">
+                            
+                                        <button class="btn btn-success btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#udpModal{{$user->user_id}}">
                                             <i class="bi bi-pencil-square"></i>
-                                            <span class="ms-2">Update</span>
+                                            <span >Update</span>
                                         </button>
                                     </td>
                                 </tr>
