@@ -33,8 +33,10 @@ class GoatController extends Controller
             ->select('farm_goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie')
             ->get();
 
+        $farms = FarmModel::all();
+
         // Truyền dữ liệu vào view
-        return view('goats.dashboard', ['goats' => $goats, 'breeds' => $breeds]);
+        return view('goats.index', ['goats' => $goats, 'breeds' => $breeds, 'farms' => $farms]);
     }
 
     public function showTransferHistoryQuery($goatId)

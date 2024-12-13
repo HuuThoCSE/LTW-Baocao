@@ -52,11 +52,12 @@
                         <th class="text-center">{{ __('messages.action') }}</th>
                     </tr>
                 </thead>
+
                 <tbody class="text-center">
                     @foreach($devices as $device)
-                        <tr onclick="window.location='{{ route('devices.show', ['id' => $device->device_id]) }}'" class="text-center">
+                        <tr class="text-center">
                             <td>{{ $device->device_id }}</td>
-                            <td>{{ $device->device_name }}</td>
+                            <td onclick="window.location='{{ route('devices.show', ['id' => $device->device_id]) }}'">{{ $device->device_name }}</td>
                             <td>{{ $device->type_device_name }}</td>
                             <td>
                                 @if($device->status === 'Active')
@@ -70,6 +71,7 @@
                                 @endif
                             </td>
                             <td class="d-flex justify-content-center align-items-center">
+
                                 <form action="{{ route('devices.del', $device->type_device_id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -81,8 +83,8 @@
                                 </form>
 
                                 <button class="btn btn-success btn-sm ms-2"
-                                data-bs-toggle="modal"
-                                data-bs-target="#udpModal{{$device->device_type_id}}" >
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#udpModal{{$device->device_type_id}}" >
                                 <i class="bi bi-pencil-square"></i>
                                 Update
                             </button>
