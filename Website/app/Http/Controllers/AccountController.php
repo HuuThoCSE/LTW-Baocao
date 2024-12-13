@@ -44,7 +44,6 @@ class AccountController extends Controller
         $roles = DB::table('farm_roles')
             ->whereIn('role_id', [3, 4, 5])  // Lọc các role_id 3, 4, 5
             ->get();
-
         // Truyền cả người dùng và vai trò vào view
         return view('account.index', ['users' => $users, 'farm_roles' => $roles]);
 
