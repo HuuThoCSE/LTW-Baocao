@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('role_id')
                     ->constrained('farm_roles', 'role_id')
                     ->onDelete('cascade');
+            $table->string('status')->default('active');
             $table->rememberToken();
             $table->timestamps();
         });

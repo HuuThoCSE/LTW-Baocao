@@ -21,12 +21,12 @@ class GoatController extends Controller
     public function index()
     {
         $farm_id = Session::get('farm_id');
-        
+
         // Lấy giống cho trang trại (farm_breeds thay vì breeds)
         $breeds = DB::table('farm_breeds')
-            ->where('farm_id', $farm_id) 
-            ->get(); 
-    
+            ->where('farm_id', $farm_id)
+            ->get();
+
         // Lấy dê cho trang trại
         $goats = DB::table('farm_goats')
             ->where('farm_goats.farm_id', $farm_id)
@@ -34,32 +34,30 @@ class GoatController extends Controller
             ->join('farm_breeds', 'farm_goats.breed_id', '=', 'farm_breeds.breed_id')  // Đổi từ breeds thành farm_breeds
             ->select('farm_goats.*', 'farms.farm_name', 'farm_breeds.breed_name_vie') // Đổi từ breeds thành farm_breeds
             ->get();
-        
+
         // Lấy tất cả trang trại
         $farms = DB::table('farms')->get();
-    
+
         // Thêm thông tin về giống cho các trang trại (nếu cần)
         foreach ($farms as $farm) {
             $farm->breeds = DB::table('farm_breeds') // Đổi từ breeds thành farm_breeds
                 ->where('farm_id', $farm->farm_id)
-                ->get(); 
+                ->get();
         }
-    
+
         // Trả về view với dữ liệu dê, giống và trang trại
-        return view('goats.dashboard', [
-            'goats' => $goats, 
-            'breeds' => $breeds, 
+        return view('goats.index', [
+            'goats' => $goats,
+            'breeds' => $breeds,
             'farms' => $farms  // Truyền biến $farms vào view
         ]);
-
-        $farms = FarmModel::all();
 
         $farms = FarmModel::all();
 
         // Truyền dữ liệu vào view
         return view('goats.index', ['goats' => $goats, 'breeds' => $breeds, 'farms' => $farms]);
     }
-    
+
     public function showTransferHistoryQuery($goatId)
     {
         return BarnTransferModel::where('goat_id', $goatId)

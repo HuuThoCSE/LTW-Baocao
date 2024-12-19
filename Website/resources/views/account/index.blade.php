@@ -53,6 +53,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Role</th>
+                                <th class="text-center">{{ __('messages.status') }}</th>
                                 <th class="text-center">Created At</th>
                                 <th >Operations</th>
                             </tr>
@@ -64,6 +65,7 @@
                                     <td>{{ $user->user_name }}</td>
                                     <td>{{ $user->user_email }}</td>
                                     <td>{{ $user->role_id}}</td>
+                                    <td>{{ $user->status }}</td>
                                     <td>{{ $user->created_at }}</td>
                                     <td class="d-flex justify-content-center align-items-center" >
                                         <form action="{{ route('account.del', $user->user_id) }}" method="POST" style="display:inline;">
@@ -75,7 +77,7 @@
                                                     <span class="ms-2">Delete</span>
                                             </button>
                                         </form>
-                            
+
                                         <button class="btn btn-success btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#udpModal{{$user->user_id}}">
                                             <i class="bi bi-pencil-square"></i>
                                             <span >Update</span>
