@@ -99,4 +99,13 @@ return [
     'maintenance' => 'Maintenance',
 
     'location' => 'Location',
+
+    'temperature' => 'Temperature',
+    'humidity' => 'Humidity',
+    'air_quality' => 'Air Quality',
+    'light_intensity' => 'Light Intensity',
+    'air_pressure' => 'Air Pressure',
+    'air_speed' => 'Air Speed',
+
+    'time' => 'Time',
 ];

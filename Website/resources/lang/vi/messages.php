@@ -96,4 +96,14 @@ return [
     'maintenance' => 'Bảo Dưỡng',
 
     'location' => 'Vị trí',
+
+
+    'temperature' => 'Nhiệt độ',
+    'humidity' => 'Độ ẩm',
+    'air_quality' => 'Chất lượng không khí',
+    'light_intensity' => 'Cường độ ánh sáng',
+    'air_pressure' => 'Áp suất không khí',
+    'air_speed' => 'Tốc độ không khí',
+
+    'time' => 'Thời gian',
 ];

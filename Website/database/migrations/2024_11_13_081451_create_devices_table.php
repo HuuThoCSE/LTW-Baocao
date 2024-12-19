@@ -26,7 +26,7 @@ return new class extends Migration
                     ->onDelete('cascade'); // Liên kết đến farm, có thể null nếu thiết bị ở cấp thấp hơn
             $table->foreignId('zone_id')
                     ->nullable()
-                    ->constrained('zones', 'zone_id')
+                    ->constrained('farm_zones', 'zone_id')
                     ->onDelete('cascade'); // Quản lý thiết bị theo khu vực
             $table->foreignId('barn_id')
                     ->nullable()

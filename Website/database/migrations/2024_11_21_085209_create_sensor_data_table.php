@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('sensor_data', function (Blueprint $table) {
             $table->id('sensor_data_id'); // ID tự động tăng, khóa chính
-            $table->string('sensor_id', 50); // ID hoặc tên của cảm biến
-            $table->string('sensor_type', 50); // Loại cảm biến (temperature, humidity, gas, ...)
+            $table->string('sensor_id');
+            $table->decimal('temperature', 5, 2);
+            $table->decimal('humidity', 5, 2);
+            $table->timestamp('recorded_at')->useCurrent();
             $table->foreignId('farm_id')
                 ->nullable()
                 ->constrained('farms', 'farm_id')
@@ -23,6 +25,8 @@ return new class extends Migration
             $table->timestamp('timestamp')->default(DB::raw('CURRENT_TIMESTAMP')); // Thời gian lấy mẫu
             $table->text('remarks')->nullable(); // Ghi chú bổ sung
             $table->timestamps(); // Tự động thêm created_at và updated_at
+
+            $table->index('sensor_id');
         });
     }
 

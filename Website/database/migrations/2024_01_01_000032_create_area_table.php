@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('farm_areas', function (Blueprint $table) {
             $table->id('area_id');
             $table->foreignId('zone_id')
-                ->constrained('zones', 'zone_id')
+                ->constrained('farm_zones', 'zone_id')
                 ->onDelete('cascade');
             $table->foreignId('farm_id')
                 ->constrained('farms', 'farm_id')

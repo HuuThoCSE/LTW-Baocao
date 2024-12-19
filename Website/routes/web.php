@@ -22,6 +22,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TypeFoodController;
 
+use App\Http\Controllers\API\SensorDataController;
+
 // Middleware
 use App\Http\Middleware\CheckAuthMiddleware;
 use App\Http\Middleware\CheckPermission;
@@ -194,7 +196,7 @@ Route::middleware(['auth', LocaleMiddleware::class, CheckAuthMiddleware::class])
         Route::post('/food', [FoodController::class, 'addFood'])->name('foods.add');
 
         # Barn Management
-        Route::get('/barns', [BarnController::class, 'getView'])->name('barns.index');
+        Route::get('/barns', [BarnController::class, 'index'])->name('barns.index');
         Route::get('/barns/{id}', [BarnController::class, 'show'])->name('barns.show');
         Route::post('/barns', [BarnController::class, 'addBarn'])->name('barns.add');
         Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('barns.del');
@@ -242,8 +244,8 @@ Route::middleware(['auth', LocaleMiddleware::class, CheckAuthMiddleware::class])
 
 # API
 // Route::get('/api/farm1/zone1/barn1/sensor/humidity', [APIController::class, 'getView'])->name('api.humidity');
-Route::get('/api/sensor', [APIController::class, 'addHumidity'])->name('api.addHumidity');
-
+Route::post('/api/sensor-data', [SensorDataController::class, 'store']);
+Route::get('/api/sensor-data', [SensorDataController::class, 'index']);
 
 // Route::middleware([CheckPermission::class, 'permission:view_farm_list'])->group(function () {
 //     Route::get('/farms', [FarmController::class, 'getView'])->name('listfarm');

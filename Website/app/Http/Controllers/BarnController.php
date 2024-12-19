@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\AreaModel;
 use App\Models\BarnModel;
+use App\Models\ZoneModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -14,10 +15,11 @@ class BarnController extends Controller
 
     public function index()
     {
-        $barns = Barn::all(); // Lấy danh sách chuồng
-        $zones = Zone::all(); // Lấy danh sách khu vực (zones)
+        $barns = BarnModel::all(); // Lấy danh sách chuồng
+        $zones = ZoneModel::all(); // Lấy danh sách khu vực (zones)
+        $areas = AreaModel::all(); // Lấy danh sách khu vực (areas)
 
-        return view('barns.index', compact('barns', 'zones'));
+        return view('barns.index', compact('barns', 'zones', 'areas'));
     }
 
     // Show details of a specific barn
@@ -27,7 +29,7 @@ class BarnController extends Controller
         if (!$barn) {
             return redirect()->route('barn.list')->with('error', 'BarnModel not found.');
         }
-        return view('barn.show', ['barn' => $barn]); // Show details view
+        return view('barns.show', ['barn' => $barn]); // Show details view
     }
 
     public function getView()
@@ -101,7 +103,7 @@ class BarnController extends Controller
               'description' => $validated['description'],
           ]);
 
-          return redirect()->route('barn.dashboard')->with('success', 'BarnModel updated successfully!');
+          return redirect()->route('barns.index')->with('success', 'BarnModel updated successfully!');
       }
 
 

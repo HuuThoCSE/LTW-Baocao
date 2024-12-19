@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     // Đăng ký middleware toàn cục
     ->withMiddleware(function ($middleware) {
-
+        $middleware->validateCsrfTokens(except: [
+            'api/sensor-data',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // Xử lý ngoại lệ nếu cần

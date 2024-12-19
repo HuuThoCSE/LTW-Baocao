@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Zone extends Model
+class ZoneModel extends Model
 {
     use HasFactory;
+
+    protected $table = 'farm_zones';
 
     protected $primaryKey = 'zone_id';
 
