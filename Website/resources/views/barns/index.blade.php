@@ -95,7 +95,6 @@
     </div>
 </section>
 
-
 <!-- Modal for updating barns -->
 @foreach($barns as $barn)
 <div class="modal fade" id="udpModal{{$barn->barn_id}}" tabindex="-1">
@@ -128,8 +127,6 @@
     </div>
 </div>
 @endforeach
-
-    <!-- Add New BarnModel Form -->
 
     <!-- Modal for adding a new barn -->
     <div class="modal fade" id="addBarnModal" tabindex="-1" aria-hidden="true">

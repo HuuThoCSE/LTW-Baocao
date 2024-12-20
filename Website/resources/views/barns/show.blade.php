@@ -53,7 +53,8 @@
 
         <!-- IoT Tab -->
         <div class="tab-pane fade" id="iot-justified" role="tabpanel" aria-labelledby="iot-tab">
-            <div class="card">
+            <!-- Temperature Chart -->
+            <div class="card mb-3">
                 <div class="card-header">
                     <h5 class="card-title">{{ __('messages.temperature')}}</h5>
                 </div>
@@ -61,104 +62,110 @@
                     <div class="d-flex justify-content-center">
                         <canvas id="temperatureChart" style="height: 100px; width: 100%;"></canvas>
                     </div>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var ctx = document.getElementById('temperatureChart').getContext('2d');
-                            var temperatureChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
-                                    datasets: [{
-                                        label: 'Temperature (°C)',
-                                        data: [25, 26, 25, 24, 23, 24, 25, 27, 28, 29, 30, 31],
-                                        borderColor: 'rgb(255, 99, 132)',
-                                        tension: 0.1,
-                                        fill: false
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        title: {
-                                            display: true,
-                                            text: 'Temperature Over Time'
-                                        }
-                                    },
-                                    scales: {
-                                        y: {
-                                            beginAtZero: false,
-                                            title: {
-                                                display: true,
-                                                text: 'Temperature (°C)'
-                                            }
-                                        },
-                                        x: {
-                                            title: {
-                                                display: true,
-                                                text: 'Time'
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    </script>
                 </div>
             </div>
 
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5 class="card-title">{{ __('messages.humidity')}}</h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-center">
-                        <canvas id="humidityChart" style="height: 100px; width: 100%;"></canvas>
-                    </div>
-                    
                     <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var ctx = document.getElementById('humidityChart').getContext('2d');
-                            var humidityChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
-                                    datasets: [{
-                                        label: '{{ __('messages.humidity')}} (%)',
-                                        data: [65, 63, 68, 70, 72, 75, 73, 70, 68, 65, 63, 60],
-                                        borderColor: 'rgb(54, 162, 235)',
-                                        tension: 0.1,
-                                        fill: false
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        title: {
-                                            display: true,
-                                            text: 'Humidity Over Time'
-                                        }
+                        let temperatureChart;
+                        let humidityChart;
+
+                        // Khởi tạo biểu đồ
+                        function initCharts() {
+                            if (!temperatureChart) {
+                                const tempCtx = document.getElementById('temperatureChart').getContext('2d');
+                                temperatureChart = new Chart(tempCtx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: @json($temperatureData['timestamps']),
+                                        datasets: [{
+                                            label: 'Nhiệt độ (°C)',
+                                            data: @json($temperatureData['values']),
+                                            borderColor: 'rgb(255, 99, 132)',
+                                            tension: 0.1
+                                        }]
                                     },
-                                    scales: {
-                                        y: {
-                                            beginAtZero: false,
-                                            title: {
-                                                display: true,
-                                                text: '{{ __('messages.humidity')}} (%)'
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: false
                                             }
                                         },
-                                        x: {
-                                            title: {
-                                                display: true,
-                                                text: '{{ __('messages.time')}}'
-                                            }
+                                        animation: {
+                                            duration: 0 // Tắt animation để cập nhật mượt hơn
                                         }
                                     }
+                                });
+                            }
+
+                            if (!humidityChart) {
+                                const humCtx = document.getElementById('humidityChart').getContext('2d');
+                                humidityChart = new Chart(humCtx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: @json($humidityData['timestamps']),
+                                        datasets: [{
+                                            label: 'Độ ẩm (%)',
+                                            data: @json($humidityData['values']),
+                                            borderColor: 'rgb(54, 162, 235)',
+                                            tension: 0.1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: false
+                                            }
+                                        },
+                                        animation: {
+                                            duration: 0 // Tắt animation để cập nhật mượt hơn
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
+                        // Hàm cập nhật dữ liệu
+                        function updateCharts() {
+                            fetch(`/barns/{{ $barn->barn_id }}/data`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (temperatureChart && data.temperature) {
+                                        temperatureChart.data.labels = data.temperature.timestamps;
+                                        temperatureChart.data.datasets[0].data = data.temperature.values;
+                                        temperatureChart.update('none'); // Sử dụng 'none' để tránh animation
+                                    }
+
+                                    if (humidityChart && data.humidity) {
+                                        humidityChart.data.labels = data.humidity.timestamps;
+                                        humidityChart.data.datasets[0].data = data.humidity.values;
+                                        humidityChart.update('none'); // Sử dụng 'none' để tránh animation
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        }
+
+                        // Khởi tạo khi trang load
+                        document.addEventListener('DOMContentLoaded', function() {
+                            initCharts();
+                            
+                            // Cập nhật dữ liệu mỗi 5 giây
+                            const updateInterval = setInterval(updateCharts, 5000);
+
+                            // Cleanup khi tab không còn active
+                            document.addEventListener('visibilitychange', function() {
+                                if (document.hidden) {
+                                    clearInterval(updateInterval);
+                                } else {
+                                    updateCharts();
+                                    setInterval(updateCharts, 5000);
                                 }
                             });
                         });
                     </script>
-                
                 </div>
             </div>
         </div>
@@ -166,4 +173,17 @@
 
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Close alerts after 10 seconds using vanilla JavaScript
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                alert.style.display = 'none';
+            });
+        }, 10000);
+    });
+</script>
+
 @endsection

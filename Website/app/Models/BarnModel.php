@@ -14,6 +14,7 @@ class BarnModel extends Model
     protected $primaryKey = 'barn_id';
 
     protected $fillable = [
+        'barn_id',
         'farm_id',
         'zone_id',
         'barn_name',
@@ -21,6 +22,8 @@ class BarnModel extends Model
         'description',
         'area_id',
     ];
+
+    protected $hidden = [];
 
     public function zone()
     {

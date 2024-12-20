@@ -57,34 +57,46 @@ class SensorDataController extends Controller
             'data' => $request->all()
         ]);
 
-        // Xác thực dữ liệu đầu vào
-        $validator = Validator::make($request->all(), [
-            'measurement' => 'required|string',
-            'tags' => 'nullable|array',
-            'fields' => 'required|array',
-            'timestamp' => 'nullable|date',
-        ]);
-
-        if ($validator->fails()) {
-            // Thêm log khi validation thất bại
-            Log::warning('Validation thất bại cho request sensor', [
-                'errors' => $validator->errors()->toArray(),
-                'input' => $request->all()
-            ]);
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $validator->validated();
-
         try {
+            // Decode payload từ JSON string thành array
+            $payload = json_decode($request->input('payload'), true);
+            if (!$payload) {
+                throw new \Exception('Invalid JSON payload');
+            }
+
+            // Chuẩn bị dữ liệu để validate
+            $data = [
+                'measurement' => $payload['measurement'] ?? null,
+                'fields' => [
+                    'temp' => $payload['temp'] ?? null,
+                    'hum' => $payload['hum'] ?? null,
+                    // Thêm các trường khác nếu cần
+                ],
+                'timestamp' => date('Y-m-d\TH:i:s\Z', $request->input('publish_received_at') / 1000),
+            ];
+
+            // Validate dữ liệu đã được transform
+            $validator = Validator::make($data, [
+                'measurement' => 'required|string',
+                'fields' => 'required|array',
+                'fields.temp' => 'required|numeric',
+                'fields.hum' => 'required|numeric',
+                'timestamp' => 'required|date',
+            ]);
+
+            if ($validator->fails()) {
+                Log::warning('Validation thất bại cho request sensor', [
+                    'errors' => $validator->errors()->toArray(),
+                    'input' => $data
+                ]);
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
             // Xử lý timestamp
-            $timestamp = null;
-            if (isset($data['timestamp'])) {
-                $timestamp = new \DateTime($data['timestamp']);
-                // Đảm bảo timestamp không nằm trong tương lai
-                if ($timestamp > new \DateTime()) {
-                    $timestamp = new \DateTime();
-                }
+            $timestamp = new \DateTime($data['timestamp']);
+            // Đảm bảo timestamp không nằm trong tương lai
+            if ($timestamp > new \DateTime()) {
+                $timestamp = new \DateTime();
             }
             
             $this->influxDB->writeData(
@@ -103,10 +115,11 @@ class SensorDataController extends Controller
             ]);
 
             return response()->json(['message' => 'Dữ liệu đã được ghi thành công vào InfluxDB'], 201);
+
         } catch (\Exception $e) {
             Log::error('Lỗi khi ghi dữ liệu vào InfluxDB: ' . $e->getMessage(), [
                 'exception' => $e,
-                'data' => $data
+                'request_data' => $request->all()
             ]);
 
             return response()->json([

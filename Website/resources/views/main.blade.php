@@ -38,6 +38,8 @@ use Illuminate\Support\Facades\Auth;
         }
     </style>
 
+    @stack('styles')
+
 </head>
 
 <body>
@@ -358,7 +360,27 @@ use Illuminate\Support\Facades\Auth;
         </li>
         <?php endif; ?>
 
+        <!--  -->
         <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-iot" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i>
+                <span>{{ __('messages.iot') }}</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+
+            <ul id="components-iot" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="{{ route('iot.index') }}">
+                  <!-- <i class="bi bi-circle"></i><span>{{ __('messages.iot_list') }}</span> -->
+                  <i class="bi bi-circle"></i><span>Hệ Thống Điều Khiển IoT</span>
+                </a>
+              </li>
+            </ul>
+        </li>
+        <?php endif; ?>
+
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 2): ?>
           <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-device" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -423,7 +445,7 @@ use Illuminate\Support\Facades\Auth;
         </li>
         <?php endif; ?>
 
-        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 3): ?>
+        <?php if (Auth::user()->role_id == 2 || Auth::user()->role_id == 2): ?>
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-location" data-bs-toggle="collapse" href="#">
               <i class="bi bi-menu-button-wide"></i>
@@ -549,6 +571,7 @@ use Illuminate\Support\Facades\Auth;
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
@@ -561,16 +584,21 @@ use Illuminate\Support\Facades\Auth;
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
 
-</body>
-<script>
-    // Tự động tắt alerts sau 10 giây (10000ms)
-    setTimeout(function() {
-        $('.alert').alert('close');
-    }, 10000);
+  <script>
+    $(document).ready(function() {
+        // Tự động tắt alerts sau 10 giây
+        setTimeout(function() {
+            $('.alert').alert('close');
+        }, 10000);
 
-    // Tự động tắt alerts sau 10 giây (10000ms)
-    setTimeout(function() {
-        $('.alert').alert('success');
-    }, 10000);
-</script>
+        // Tự động tắt alerts success sau 10 giây
+        setTimeout(function() {
+            $('.alert-success').alert('close');
+        }, 10000);
+    });
+  </script>
+
+  @stack('scripts')
+
+</body>
 </html>

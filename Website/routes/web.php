@@ -15,12 +15,12 @@ use App\Http\Controllers\GoatController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AreaController;
-use App\Http\Controllers\APIController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\BarnController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TypeFoodController;
+use App\Http\Controllers\IoTController;
 
 use App\Http\Controllers\API\SensorDataController;
 
@@ -201,6 +201,7 @@ Route::middleware(['auth', LocaleMiddleware::class, CheckAuthMiddleware::class])
         Route::post('/barns', [BarnController::class, 'addBarn'])->name('barns.add');
         Route::delete('/barns/{id}', [BarnController::class, 'delBarn'])->name('barns.del');
         Route::put('/barns/{id}', [BarnController::class, 'udpBarn'])->name('barns.udp');
+        Route::get('/barns/{barn}/data', [BarnController::class, 'getData'])->name('barns.getData');
 
     // Chung chung
 //        Route::get('/dashboard', [DashboardController::class, 'getView'])->name('dashboard.view');
@@ -240,12 +241,20 @@ Route::middleware(['auth', LocaleMiddleware::class, CheckAuthMiddleware::class])
         Route::post('/typefoods', [TypeFoodController::class, 'add'])->name('typefoods.add');
         Route::delete('/typefoods/{id}', [TypeFoodController::class, 'delFood'])->name('typefoods.del');
         Route::put('/typefoods/{id}', [TypeFoodController::class, 'udpFood'])->name('typefoods.udp');
+
+        # IoT Management
+        Route::group(['prefix' => 'iot'], function () {
+            Route::get('/', [IoTController::class, 'index'])->name('iot.index');
+            Route::post('/control', [IoTController::class, 'control'])->name('iot.control');
+        });
 });
 
 # API
 // Route::get('/api/farm1/zone1/barn1/sensor/humidity', [APIController::class, 'getView'])->name('api.humidity');
 Route::post('/api/sensor-data', [SensorDataController::class, 'store']);
 Route::get('/api/sensor-data', [SensorDataController::class, 'index']);
+
+Route::get('/api/barn-data/{deviceId}/humidity', [BarnController::class, 'getHumidityData']);
 
 // Route::middleware([CheckPermission::class, 'permission:view_farm_list'])->group(function () {
 //     Route::get('/farms', [FarmController::class, 'getView'])->name('listfarm');
@@ -260,3 +269,5 @@ Route::get('/api/sensor-data', [SensorDataController::class, 'index']);
 // Route::middleware([CheckPermission::class, 'permission:edit_device'])->group(function () {
 //     // Các route khác dành cho IT nông trại
 // });
+
+

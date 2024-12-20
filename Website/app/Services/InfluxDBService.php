@@ -5,6 +5,7 @@ namespace App\Services;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
+use Illuminate\Support\Facades\Log;
 
 class InfluxDBService
 {
@@ -15,6 +16,12 @@ class InfluxDBService
 
     public function __construct()
     {
+        Log::info('InfluxDB Config', [
+            'url' => config('influxdb.url'),
+            'org' => config('influxdb.org'),
+            'bucket' => config('influxdb.bucket')
+        ]);
+
         $config = config('influxdb');
 
         $this->client = new Client([

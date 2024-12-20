@@ -106,4 +106,7 @@ return [
     'air_speed' => 'Tốc độ không khí',
 
     'time' => 'Thời gian',
+
+    'iot' => 'IoT',
+    'iot_list' => 'Danh sách IoT',
 ];

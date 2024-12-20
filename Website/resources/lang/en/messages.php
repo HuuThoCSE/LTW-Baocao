@@ -108,4 +108,7 @@ return [
     'air_speed' => 'Air Speed',
 
     'time' => 'Time',
+
+    'iot' => 'IoT',
+    'iot_list' => 'List of IoT',
 ];
