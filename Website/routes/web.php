@@ -253,7 +253,6 @@ Route::middleware(['auth', LocaleMiddleware::class, CheckAuthMiddleware::class])
 // Route::get('/api/farm1/zone1/barn1/sensor/humidity', [APIController::class, 'getView'])->name('api.humidity');
 Route::post('/api/sensor-data', [SensorDataController::class, 'store']);
 Route::get('/api/sensor-data', [SensorDataController::class, 'index']);
-
 Route::get('/api/barn-data/{deviceId}/humidity', [BarnController::class, 'getHumidityData']);
 
 // Route::middleware([CheckPermission::class, 'permission:view_farm_list'])->group(function () {
@@ -270,4 +269,11 @@ Route::get('/api/barn-data/{deviceId}/humidity', [BarnController::class, 'getHum
 //     // Các route khác dành cho IT nông trại
 // });
 
+Route::get('/mqtt-ca-cert', function () {
+    return response()->file(storage_path('certs/ca.crt'), [
+        'Content-Type' => 'application/x-x509-ca-cert'
+    ]);
+})->middleware('auth');
+
+Route::get('/sensor-data/24h', [SensorDataController::class, 'getLast24Hours']);
 

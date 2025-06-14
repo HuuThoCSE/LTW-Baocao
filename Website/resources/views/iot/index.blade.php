@@ -34,10 +34,11 @@
                                     <input class="form-check-input" type="checkbox" id="lightSwitch">
                                     <label class="form-check-label" for="lightSwitch">Bật/Tắt</label>
                                 </div>
-                                <div class="mt-3">
+                                <!-- <div class="mt-3">
                                     <label for="lightBrightness" class="form-label">Độ sáng</label>
                                     <input type="range" class="form-range" id="lightBrightness" min="0" max="100">
-                                </div>
+                                    <span id="lightValue" class="ms-2">0%</span>
+                                </div> -->
                             </div>
                         </div>
 
@@ -52,13 +53,14 @@
                                     <input class="form-check-input" type="checkbox" id="fanSwitch">
                                     <label class="form-check-label" for="fanSwitch">Bật/Tắt</label>
                                 </div>
-                                <div class="mt-3">
+                                <!-- <div class="mt-3">
+                                    <label for="fanSpeed" class="form-label">Tốc độ quạt</label>
                                     <select class="form-select" id="fanSpeed">
-                                        <option value="1">Tốc độ thấp</option>
-                                        <option value="2">Tốc độ trung bình</option>
-                                        <option value="3">Tốc độ cao</option>
+                                        <option value="1">Thấp</option>
+                                        <option value="2">Trung bình</option>
+                                        <option value="3">Cao</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -73,13 +75,14 @@
                                     <input class="form-check-input" type="checkbox" id="mistSwitch">
                                     <label class="form-check-label" for="mistSwitch">Bật/Tắt</label>
                                 </div>
-                                <div class="mt-3">
+                                <!-- <div class="mt-3">
+                                    <label for="mistInterval" class="form-label">Khoảng thời gian</label>
                                     <select class="form-select" id="mistInterval">
                                         <option value="5">5 phút/lần</option>
                                         <option value="10">10 phút/lần</option>
                                         <option value="15">15 phút/lần</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -113,6 +116,30 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Thêm biểu đồ ánh sáng -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Biểu Đồ Ánh Sáng (24h Gần Nhất)</h5>
+                            <div style="height: 300px;">
+                                <canvas id="lightChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thêm biểu đồ NH3 -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Biểu Đồ NH3 (24h Gần Nhất)</h5>
+                            <div style="height: 300px;">
+                                <canvas id="nh3Chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -124,15 +151,19 @@
                     <div class="sensor-data">
                         <div class="sensor-item">
                             <i class="bi bi-thermometer-half"></i>
-                            <span>Nhiệt độ: <strong id="currentTemp">27°C</strong></span>
+                            <span>Nhiệt độ: <strong id="currentTemp">--°C</strong></span>
                         </div>
                         <div class="sensor-item">
                             <i class="bi bi-droplet"></i>
-                            <span>Độ ẩm: <strong id="currentHumidity">65%</strong></span>
+                            <span>Độ ẩm: <strong id="currentHumidity">--%</strong></span>
                         </div>
                         <div class="sensor-item">
                             <i class="bi bi-brightness-high"></i>
-                            <span>Ánh sáng: <strong id="currentLight">500 lux</strong></span>
+                            <span>Ánh sáng: <strong id="currentLight">-- lux</strong></span>
+                        </div>
+                        <div class="sensor-item">
+                            <i class="bi bi-cloud-haze2"></i>
+                            <span>NH3: <strong id="currentNH3">-- ppm</strong></span>
                         </div>
                     </div>
                 </div>
@@ -176,303 +207,589 @@
         font-size: 18px;
         font-weight: 500;
     }
-    /* Thêm style cho toast messages */
+    .toast-container {
+        z-index: 1050;
+    }
     .toast {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
+        opacity: 1 !important;
     }
-    .toast-success {
-        background-color: #28a745;
-        color: white;
-    }
-    .toast-error {
-        background-color: #dc3545;
-        color: white;
-    }
-    .toast-warning {
-        background-color: #ffc107;
-        color: black;
+    .toast-body {
+        font-size: 0.95rem;
     }
 </style>
 @endpush
 
 @push('scripts')
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- MQTT.js -->
 <script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
+
 <script>
-    // Cấu hình MQTT
-    const mqttConfig = {
-        host: 'localhost',
-        port: 8083,
-        path: '/mqtt',
-        protocol: 'ws',
-        username: 'fit21022008',
-        password: 'fit21022008',
-        clientId: 'webClient_' + Math.random().toString(16).substr(2, 8)
-    };
+    /* 
+      ================================================
+      ================  MQTT SECTION  ================
+      ================================================
+    */
 
-    // Khai báo client một lần duy nhất
-    const client = mqtt.connect(`${mqttConfig.protocol}://${mqttConfig.host}:${mqttConfig.port}${mqttConfig.path}`, {
-        username: mqttConfig.username,
-        password: mqttConfig.password,
-        clientId: mqttConfig.clientId,
-        clean: true,
-        connectTimeout: 4000,
-        reconnectPeriod: 1000,
-        keepalive: 60,
-        rejectUnauthorized: false
-    });
+    // Biến toàn cục cho MQTT client
+    let client;
 
-    // Xử lý các sự kiện kết nối
-    client.on('connect', function() {
-        console.log('Connected to MQTT broker');
-        showToast('Kết nối MQTT thành công!', 'success');
-        
-        // Subscribe các topic
-        client.subscribe('farm/temperature');
-        client.subscribe('farm/humidity');
-        client.subscribe('farm/devices/status/#');
+    // Hàm khởi tạo kết nối MQTT
+    async function initializeMQTT() {
+        try {
+            if (typeof mqtt === 'undefined') {
+                console.error('MQTT client not loaded');
+                setTimeout(initializeMQTT, 1000);
+                return;
+            }
 
-        // Thêm dòng này: Gửi thông báo kết nối thành công vào broker
-        client.publish('farm/connection', 'Web client connected successfully!', { retain: true });
-    });
+            // Thay bằng các thông số broker của bạn
+            const mqttConfig = {
+                host: 'k5debd44.ala.asia-southeast1.emqxsl.com', 
+                port: 8084,
+                path: '/mqtt',
+                protocol: 'wss',
+                username: 'fit21022008',
+                password: 'fit21022008',
+                clientId: 'webClient_' + Math.random().toString(16).substr(2, 8)
+            };
 
-    client.on('error', function(error) {
-        console.error('MQTT Error:', error);
-        showToast('Lỗi kết nối MQTT!', 'error');
-    });
+            // Kết nối MQTT
+            client = mqtt.connect(`${mqttConfig.protocol}://${mqttConfig.host}:${mqttConfig.port}${mqttConfig.path}`, {
+                username: mqttConfig.username,
+                password: mqttConfig.password,
+                clientId: mqttConfig.clientId,
+                clean: true,
+                connectTimeout: 4000,
+                reconnectPeriod: 1000,
+                keepalive: 60
+            });
 
-    client.on('close', function() {
-        console.log('MQTT connection closed');
-        showToast('Mất kết nối MQTT!', 'warning');
-    });
+            // Sự kiện khi kết nối thành công
+            client.on('connect', function() {
+                console.log('Connected to MQTT broker');
+                subscribeToTopics();
+            });
 
-    client.on('reconnect', function() {
-        console.log('Attempting to reconnect to MQTT broker...');
-    });
+            // Sự kiện lỗi
+            client.on('error', function(err) {
+                console.error('MQTT Error:', err);
+                showToast('Lỗi kết nối MQTT!', 'error');
+            });
 
-    // Hàm hiển thị thông báo
-    function showToast(message, type = 'info') {
-        const toastDiv = document.createElement('div');
-        toastDiv.className = `toast toast-${type} show`;
-        toastDiv.textContent = message;
-        document.body.appendChild(toastDiv);
-        
-        setTimeout(() => {
-            toastDiv.remove();
-        }, 3000);
+            // Sự kiện khi nhận message
+            client.on('message', function(topic, message) {
+                console.log('Received:', topic, message.toString());
+                handleMQTTMessage(topic, message);
+            });
+
+        } catch (error) {
+            console.error('Error in initializeMQTT:', error);
+            showToast('Lỗi khởi tạo MQTT!', 'error');
+        }
     }
 
-    // Các hàm điều khiển thiết bị
-    function controlDevice(device, action) {
-        if (client.connected) {
-            const topic = `farm/control/${device}`;
-            client.publish(topic, action, { qos: 1 }, function(err) {
-                if (err) {
-                    console.error('Publish error:', err);
-                    showToast('Lỗi gửi lệnh!', 'error');
+    // Subscribe các topic cần thiết
+    function subscribeToTopics() {
+        if (client && client.connected) {
+            // Ví dụ subscribe toàn bộ farm/# để bắt hết
+            client.subscribe('farm/#', (err) => {
+                if (!err) {
+                    console.log('Subscribed to farm/#');
                 } else {
-                    console.log(`Sent: ${topic} - ${action}`);
-                    showToast(`Đã gửi lệnh ${action} đến ${device}`, 'success');
+                    console.error('Subscribe error:', err);
                 }
             });
         } else {
-            showToast('Chưa kết nối MQTT!', 'error');
+            console.warn('Client not ready for subscribing');
         }
     }
 
-    // Đợi cho trang load xong
-    window.addEventListener('load', function() {
-        // Biểu đồ nhiệt độ
-        new Chart(document.getElementById('temperatureChart'), {
+    // Hàm handle message chung
+    function handleMQTTMessage(topic, message) {
+        const msgStr = message.toString();
+
+        switch (topic) {
+            // Nhận nhiệt độ
+            case 'farm/temperature': {
+                const temp = parseFloat(msgStr);
+                if (!isNaN(temp)) {
+                    // Cập nhật thẻ hiện tại
+                    document.getElementById('currentTemp').textContent = temp + '°C';
+                    // Cập nhật biểu đồ
+                    updateCharts(temp, null, null);
+                }
+                break;
+            }
+            // Nhận độ ẩm
+            case 'farm/humidity': {
+                const hum = parseFloat(msgStr);
+                if (!isNaN(hum)) {
+                    // Cập nhật thẻ hiện tại
+                    document.getElementById('currentHumidity').textContent = hum + '%';
+                    // Cập nhật biểu đồ
+                    updateCharts(null, hum, null);
+                }
+                break;
+            }
+            // Nhận ánh sáng
+            case 'farm/light': {
+                const light = parseFloat(msgStr);
+                if (!isNaN(light)) {
+                    document.getElementById('currentLight').textContent = light + ' lux';
+                    // Cập nhật biểu đồ với giá trị ánh sáng
+                    updateCharts(null, null, light);
+                }
+                break;
+            }
+            // Nếu cần handle thêm thì thêm vào
+            default: {
+                // Ví dụ: farm/devices/status/light, farm/devices/status/fan
+                if (topic.startsWith('farm/devices/status/')) {
+                    console.log('Cập nhật trạng thái thiết bị:', topic, msgStr);
+                    // Ở đây ta có thể cập nhật UI theo trạng thái nếu muốn
+                }
+                break;
+            }
+            // Nhận NH3
+            case 'farm/nh3': {
+                const nh3 = parseFloat(msgStr);
+                if (!isNaN(nh3)) {
+                    document.getElementById('currentNH3').textContent = nh3 + ' ppm';
+                    updateCharts(null, null, null, nh3);
+                }
+                break;
+            }
+        }
+    }
+
+    /* 
+      ================================================
+      ==========  DEVICE CONTROL SECTION  ============
+      ================================================
+    */
+
+    // Publish điều khiển
+    function pubControl(topic, payload) {
+        if (!client || !client.connected) {
+            showToast('Chưa kết nối MQTT!', 'error');
+            return;
+        }
+        client.publish(topic, payload, { qos: 1 }, (err) => {
+            if (err) {
+                console.error('Publish error:', err);
+                showToast('Lỗi gửi lệnh!', 'error');
+            } else {
+                console.log(`Sent: ${topic} - ${payload}`);
+                showToast(`Đã gửi lệnh: ${payload}`, 'success');
+            }
+        });
+    }
+
+    // Gọi khi bật/tắt đèn
+    function controlLight(isOn) {
+        const topic = 'farm/control/light';
+        pubControl(topic, isOn ? 'ON' : 'OFF');
+    }
+
+    // Gọi khi thay đổi độ sáng
+    function controlBrightness(value) {
+        const topic = 'farm/control/light/brightness';
+        pubControl(topic, value.toString());
+    }
+
+    // Gọi khi bật/tắt quạt
+    function controlFan(isOn) {
+        const topic = 'farm/control/fan';
+        pubControl(topic, isOn ? 'ON' : 'OFF');
+    }
+
+    // Gọi khi thay đổi tốc độ quạt
+    function controlFanSpeed(speed) {
+        const topic = 'farm/control/fan/speed';
+        pubControl(topic, speed);
+    }
+
+    // Gọi khi bật/tắt phun sương
+    function controlMist(isOn) {
+        const topic = 'farm/control/mist';
+        pubControl(topic, isOn ? 'ON' : 'OFF');
+    }
+
+    // Gọi khi thay đổi tần suất phun sương
+    function controlMistInterval(interval) {
+        const topic = 'farm/control/mist/interval';
+        pubControl(topic, interval);
+    }
+
+    /* 
+      ================================================
+      ==============  CHART SECTION  ================
+      ================================================
+    */
+
+    let temperatureChart = null;
+    let humidityChart = null;
+    let lightChart = null;
+    let nh3Chart = null;
+
+    function initCharts() {
+        const tempCtx = document.getElementById('temperatureChart');
+        const humCtx = document.getElementById('humidityChart');
+        const lightCtx = document.getElementById('lightChart');
+        const nh3Ctx = document.getElementById('nh3Chart');
+
+
+        // Khởi tạo biểu đồ nhiệt độ
+        temperatureChart = new Chart(tempCtx, {
             type: 'line',
             data: {
-                labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+                labels: [],
                 datasets: [{
                     label: 'Nhiệt độ (°C)',
-                    data: [25, 26, 27, 28, 30, 29, 27, 26],
+                    data: [],
                     borderColor: 'rgb(255, 99, 132)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: true
+                    fill: true,
+                    tension: 0.4
                 }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-
-        // Biểu đồ độ ẩm
-        new Chart(document.getElementById('humidityChart'), {
-            type: 'line',
-            data: {
-                labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-                datasets: [{
-                    label: 'Độ ẩm (%)',
-                    data: [65, 67, 70, 65, 60, 62, 65, 68],
-                    borderColor: 'rgb(54, 162, 235)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    });
-
-    // Khởi tạo biến cho biểu đồ
-    let myChart;
-    let temperatureData = [];
-    let humidityData = [];
-    let labels = [];
-
-    // Xử lý nhận message
-    client.on('message', function(topic, message) {
-        console.log('Received:', topic, message.toString());
-        
-        switch(topic) {
-            case 'farm/temperature':
-                document.getElementById('currentTemp').textContent = message.toString() + '°C';
-                updateTemperatureChart(message);
-                break;
-            case 'farm/humidity':
-                document.getElementById('currentHumidity').textContent = message.toString() + '%';
-                updateHumidityChart(message);
-                break;
-            case 'farm/light':
-                document.getElementById('currentLight').textContent = message.toString() + ' lux';
-                break;
-            default:
-                updateDeviceStatus(topic, message.toString());
-        }
-    });
-
-    // Hàm điều khiển thiết bị
-    function controlDevice(device, action) {
-        const topic = `farm/control/${device}`;
-        client.publish(topic, action);
-        console.log(`Sent: ${topic} - ${action}`);
-    }
-
-    // Điều khiển độ sáng đèn
-    function controlBrightness(value) {
-        document.getElementById('lightValue').textContent = value + '%';
-        client.publish('farm/control/light/brightness', value.toString());
-    }
-
-    // Điều khiển tốc độ quạt
-    function controlFanSpeed(speed) {
-        client.publish('farm/control/fan/speed', speed);
-    }
-
-    // Điều khiển thời gian phun sương
-    function controlMistDuration(duration) {
-        client.publish('farm/control/mist/duration', duration);
-    }
-
-    // Cập nhật trạng thái thiết bị
-    function updateDeviceStatus(topic, message) {
-        if (topic.startsWith('farm/devices/status/')) {
-            const device = topic.split('/').pop();
-            // Cập nhật UI dựa trên trạng thái nhận được
-            console.log(`${device} status: ${message}`);
-        }
-    }
-
-    // Khởi tạo biểu đồ
-    window.addEventListener('load', function() {
-        const ctx = document.getElementById('myChart');
-        myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Nhiệt độ (°C)',
-                        data: temperatureData,
-                        borderColor: 'rgb(255, 99, 132)',
-                        tension: 0.1
-                    },
-                    {
-                        label: 'Độ ẩm (%)',
-                        data: humidityData,
-                        borderColor: 'rgb(54, 162, 235)',
-                        tension: 0.1
-                    }
-                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: false,
                         suggestedMin: 0,
-                        suggestedMax: 100
+                        suggestedMax: 50
                     }
-                },
-                animation: {
-                    duration: 0 // Tắt animation để cập nhật mượt hơn
                 }
             }
         });
-    });
 
-    // Cập nhật biểu đồ
-    function updateChart() {
-        if (myChart) {
-            myChart.data.labels = labels;
-            myChart.data.datasets[0].data = temperatureData;
-            myChart.data.datasets[1].data = humidityData;
-            myChart.update();
+        // Khởi tạo biểu đồ độ ẩm
+        humidityChart = new Chart(humCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Độ ẩm (%)',
+                    data: [],
+                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+
+        // Thêm khởi tạo biểu đồ ánh sáng
+        lightChart = new Chart(lightCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Ánh sáng (lux)',
+                    data: [],
+                    borderColor: 'rgb(255, 159, 64)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: 1000
+                    }
+                }
+            }
+        });
+
+        // Khởi tạo biểu đồ NH3
+        nh3Chart = new Chart(nh3Ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'NH3 (ppm)',
+                    data: [],
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        suggestedMin: 0,
+                        suggestedMax: 50
+                    }
+                }
+            }
+        });
+    }
+
+    // Thêm dữ liệu điểm mới vào chart
+    function updateCharts(temp, hum, light, nh3) {
+        const now = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+        if (temp !== null && temperatureChart) {
+            temperatureChart.data.labels.push(now);
+            temperatureChart.data.datasets[0].data.push(temp);
+
+            // Giới hạn tối đa 288 điểm (mỗi 5 phút 1 lần => 24h)
+            if (temperatureChart.data.labels.length > 288) {
+                temperatureChart.data.labels.shift();
+                temperatureChart.data.datasets[0].data.shift();
+            }
+            temperatureChart.update('none');
+        }
+
+        if (hum !== null && humidityChart) {
+            humidityChart.data.labels.push(now);
+            humidityChart.data.datasets[0].data.push(hum);
+
+            if (humidityChart.data.labels.length > 288) {
+                humidityChart.data.labels.shift();
+                humidityChart.data.datasets[0].data.shift();
+            }
+            humidityChart.update('none');
+        }
+
+        // Thêm xử lý ánh sáng
+        if (light !== null && lightChart) {
+            lightChart.data.labels.push(now);
+            lightChart.data.datasets[0].data.push(light);
+
+            if (lightChart.data.labels.length > 288) {
+                lightChart.data.labels.shift();
+                lightChart.data.datasets[0].data.shift();
+            }
+            lightChart.update('none');
+        }
+
+        // Thêm xử lý NH3
+        if (nh3 !== null && nh3Chart) {
+            nh3Chart.data.labels.push(now);
+            nh3Chart.data.datasets[0].data.push(nh3);
+
+            if (nh3Chart.data.labels.length > 288) {
+                nh3Chart.data.labels.shift();
+                nh3Chart.data.datasets[0].data.shift();
+            }
+            nh3Chart.update('none');
         }
     }
 
-    // Thêm các event handlers sau phần khởi tạo MQTT
-    document.getElementById('lightSwitch').addEventListener('change', function(e) {
-        controlDevice('light', e.target.checked ? 'ON' : 'OFF');
-    });
+    // Lấy dữ liệu từ API (từ InfluxDB) và cập nhật cả biểu đồ lẫn card
+    async function fetchSensorData() {
+        try {
+            // Lấy thời điểm hiện tại và 24h trước
+            const endTime = new Date();
+            const startTime = new Date(endTime.getTime() - (24 * 60 * 60 * 1000));
+            
+            const response = await fetch(`/api/sensor-data?start=${startTime.toISOString()}&end=${endTime.toISOString()}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
+            const data = await response.json();
+            
+            // Log dữ liệu để debug
+            console.log('Received sensor data:', data);
 
-    document.getElementById('lightBrightness').addEventListener('input', function(e) {
-        controlDevice('light/brightness', e.target.value);
-    });
+            // Kiểm tra dữ liệu có tồn tại và không phải null
+            if (data.timestamps) {
+                // Lọc bỏ các giá trị null
+                const validData = data.timestamps.map((time, index) => ({
+                    time,
+                    temp: data.temperatures?.[index] || null,
+                    hum: data.humidity?.[index] || null,
+                    light: data.light?.[index] || null,
+                    nh3: data.nh3?.[index] || null
+                })).filter(item => item.temp !== null || item.hum !== null || item.light !== null || item.nh3 !== null);
 
-    document.getElementById('fanSwitch').addEventListener('change', function(e) {
-        controlDevice('fan', e.target.checked ? 'ON' : 'OFF');
-    });
+                if (validData.length > 0) {
+                    // Cập nhật biểu đồ nhiệt độ
+                    if (temperatureChart) {
+                        temperatureChart.data.labels = validData.map(d => d.time);
+                        temperatureChart.data.datasets[0].data = validData.map(d => d.temp);
+                        temperatureChart.update();
+                    }
 
-    document.getElementById('fanSpeed').addEventListener('change', function(e) {
-        controlDevice('fan/speed', e.target.value);
-    });
+                    // Cập nhật biểu đồ độ ẩm
+                    if (humidityChart) {
+                        humidityChart.data.labels = validData.map(d => d.time);
+                        humidityChart.data.datasets[0].data = validData.map(d => d.hum);
+                        humidityChart.update();
+                    }
 
-    document.getElementById('mistSwitch').addEventListener('change', function(e) {
-        controlDevice('mist', e.target.checked ? 'ON' : 'OFF');
-    });
+                    // Cập nhật biểu đồ ánh sáng
+                    if (lightChart) {
+                        lightChart.data.labels = validData.map(d => d.time);
+                        lightChart.data.datasets[0].data = validData.map(d => d.light);
+                        lightChart.update();
+                    }
 
-    document.getElementById('mistInterval').addEventListener('change', function(e) {
-        controlDevice('mist/interval', e.target.value);
-    });
+                    // Cập nhật biểu đồ NH3
+                    if (nh3Chart) {
+                        nh3Chart.data.labels = validData.map(d => d.time);
+                        nh3Chart.data.datasets[0].data = validData.map(d => d.nh3);
+                        nh3Chart.update();
+                    }
 
-    // Thêm hàm cập nhật biểu đồ với giới hạn dữ liệu
-    function updateTemperatureChart(newValue) {
-        const MAX_DATA_POINTS = 8; // Giới hạn số điểm dữ liệu
-        
-        temperatureData.push(parseFloat(newValue));
-        if (temperatureData.length > MAX_DATA_POINTS) {
-            temperatureData.shift();
+                    // Cập nhật giá trị hiện tại với giá trị cuối cùng có sẵn
+                    const lastValidData = validData[validData.length - 1];
+                    if (lastValidData.temp) {
+                        document.getElementById('currentTemp').textContent = `${lastValidData.temp}°C`;
+                    }
+                    if (lastValidData.hum) {
+                        document.getElementById('currentHumidity').textContent = `${lastValidData.hum}%`;
+                    }
+                    if (lastValidData.light) {
+                        document.getElementById('currentLight').textContent = `${lastValidData.light} lux`;
+                    }
+                    if (lastValidData.nh3) {
+                        document.getElementById('currentNH3').textContent = `${lastValidData.nh3} ppm`;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching sensor data:', error);
+            showToast('Lỗi tải dữ liệu cảm biến!', 'error');
         }
-        
-        labels.push(new Date().toLocaleTimeString());
-        if (labels.length > MAX_DATA_POINTS) {
-            labels.shift();
-        }
-        
-        updateChart();
     }
+
+    /* 
+      ================================================
+      ==============  UI INTERACTION  ===============
+      ================================================
+    */
+
+    // Toast
+    function showToast(message, type = 'info') {
+        // Xóa toast cũ nếu còn
+        const oldToastContainer = document.querySelector('.toast-container');
+        if (oldToastContainer) {
+            oldToastContainer.remove();
+        }
+
+        // Tạo container cho toast nếu chưa có
+        let toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+        document.body.appendChild(toastContainer);
+
+        const toastHtml = `
+            <div class="toast align-items-center text-white bg-${getBootstrapColor(type)} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="${getIcon(type)}"></i> ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        `;
+        toastContainer.innerHTML = toastHtml;
+
+        const toastEl = toastContainer.querySelector('.toast');
+        const toast = new bootstrap.Toast(toastEl, {
+            animation: true,
+            autohide: true,
+            delay: 3000
+        });
+        toast.show();
+    }
+
+    function getBootstrapColor(type) {
+        switch(type) {
+            case 'success': return 'success';
+            case 'error':   return 'danger';
+            case 'warning': return 'warning';
+            default:        return 'info';
+        }
+    }
+    function getIcon(type) {
+        switch(type) {
+            case 'success': return 'bi bi-check-circle-fill me-2';
+            case 'error':   return 'bi bi-x-circle-fill me-2';
+            case 'warning': return 'bi bi-exclamation-triangle-fill me-2';
+            default:        return 'bi bi-info-circle-fill me-2';
+        }
+    }
+
+    /* 
+      ================================================
+      =============  DOM EVENT BINDING  =============
+      ================================================
+    */
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Khởi tạo chart
+        initCharts();
+
+        // 2. Lấy dữ liệu ban đầu từ API
+        fetchSensorData();
+
+        // 3. Khởi tạo kết nối MQTT
+        initializeMQTT();
+
+        // 4. Đặt lịch cập nhật dữ liệu từ API mỗi 5 phút (tùy chỉnh theo nhu cầu)
+        setInterval(fetchSensorData, 5 * 60 * 1000);
+
+        // 5. Gắn sự kiện điều khiển UI -> MQTT
+        const lightSwitch = document.getElementById('lightSwitch');
+        const lightBrightness = document.getElementById('lightBrightness');
+        const fanSwitch = document.getElementById('fanSwitch');
+        const fanSpeed = document.getElementById('fanSpeed');
+        const mistSwitch = document.getElementById('mistSwitch');
+        const mistInterval = document.getElementById('mistInterval');
+
+        // Bật tắt đèn
+        lightSwitch.addEventListener('change', function() {
+            controlLight(this.checked);
+        });
+
+        // Điều chỉnh độ sáng
+        lightBrightness.addEventListener('input', function() {
+            document.getElementById('lightValue').textContent = this.value + '%';
+            controlBrightness(this.value);
+        });
+
+        // Bật tắt quạt
+        fanSwitch.addEventListener('change', function() {
+            controlFan(this.checked);
+        });
+
+        // Thay đổi tốc độ quạt
+        // fanSpeed.addEventListener('change', function() {
+        //     controlFanSpeed(this.value);
+        // });
+
+        // Bật tắt phun sương
+        mistSwitch.addEventListener('change', function() {
+            controlMist(this.checked);
+        });
+
+        // Thay đổi tần suất phun sương
+        // mistInterval.addEventListener('change', function() {
+        //     controlMistInterval(this.value);
+        // });
+    });
 </script>
 @endpush
 @endsection

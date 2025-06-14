@@ -3,119 +3,172 @@
 namespace App\Services;
 
 use InfluxDB2\Client;
-use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
+use DateTime;
 use Illuminate\Support\Facades\Log;
 
 class InfluxDBService
 {
     protected $client;
+    protected $queryApi;
     protected $writeApi;
-    protected $bucket;
-    protected $org;
+    protected $config;
 
     public function __construct()
     {
-        Log::info('InfluxDB Config', [
-            'url' => config('influxdb.url'),
-            'org' => config('influxdb.org'),
-            'bucket' => config('influxdb.bucket')
+        // Thêm logging để debug
+        Log::debug('InfluxDB ENV values:', [
+            'url' => env('INFLUXDB_URL'),
+            'org' => env('INFLUXDB_ORG'),
+            'bucket' => env('INFLUXDB_BUCKET'),
+            'has_token' => !empty(env('INFLUXDB_TOKEN'))
         ]);
 
-        $config = config('influxdb');
+        $this->config = [
+            "url" => config('services.influxdb.url'),
+            "token" => config('services.influxdb.token'),
+            "org" => config('services.influxdb.org'),
+            "bucket" => config('services.influxdb.bucket'),
+        ];
 
-        $this->client = new Client([
-            "url" => $config['url'],
-            "token" => $config['token'],
-            "org" => $config['org'],
-            "bucket" => $config['bucket'],
-            "precision" => WritePrecision::NS
+        // Log cấu hình từ config
+        Log::debug('InfluxDB Configuration from config:', [
+            'url' => $this->config['url'],
+            'org' => $this->config['org'],
+            'bucket' => $this->config['bucket'],
+            'has_token' => !empty($this->config['token'])
         ]);
 
+        // Kiểm tra cấu hình
+        $this->validateConfig();
+
+        $this->client = new Client($this->config);
+        $this->queryApi = $this->client->createQueryApi();
         $this->writeApi = $this->client->createWriteApi();
-        $this->bucket = $config['bucket'];
-        $this->org = $config['org'];
     }
 
     /**
-     * Ghi một điểm dữ liệu vào InfluxDB
+     * Kiểm tra cấu hình InfluxDB
      *
-     * @param string $measurement
-     * @param array $tags
-     * @param array $fields
-     * @param \DateTimeInterface|null $timestamp
-     * @return void
+     * @throws \Exception
      */
-    public function writeData(string $measurement, array $tags, array $fields, ?\DateTimeInterface $timestamp = null)
+    protected function validateConfig()
     {
-        $point = Point::measurement($measurement);
+        $required = ['url', 'token', 'org', 'bucket'];
+        $missing = [];
 
-        foreach ($tags as $key => $value) {
-            $point->addTag($key, $value);
-        }
-
-        foreach ($fields as $key => $value) {
-            $point->addField($key, $value);
-        }
-
-        if ($timestamp) {
-            $timestampNs = $timestamp->getTimestamp() * 1000000000;
-            $point->time($timestampNs);
-        }
-
-        $this->writeApi->write($point);
-    }
-
-    public function readData(string $measurement, ?array $tags = [])
-    {
-        $queryApi = $this->client->createQueryApi();
-        
-        // Xây dựng câu truy vấn Flux
-        $query = 'from(bucket:"' . $this->bucket . '") 
-            |> range(start: -1h)
-            |> filter(fn: (r) => r["_measurement"] == "' . $measurement . '"';
-        
-        // Thêm điều kiện tags nếu có
-        if (!empty($tags)) {
-            foreach ($tags as $key => $value) {
-                $query .= ' and r["' . $key . '"] == "' . $value . '"';
+        foreach ($required as $field) {
+            if (empty($this->config[$field])) {
+                $missing[] = $field;
             }
         }
-        
-        $query .= ')';
 
+        if (!empty($missing)) {
+            $message = 'Missing required InfluxDB configuration: ' . implode(', ', $missing);
+            Log::error($message);
+            throw new \Exception($message);
+        }
+    }
+
+    /**
+     * Thực hiện truy vấn Flux
+     *
+     * @param string $query
+     * @return array
+     */
+    public function query(string $query)
+    {
         try {
-            $result = $queryApi->query($query);
+            Log::debug('Executing InfluxDB query', ['query' => $query]);
+
+            $result = $this->queryApi->query($query);
             
-            // Chuyển đổi kết quả thành mảng
+            // Chuyển đổi kết quả thành mảng dữ liệu
             $data = [];
             foreach ($result as $table) {
                 foreach ($table->records as $record) {
-                    $data[] = [
-                        'time' => $record->getTime(),
-                        'value' => $record->getValue(),
-                        'field' => $record->getField(),
-                        'measurement' => $record->getMeasurement(),
-                        'tags' => $record->values
-                    ];
+                    $data[] = $record;
                 }
             }
             
+            Log::debug('InfluxDB query result', ['count' => count($data)]);
             return $data;
+
         } catch (\Exception $e) {
-            \Log::error('Lỗi khi đọc dữ liệu từ InfluxDB: ' . $e->getMessage());
+            Log::error('InfluxDB query error', [
+                'error' => $e->getMessage(),
+                'query' => $query,
+                'config' => [
+                    'url' => $this->config['url'],
+                    'org' => $this->config['org'],
+                    'bucket' => $this->config['bucket']
+                ]
+            ]);
             throw $e;
         }
     }
 
     /**
-     * Đóng kết nối InfluxDB
+     * Ghi dữ liệu vào InfluxDB
      *
+     * @param string $measurement
+     * @param array $tags
+     * @param array $fields
+     * @param DateTime|null $timestamp
      * @return void
      */
-    public function close()
+    public function writeData(string $measurement, array $tags, array $fields, ?DateTime $timestamp = null)
     {
-        $this->writeApi->close();
-        $this->client->close();
+        try {
+            $point = Point::measurement($measurement);
+
+            // Thêm tags
+            foreach ($tags as $key => $value) {
+                $point->addTag($key, $value);
+            }
+
+            // Thêm fields
+            foreach ($fields as $key => $value) {
+                if (is_numeric($value)) {
+                    $point->addField($key, (float)$value);
+                } else {
+                    $point->addField($key, $value);
+                }
+            }
+
+            // Thêm timestamp nếu có
+            if ($timestamp) {
+                $point->time($timestamp);
+            }
+
+            Log::debug('Writing data to InfluxDB', [
+                'measurement' => $measurement,
+                'tags' => $tags,
+                'fields' => $fields,
+                'timestamp' => $timestamp ? $timestamp->format('Y-m-d H:i:s') : null
+            ]);
+
+            // Ghi dữ liệu
+            $this->writeApi->write($point);
+
+        } catch (\Exception $e) {
+            Log::error('InfluxDB write error', [
+                'error' => $e->getMessage(),
+                'measurement' => $measurement,
+                'tags' => $tags,
+                'fields' => $fields
+            ]);
+            throw $e;
+        }
+    }
+
+    /**
+     * Đóng kết nối khi service bị hủy
+     */
+    public function __destruct()
+    {
+        if ($this->client) {
+            $this->client->close();
+        }
     }
 }
